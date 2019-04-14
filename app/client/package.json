@@ -1,0 +1,52 @@
+{
+  "name": "master-thesis",
+  "version": "1.0.0",
+  "description": "Smart contract master thesis example",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server --mode development  --progress --colors --config ./webpack.config.js --open",
+    "build": "webpack --mode production",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/senaa12/PmfSmartContracts.git"
+  },
+  "keywords": [
+    "Ethereum",
+    "Smart Contract",
+    "React",
+    "Javascript",
+    "Truffle",
+    "Webpack",
+    "Master Thesis"
+  ],
+  "author": "Luka Senicic",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/senaa12/PmfSmartContracts/issues"
+  },
+  "homepage": "https://github.com/senaa12/PmfSmartContracts#readme",
+  "dependencies": {
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
+    "@babel/preset-react": "^7.0.0",
+    "babel-eslint": "^10.0.1",
+    "babel-loader": "^8.0.5",
+    "css-loader": "^2.1.1",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-loader": "^2.1.2",
+    "html-webpack-plugin": "^3.2.0",
+    "node-sass": "^4.11.0",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.30.0",
+    "webpack-cli": "^3.3.0",
+    "webpack-dev-server": "^3.3.1"
+  }
+}
