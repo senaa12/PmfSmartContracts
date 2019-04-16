@@ -1,6 +1,6 @@
-var HelloWorld=artifacts.require ("./HelloWorld.sol");
+var TestContract=artifacts.require ("./TestContract.sol");
 
 
 module.exports = function(deployer) {
-      deployer.deploy(HelloWorld);
+      deployer.deploy(TestContract);
 }
