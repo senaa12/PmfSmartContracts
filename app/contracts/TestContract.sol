@@ -1,17 +1,23 @@
 pragma solidity ^0.5.0;
 
 contract TestContract {
-    string private test_string;
+    uint private test;
+    address private sender;
 
     constructor() public {
-        test_string = "neki fini test";
+        test = 0;
     }
 
-    function setTest(string memory test) public {
-        test_string = test;
+    function setTest(uint t) public {
+        test = t;
+        sender = msg.sender;
     }  
 
-    function getTest() public view returns(string memory) {
-        return test_string;
+    function getTest() public view returns(uint) {
+        return test;
+    }
+
+    function getSender() public view returns(address) {
+        return sender;
     }
 }

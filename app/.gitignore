@@ -1,1 +1,6 @@
+# truffle build files
 /build
+
+# web-app stuff
+/node_modules
+/dist
