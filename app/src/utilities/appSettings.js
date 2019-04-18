@@ -1,6 +1,6 @@
 class AppSettings {
     constructor() {
-        
+        this._contractAddress = null;
     }
 }
 
