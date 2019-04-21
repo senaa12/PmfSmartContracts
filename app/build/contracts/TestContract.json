@@ -54,15 +54,15 @@
       "signature": "0x5e01eb5a"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.5.0+commit.1d4f565a\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":true,\"inputs\":[],\"name\":\"getSender\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"t\",\"type\":\"uint256\"}],\"name\":\"setTest\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getTest\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/C/Users/luka.senicic/Documents/PmfSmartContracts/app/contracts/TestContract.sol\":\"TestContract\"},\"evmVersion\":\"byzantium\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/C/Users/luka.senicic/Documents/PmfSmartContracts/app/contracts/TestContract.sol\":{\"keccak256\":\"0xba8bc5a467b84f389372ece2378992328a3b3a18191636415b1b6544d5e3d59d\",\"urls\":[\"bzzr://4b3cd9517add28261cc385b0f29a7b2eec812d891024340c05aa51a5efcec0d8\"]}},\"version\":1}",
-  "bytecode": "0x608060405234801561001057600080fd5b50600080819055506101c3806100276000396000f3fe608060405260043610610057576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680635e01eb5a1461005c5780636ca1f933146100b3578063a8cd0a80146100ee575b600080fd5b34801561006857600080fd5b50610071610119565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b3480156100bf57600080fd5b506100ec600480360360208110156100d657600080fd5b8101908080359060200190929190505050610143565b005b3480156100fa57600080fd5b5061010361018e565b6040518082815260200191505060405180910390f35b6000600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905090565b8060008190555033600160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555050565b6000805490509056fea165627a7a72305820d7f9a592d1d2c0c901e64cfe34824fe51a16be92ed1865134efb5ab853c1fd0f0029",
-  "deployedBytecode": "0x608060405260043610610057576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680635e01eb5a1461005c5780636ca1f933146100b3578063a8cd0a80146100ee575b600080fd5b34801561006857600080fd5b50610071610119565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b3480156100bf57600080fd5b506100ec600480360360208110156100d657600080fd5b8101908080359060200190929190505050610143565b005b3480156100fa57600080fd5b5061010361018e565b6040518082815260200191505060405180910390f35b6000600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905090565b8060008190555033600160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555050565b6000805490509056fea165627a7a72305820d7f9a592d1d2c0c901e64cfe34824fe51a16be92ed1865134efb5ab853c1fd0f0029",
+  "metadata": "{\"compiler\":{\"version\":\"0.5.0+commit.1d4f565a\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":true,\"inputs\":[],\"name\":\"getSender\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"t\",\"type\":\"uint256\"}],\"name\":\"setTest\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getTest\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/C/Users/Sena/Documents/PmfSmartContracts/app/contracts/TestContract.sol\":\"TestContract\"},\"evmVersion\":\"byzantium\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/C/Users/Sena/Documents/PmfSmartContracts/app/contracts/TestContract.sol\":{\"keccak256\":\"0xba8bc5a467b84f389372ece2378992328a3b3a18191636415b1b6544d5e3d59d\",\"urls\":[\"bzzr://4b3cd9517add28261cc385b0f29a7b2eec812d891024340c05aa51a5efcec0d8\"]}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b50600080819055506101c3806100276000396000f3fe608060405260043610610057576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680635e01eb5a1461005c5780636ca1f933146100b3578063a8cd0a80146100ee575b600080fd5b34801561006857600080fd5b50610071610119565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b3480156100bf57600080fd5b506100ec600480360360208110156100d657600080fd5b8101908080359060200190929190505050610143565b005b3480156100fa57600080fd5b5061010361018e565b6040518082815260200191505060405180910390f35b6000600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905090565b8060008190555033600160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555050565b6000805490509056fea165627a7a72305820158b0921a4c6cc2db9069455079fcdbb38ba4217131267318f0b12ef2a8010da0029",
+  "deployedBytecode": "0x608060405260043610610057576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680635e01eb5a1461005c5780636ca1f933146100b3578063a8cd0a80146100ee575b600080fd5b34801561006857600080fd5b50610071610119565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b3480156100bf57600080fd5b506100ec600480360360208110156100d657600080fd5b8101908080359060200190929190505050610143565b005b3480156100fa57600080fd5b5061010361018e565b6040518082815260200191505060405180910390f35b6000600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905090565b8060008190555033600160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555050565b6000805490509056fea165627a7a72305820158b0921a4c6cc2db9069455079fcdbb38ba4217131267318f0b12ef2a8010da0029",
   "sourceMap": "27:407:1:-;;;111:48;8:9:-1;5:2;;;30:1;27;20:12;5:2;111:48:1;150:1;143:4;:8;;;;27:407;;;;;;",
   "deployedSourceMap": "27:407:1:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;349:82;;8:9:-1;5:2;;;30:1;27;20:12;5:2;349:82:1;;;;;;;;;;;;;;;;;;;;;;;;;;;167:89;;8:9:-1;5:2;;;30:1;27;20:12;5:2;167:89:1;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;167:89:1;;;;;;;;;;;;;;;;;;;;266:75;;8:9:-1;5:2;;;30:1;27;20:12;5:2;266:75:1;;;;;;;;;;;;;;;;;;;;;;;349:82;390:7;417:6;;;;;;;;;;;410:13;;349:82;:::o;167:89::-;217:1;210:4;:8;;;;238:10;229:6;;:19;;;;;;;;;;;;;;;;;;167:89;:::o;266:75::-;305:4;329;;322:11;;266:75;:::o",
   "source": "pragma solidity ^0.5.0;\r\n\r\ncontract TestContract {\r\n    uint private test;\r\n    address private sender;\r\n\r\n    constructor() public {\r\n        test = 0;\r\n    }\r\n\r\n    function setTest(uint t) public {\r\n        test = t;\r\n        sender = msg.sender;\r\n    }  \r\n\r\n    function getTest() public view returns(uint) {\r\n        return test;\r\n    }\r\n\r\n    function getSender() public view returns(address) {\r\n        return sender;\r\n    }\r\n}",
-  "sourcePath": "C:/Users/luka.senicic/Documents/PmfSmartContracts/app/contracts/TestContract.sol",
+  "sourcePath": "C:/Users/Sena/Documents/PmfSmartContracts/app/contracts/TestContract.sol",
   "ast": {
-    "absolutePath": "/C/Users/luka.senicic/Documents/PmfSmartContracts/app/contracts/TestContract.sol",
+    "absolutePath": "/C/Users/Sena/Documents/PmfSmartContracts/app/contracts/TestContract.sol",
     "exportedSymbols": {
       "TestContract": [
         102
@@ -567,7 +567,7 @@
     "src": "0:434:1"
   },
   "legacyAST": {
-    "absolutePath": "/C/Users/luka.senicic/Documents/PmfSmartContracts/app/contracts/TestContract.sol",
+    "absolutePath": "/C/Users/Sena/Documents/PmfSmartContracts/app/contracts/TestContract.sol",
     "exportedSymbols": {
       "TestContract": [
         102
@@ -1081,10 +1081,16 @@
       "links": {},
       "address": "0x4f6E209879B19A433ac975064fedcd0c11CF04C8",
       "transactionHash": "0x57aae2af416128fce49cebc6933955aa2369e7827f2feda813a2d1c7e60b4c6a"
+    },
+    "1555784833821": {
+      "events": {},
+      "links": {},
+      "address": "0xce246A6d038db2f5af08eA8bb26bd062eDc13CF2",
+      "transactionHash": "0xf76263118ded0e82853b703afdb626c32ac3c639f0b6e823016adfe24cd18cca"
     }
   },
   "schemaVersion": "3.0.6",
-  "updatedAt": "2019-04-18T11:39:32.814Z",
+  "updatedAt": "2019-04-20T18:27:33.611Z",
   "devdoc": {
     "methods": {}
   },

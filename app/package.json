@@ -6,7 +6,8 @@
   "scripts": {
     "start": "webpack-dev-server --mode development  --progress --colors --config ./webpack.config.js --open",
     "build": "webpack --mode production",
-    "test": "test"
+    "open-cypress": "./node_modules/.bin/cypress open",
+    "test": "start-server-and-test start http://localhost:1212 open-cypress"
   },
   "repository": {
     "type": "git",
@@ -38,9 +39,11 @@
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.5",
     "css-loader": "^2.1.1",
+    "cypress": "^3.2.0",
     "html-webpack-plugin": "^3.2.0",
     "node-sass": "^4.11.0",
     "sass-loader": "^7.1.0",
+    "start-server-and-test": "^1.7.13",
     "style-loader": "^0.23.1",
     "truffle": "^5.0.13",
     "webpack": "^4.30.0",
