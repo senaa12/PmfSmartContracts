@@ -44,12 +44,12 @@ class Web3Test {
 
 
         // saving user address
-        this._userAddress = this._web3.givenProvider.selectedAddress
+        this._userAddress = this._web3.givenProvider.selectedAddress;
 
         //initialization of conncection to smart contract
         try {
             // also need to automate somehow path finding
-            this._testContractAbi = require("../../build/contracts/TestContract.json");
+            this._testContractAbi = require("../../build/contracts/Lottery.json");
         } catch (e) {
             return { success: false, errorMessage: "There is no smart contract ABI provided" }
             //TODO: return and handle error needed
@@ -92,7 +92,7 @@ class Web3Test {
     }
 
     async _setNumber(newNum) {
-        this._contract.methods.setTest(this._web3.utils.toHex(newNum)).send({ from: this._userAddress })
+        this._contract.methods.random().send({ from: this._userAddress })
         .on('confirmation', (confirmationNumber, receipt) =>  console.log(receipt))
         .catch(ex => console.log(ex))
     }

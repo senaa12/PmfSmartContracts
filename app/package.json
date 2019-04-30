@@ -4,8 +4,8 @@
   "description": "Smart contract master thesis example",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --mode development  --progress --colors --config ./webpack.config.js --open",
-    "build": "webpack --mode production",
+    "start": "webpack-dev-server --mode development  --progress --colors --config ./webpack.config.dev.js --open",
+    "build": "webpack --config ./webpack.config.prod.js --mode production",
     "open-cypress": "./node_modules/.bin/cypress open",
     "test": "start-server-and-test start http://localhost:1212 open-cypress"
   },

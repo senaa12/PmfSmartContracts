@@ -8,6 +8,16 @@
 \usepackage{csquotes}
 \MakeOuterQuote{"}
 
+\usepackage{thmtools}
+\declaretheorem{teorem}
+\declaretheorem[sibling=teorem]{korolar}
+\declaretheorem[name=Činjenica,sibling=teorem,qed=\textup{EOČ}]{cinjenica}
+\declaretheorem[style=definition,sibling=teorem,qed=$\vartriangleleft$]{definicija}
+\declaretheorem[style=remark,sibling=teorem]{napomena}
+
+\usepackage{biblatex}
+\addbibresource{bibliografija.bib}
+
 \title{Ethereum: Smart contracts}
 \author{Luka Seničić}
 \date{\today}
@@ -19,15 +29,55 @@
 \tableofcontents
 
 \chapter{Uvod}
+\section{Motivacija}
+digitalne valute pokusavaju rjesit problem automated payment sistema
 
-\chapter{Bitcoin}
+\section{Povijest}
+Prva ideju i sam izraz \emph{smart contract} objavio je Nick Szabo 1994. godine\cite{smart_contract_idea}. U tom članku on smart contract predstavlja kao:
+\begin{definicija}
+Smart contract je digitalni transakcijski protokol koji izvršava odredbe ugovora. Ciljevi dizajna smart contracta su da zadovoljava uobičajene zahtjeve u ugovorima (načine plaćanjam, anonimnost itd.), minimiziraju potrebu za povjerljivom trećom osobom.
+\end{definicija}
+Kao primjer nanjbolji smart contracta daje DigitalCash, koji se smatra prvom digitalnom valutom i pojavio se 1982. godine\cite{digi_cash}. Szabo vrlo ambiciozno širi svoju ideju na razne načine. Koristi smart contract za izvršavanje kompleksnih načina plaćanja uz malu naknadu i jednostavnu izvedbu. Čak daje primjer i implementacije smart contracta u fizički objekt. auto....
+
+
+\section{Thesis outline}
+
+\chapter{Blockchain}
+
+\section{Kriptografija}
+
+\section{Uvod u Blockchain}
+
+\section{Bitcoin}
 
 \chapter{Ethereum}
 
+pokupljeno sa \cite{ethdocs}
+
+\section{Decentralized application platform}
+
+\section{Accounti}
+
+\section{Ether \& Gas}
+
+\section{Transakcije}
+
+\section{Protocol \& mining}
+
 \chapter{Smart Contracts}
+
+\section{Solidity \& EVM}
+
+pokupljeno sa \cite{soliditydocs}
+
+\section{Komunikacija}
+
+\section{Sigurnost}
 
 \chapter{Primjer:}
 
 \chapter{Zaključak}
+
+\printbibliography--
 
 \end{document}
