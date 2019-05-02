@@ -1,0 +1,30 @@
+.board-base{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    border: solid 1px black;
+    padding: 5px;
+    min-height: 350px;
+    .numbers{
+        display:flex;
+        width: 88%;
+        height: 70%;
+        flex-wrap: wrap;
+    }
+    .numbers-zero{
+        width: 3%;
+        height: 180px;
+    }
+}
+
+.board-items{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: solid 1px black;
+}
+
+.board-items:hover {
+    cursor: pointer;
+}

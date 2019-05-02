@@ -1,59 +1,66 @@
 
 import React, { useEffect, useState } from "react";
-import Web3Test from '../utilities/web3.test';
+import Web3Wrapper from '../utilities/web3Wrapper';
+import Header from './header/header';
+import BoardBase from './board/boardBase';
 
+import { AppState } from '../common/enums'; 
 import "./app.scss";
 
 export default function App() {
-    const [number, setNumber] = useState(null);
-    const [lastSender, setLastSender] = useState(null);
-    const [initialized, setInitialized] = useState(false);
-    const [successfullInitialization, setSuccessfullInitialization] = useState(false);
+    const [appState, setAppState] = useState(AppState.IsNotInitialized);
     const [errorMessage, setErrorMessage] = useState("");
-    const [funds, setFunds] = useState(null);
-    const [newValue, setNewValue] = useState("");
- 
+
     useEffect(() => {
-        if(!initialized) {
-            Web3Test._initialization()
+        if(appState == AppState.IsNotInitialized) {
+            Web3Wrapper._initialization()
                 .then(res =>
                     {
-                        setInitialized(true);
-                        setSuccessfullInitialization(res.success);
-                        setErrorMessage(res.errorMessage);
-                    }).then(refreshNumber).catch(console.log);
+                        if(!res.success) {
+                            setAppState(AppState.ErrorWhenInitializing);
+                            setErrorMessage(res.errorMessage);
+                        }
+                        else {
+                            setAppState(AppState.SuccessfulInitialization);
+                        }
+                    }).catch(err => {
+                        setAppState(AppState.ErrorWhenInitializing);
+                        setErrorMessage("Something weird happend!? Check ConsoleLog for details");
+                        console.log(err);   
+                    });
         }
-    }, [initialized]);
+    }, [appState]);
 
-    const sendToSmartContract = () => {
-        Web3Test._setNumber(newValue).then(refreshNumber).then(console.log).catch(console.log);
+
+    const [selectedIDs, setSelectedIDs] = useState([]);
+    const pushToSelected = (newID) => {
+        let current = selectedIDs;
+        current.push(newID);
+        setSelectedIDs(current);
     }
 
-    const refreshNumber = () => {
-        Web3Test._getNumberSelected().then(setNumber);
-        Web3Test._getLastSender().then(setLastSender);
-        Web3Test._getCurrentUserBalance().then(setFunds);
+    const [newAmount, setNewAmount] = useState(1);
+
+    const send = () => {
+        Web3Wrapper._placeBet(selectedIDs, [newAmount]).then(console.log).catch(console.log);
     }
- 
+
+    const call = () => {
+        Web3Wrapper._getLastSpinResults().then(console.log).catch(console.log);
+    }
     return(
         <div>
-                {initialized && <>
-                     {successfullInitialization ?
-                     <>
-                     <h1>TESTING</h1>
-                     <br />
-                     <h2>current number {number ? number : ""}</h2>
-                     <br />
-                     <h2>last sender {lastSender ? lastSender : ""}</h2>
-                     <br />
-                     <h2>current user {Web3Test._userAddress}</h2>
-                     <br />
-                     <h2>balance {funds}</h2>
-                     <br />
-                     <button onClick={refreshNumber}>refresh</button>
-                     <br />
-                     <input value={newValue} onChange={e => setNewValue(e.target.value)}></input><button onClick={sendToSmartContract}>set</button>
-                     </>
+                {!(appState == AppState.IsNotInitialized) && <>
+                    <Header />
+                     {appState == AppState.SuccessfulInitialization ?                   
+                        <div className="body">
+                        <BoardBase onSelection={pushToSelected}/>
+                        <h1>TESTING</h1>
+                        <br />
+                        <input value={newAmount} onChange={e => setNewAmount(e.target.value)} />
+                        <br />
+                        <button onClick={send} >posalji</button><button onClick={call} >rez</button>
+                        </div>
                      : <h1>{errorMessage}</h1>}
                  </> }
         </div>

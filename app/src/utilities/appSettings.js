@@ -1,6 +1,8 @@
+const addressFile = require("./contractAddress.json");
+
 class AppSettings {
     constructor() {
-        this._contractAddress = null;
+        this._contractAddress = addressFile.address;
     }
 }
 

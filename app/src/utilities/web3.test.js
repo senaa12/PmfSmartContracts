@@ -1,5 +1,6 @@
 import Web3 from 'web3';
 import appSettings from './appSettings';
+import { convertHexArrayToDecimal } from '../common/converters';
 
 class Web3Test {
     constructor(){
@@ -7,6 +8,7 @@ class Web3Test {
         this._contract;
         this._web3;
         this._userAddress;
+        this._userBalance;
     }
 
     // this function initializes web3 and connects to contract
@@ -46,10 +48,12 @@ class Web3Test {
         // saving user address
         this._userAddress = this._web3.givenProvider.selectedAddress;
 
+        this._userBalance = await this._getCurrentUserBalance();
+
         //initialization of conncection to smart contract
         try {
             // also need to automate somehow path finding
-            this._testContractAbi = require("../../build/contracts/Lottery.json");
+            this._testContractAbi = require("../../build/contracts/CryptoRoulette.json");
         } catch (e) {
             return { success: false, errorMessage: "There is no smart contract ABI provided" }
             //TODO: return and handle error needed
@@ -81,25 +85,32 @@ class Web3Test {
         return { errorMessage: null };
     }
 
-    async _getNumberSelected() {
-        const res = await this._contract.methods.getTest().call();
-        return this._web3.utils.hexToNumberString(res._hex);
+    async _getLastSpins() {
+        const res = await this._contract.methods.getLastSpins().call();
+        console.log(res);
+        
+        return null;
     }
 
-    async _getLastSender() {
-        const res = await this._contract.methods.getSender().call();
-        return res;
+    async getBalanceForCurrentUser() {
+        const res = await this._web3.eth.getBalance(this._userAddress);
+        console.log(res);
     }
 
-    async _setNumber(newNum) {
-        this._contract.methods.random().send({ from: this._userAddress })
+    async _getLastSpinResults() {
+        const res = await this._contract.methods.getSpinResults().call();
+        return convertHexArrayToDecimal(res.map(r => r._hex));
+    }
+
+    async _placeBet(newNum, amount) {
+        this._contract.methods.placeBet([this._web3.utils.toHex(newNum)], [this._web3.utils.toHex(amount)]).send({ from: this._userAddress, value: this._web3.utils.toWei("1", "ether") })
         .on('confirmation', (confirmationNumber, receipt) =>  console.log(receipt))
         .catch(ex => console.log(ex))
     }
 
     async _getCurrentUserBalance() {
         const res = await this._web3.eth.getBalance(this._userAddress);
-        return res;
+        return this._web3.utils.fromWei(res, 'ether');
     }
 
     _defaultCallBack(err, res) {
