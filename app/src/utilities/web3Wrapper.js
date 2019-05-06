@@ -73,6 +73,11 @@ class Web3Wrapper {
         return convertHexArrayToDecimal(res.map(r => r._hex));
     }
 
+    async _getLastSpins() {
+        const res = await this._contract.methods.getLastSpins().call();
+        return res;
+    }
+
     async _placeBet(betIDs, amountsPerBet) {
         let hexBetIDs = convertDecimalArrayToHex(betIDs);
         let hexAmountsPerBet = convertDecimalArrayToHex(amountsPerBet);

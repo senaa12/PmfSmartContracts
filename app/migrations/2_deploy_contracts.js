@@ -1,8 +1,14 @@
-// var TestContract=artifacts.require ("./TestContract.sol");
 var CryptoRoulette=artifacts.require("CryptoRoulette");
+
+const fs = require("fs");
+const saveContractAddressPath = "./src/utilities/contractAddress.json";
 
 
 module.exports = function(deployer) {
-      // deployer.deploy(TestContract);
-      deployer.deploy(CryptoRoulette);
+      deployer.deploy(CryptoRoulette).then(function(){
+            const address = {
+                  "address" : CryptoRoulette.address
+            };
+            fs.writeFile(saveContractAddressPath, JSON.stringify(address), 'utf8', console.log);           
+      });
 }

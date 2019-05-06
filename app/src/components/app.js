@@ -6,6 +6,8 @@ import BoardBase from './board/boardBase';
 
 import { AppState } from '../common/enums'; 
 import "./app.scss";
+import CurrentBetDashboard from "./currentBetDashboard/currentBetDashboard";
+import PreviousBetsDashboard from "./previosBetsDashboard/previousBetsDashBoard";
 
 export default function App() {
     const [appState, setAppState] = useState(AppState.IsNotInitialized);
@@ -33,33 +35,32 @@ export default function App() {
 
 
     const [selectedIDs, setSelectedIDs] = useState([]);
+    const [newAmount, setNewAmount] = useState([]);
+    
     const pushToSelected = (newID) => {
-        let current = selectedIDs;
-        current.push(newID);
-        setSelectedIDs(current);
+        if(!selectedIDs.includes(newID)){
+            setSelectedIDs([...selectedIDs, newID]);
+            setNewAmount([...newAmount, 1]);          
+        }
     }
 
-    const [newAmount, setNewAmount] = useState(1);
-
-    const send = () => {
-        Web3Wrapper._placeBet(selectedIDs, [newAmount]).then(console.log).catch(console.log);
+    const spinWheel = () => {
+        Web3Wrapper._placeBet(selectedIDs, newAmount).then(console.log).catch(console.log);
     }
 
     const call = () => {
-        Web3Wrapper._getLastSpinResults().then(console.log).catch(console.log);
+        Web3Wrapper._getLastSpins().then(console.log).catch(console.log);
     }
+
     return(
         <div>
                 {!(appState == AppState.IsNotInitialized) && <>
                     <Header />
                      {appState == AppState.SuccessfulInitialization ?                   
-                        <div className="body">
+                        <div className="row body">
                         <BoardBase onSelection={pushToSelected}/>
-                        <h1>TESTING</h1>
-                        <br />
-                        <input value={newAmount} onChange={e => setNewAmount(e.target.value)} />
-                        <br />
-                        <button onClick={send} >posalji</button><button onClick={call} >rez</button>
+                        <CurrentBetDashboard selections={selectedIDs} spinWheel={spinWheel}/>
+                        <PreviousBetsDashboard refreshPreviousBets={call}/>
                         </div>
                      : <h1>{errorMessage}</h1>}
                  </> }

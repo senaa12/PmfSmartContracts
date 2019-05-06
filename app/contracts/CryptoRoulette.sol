@@ -7,6 +7,7 @@ contract CryptoRoulette {
         uint[] _selectedItemID;
         uint _totalFundsPlaced;
         uint _winingNumber;
+        bool _isWinningTicket;
     }
 
     address private _contractOwner;
@@ -27,17 +28,18 @@ contract CryptoRoulette {
         _contractFunds = msg.value;
     }
 
-    function placeBet(uint[] memory betIDs, uint[] memory bets) public payable returns (uint) {
+    function placeBet(uint[] memory betIDs, uint[] memory bets) public payable returns (Spin memory) {
         uint spinResult = wheelSpin();
-        _lastSpinResults.push(spinResult);
         bool isWinningTicket = isWinner(spinResult, betIDs);
         Spin memory newSpin = Spin({
             _better: msg.sender,
             _selectedItemID: betIDs,
             _totalFundsPlaced: sumArray(bets), 
-            _winingNumber: spinResult
+            _winingNumber: spinResult,
+            _isWinningTicket: isWinningTicket
         });
-        return spinResult;
+        _lastSpins.push(newSpin);
+        return newSpin;
     }
 
     function wheelSpin() public returns (uint) {
