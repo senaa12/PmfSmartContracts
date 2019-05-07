@@ -24,6 +24,7 @@ export default function App() {
                         }
                         else {
                             setAppState(AppState.SuccessfulInitialization);
+                            getLastSpins();
                         }
                     }).catch(err => {
                         setAppState(AppState.ErrorWhenInitializing);
@@ -35,21 +36,34 @@ export default function App() {
 
 
     const [selectedIDs, setSelectedIDs] = useState([]);
-    const [newAmount, setNewAmount] = useState([]);
+    const [amounts, setAmounts] = useState([]);
     
-    const pushToSelected = (newID) => {
+    const onSelection = (newID) => {
         if(!selectedIDs.includes(newID)){
             setSelectedIDs([...selectedIDs, newID]);
-            setNewAmount([...newAmount, 1]);          
+            setAmounts([...amounts, 1]);          
         }
+    }
+    const updateSpinAmounts = (newAmount, index) => {
+        amounts[index] = newAmount;
+        setAmounts([...amounts]);
+    }
+    const removeSelection = (index) => {
+        amounts.splice(index, 1);
+        selectedIDs.splice(index, 1);
+        setAmounts([...amounts]);
+        setSelectedIDs([...selectedIDs]);
     }
 
     const spinWheel = () => {
-        Web3Wrapper._placeBet(selectedIDs, newAmount).then(console.log).catch(console.log);
+        setAmounts([]);
+        setSelectedIDs([]);
+        Web3Wrapper._placeBet(selectedIDs, amounts);
     }
 
-    const call = () => {
-        Web3Wrapper._getLastSpins().then(console.log).catch(console.log);
+    const [lastSpins, setLastSpins] = useState([]);
+    const getLastSpins = () => {
+        Web3Wrapper._getLastSpins().then(setLastSpins).catch(console.log);
     }
 
     return(
@@ -58,9 +72,20 @@ export default function App() {
                     <Header />
                      {appState == AppState.SuccessfulInitialization ?                   
                         <div className="row body">
-                        <BoardBase onSelection={pushToSelected}/>
-                        <CurrentBetDashboard selections={selectedIDs} spinWheel={spinWheel}/>
-                        <PreviousBetsDashboard refreshPreviousBets={call}/>
+                        <BoardBase 
+                            onSelection={onSelection}
+                        />
+                        <CurrentBetDashboard 
+                            selections={selectedIDs} 
+                            amounts={amounts} 
+                            spinWheel={spinWheel} 
+                            updateSpinAmounts={updateSpinAmounts} 
+                            removeSelection={removeSelection}
+                        />
+                        <PreviousBetsDashboard 
+                            refreshPreviousBets={getLastSpins} 
+                            lastSpins={lastSpins} 
+                        />
                         </div>
                      : <h1>{errorMessage}</h1>}
                  </> }

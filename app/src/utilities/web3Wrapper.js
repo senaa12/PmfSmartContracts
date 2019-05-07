@@ -1,6 +1,7 @@
 import Web3 from 'web3';
 import appSettings from './appSettings';
-import { convertHexArrayToDecimal, convertDecimalArrayToHex } from '../common/converters';
+import { convertHexToDecimal, convertDecimalToHex, SpinMapper } from '../common/converters';
+import { getSumArray } from "../common/helpFunctions";
 
 class Web3Wrapper {
     constructor(){
@@ -8,6 +9,7 @@ class Web3Wrapper {
         this._web3;
         this._userAddress;
         this._userBalance;
+        this._isUserContractOwner;
     }
 
     async _initialization() {
@@ -53,6 +55,10 @@ class Web3Wrapper {
             return { success: false, errorMessage: "No Address for smart contract provided" };
         }
         this._contract = this._web3.eth.Contract(this._testContractAbi.abi, appSettings._contractAddress);
+        
+        const _contractOwner = await this._getContractOwner()
+        this._isUserContractOwner = _contractOwner.toLowerCase() == this._userAddress;
+        
         return { success: true };
         //#endregion 
     }
@@ -70,22 +76,34 @@ class Web3Wrapper {
 
     async _getLastSpinResults() {
         const res = await this._contract.methods.getSpinResults().call();
-        return convertHexArrayToDecimal(res.map(r => r._hex));
+        return convertHexToDecimal(res.map(r => r._hex));
     }
 
     async _getLastSpins() {
         const res = await this._contract.methods.getLastSpins().call();
+        return SpinMapper(res);
+    }
+
+    async _getBalance() {
+        const res = await this._contract.methods.getBalance().call();
+        console.log(this._web3.utils.fromWei(res.toString(), "ether"));
+        return this._web3.utils.fromWei(res.toString(), "ether");
+    }
+
+    async _getContractOwner() {
+        const res = await this._contract.methods.getContractOwner().call()
         return res;
     }
 
     async _placeBet(betIDs, amountsPerBet) {
-        let hexBetIDs = convertDecimalArrayToHex(betIDs);
-        let hexAmountsPerBet = convertDecimalArrayToHex(amountsPerBet);
-        this._contract.methods.placeBet(hexBetIDs, hexAmountsPerBet).send({ from: this._userAddress, value: this._web3.utils.toWei("1", "ether") })
-        .on('confirmation', (confirmationNumber, receipt) =>  console.log(receipt))
-        .catch(ex => console.log(ex))
+        let hexBetIDs = convertDecimalToHex(betIDs);
+        this._contract.methods.placeBet(hexBetIDs, amountsPerBet.map(b => this._web3.utils.toWei(b.toString(), "ether"))).send({ 
+            from: this._userAddress, 
+            value: this._web3.utils.toWei(amountsPerBet.reduce(getSumArray, 0).toString(), "ether") 
+        })
+        .on('confirmation', (confirmationNumber, receipt) => console.log(receipt))
+        .catch(console.log) 
     }
-
 }
 
 const web3Wrapper = new Web3Wrapper();

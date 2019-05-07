@@ -1,7 +1,14 @@
 .single-bet{
     width: 100%;
+    align-items: end;
+    justify-content: space-between;
+    margin-bottom: 10px;
 
     .custom-form-control{
         width: 60% !important;
+    }
+
+    .label{
+        font-size: 20px;
     }
 }

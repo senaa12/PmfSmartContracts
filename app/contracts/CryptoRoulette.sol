@@ -3,16 +3,19 @@ pragma experimental ABIEncoderV2;
 
 contract CryptoRoulette {
     struct Spin {
-        address _better;
-        uint[] _selectedItemID;
-        uint _totalFundsPlaced;
-        uint _winingNumber;
-        bool _isWinningTicket;
+        uint time;
+        address better;
+        uint[] selectedItemID;
+        uint totalFundsPlaced;
+        uint selectedNumber;
+        bool isWinningSpin;
     }
 
     address private _contractOwner;
-    uint private _contractFunds;
-    
+    function getContractOwner() public view returns (address) {
+        return _contractOwner;
+    }
+
     uint[] private _lastSpinResults;
     function getSpinResults() public view returns (uint[] memory) {
         return _lastSpinResults;
@@ -25,18 +28,22 @@ contract CryptoRoulette {
 
     constructor() public payable {
         _contractOwner = msg.sender;
-        _contractFunds = msg.value;
     }
 
     function placeBet(uint[] memory betIDs, uint[] memory bets) public payable returns (Spin memory) {
-        uint spinResult = wheelSpin();
-        bool isWinningTicket = isWinner(spinResult, betIDs);
+        uint selectedNumber = wheelSpin();
+        bool isWinningSpin = isWinner(selectedNumber, betIDs);
+        if(isWinningSpin) {
+            // transfers funds to winner
+            msg.sender.transfer(calculateWinAmount(bets, selectedNumber));
+        }
         Spin memory newSpin = Spin({
-            _better: msg.sender,
-            _selectedItemID: betIDs,
-            _totalFundsPlaced: sumArray(bets), 
-            _winingNumber: spinResult,
-            _isWinningTicket: isWinningTicket
+            time: now,
+            better: msg.sender,
+            selectedItemID: betIDs,
+            totalFundsPlaced: sumArray(bets),
+            selectedNumber: selectedNumber,
+            isWinningSpin: isWinningSpin
         });
         _lastSpins.push(newSpin);
         return newSpin;
@@ -44,7 +51,7 @@ contract CryptoRoulette {
 
     function wheelSpin() public returns (uint) {
         // actually this function just generates random number
-        uint _randomNumber = (uint(keccak256(abi.encodePacked(blockhash(block.number - 1), _lastSpinResults.length, now)))) % 36;
+        uint _randomNumber = (uint(keccak256(abi.encodePacked(blockhash(block.number - 1), _lastSpinResults.length, block.timestamp)))) % 36;
         _lastSpinResults.push(_randomNumber);
         return _randomNumber;
     }
@@ -59,6 +66,13 @@ contract CryptoRoulette {
         return false;
     }
 
+    function calculateWinAmount(uint[] memory placedBets, uint selectedNumber) private pure returns(uint) {
+        // function calculates total win amount that contract needs to send to user who won the bet
+        // TODO:
+        uint _win = 4000000000000000000;
+        return _win;
+    }
+
     function sumArray(uint[] memory placedBets) private pure returns (uint _sum) {
         _sum = 0;
         for (uint i = 0; i < placedBets.length; i++) {
@@ -66,15 +80,23 @@ contract CryptoRoulette {
         }
     }
 
-    modifier restricted() {
+    modifier onlyOwner() {
         // Ensure the participant awarding the ether is the manager
-        require(msg.sender == _contractOwner);
+        require(
+            msg.sender == _contractOwner,
+            "Only Owner can see this func"
+        );
         _;
+    }
+
+    function getBalance() public onlyOwner view returns(uint){
+        // returns current balance of smart contract, notice this function is restricted to only contract owner
+        return address(this).balance;
     }
 
     modifier minBet() {
         // minimum amount ether required for player to place bet
-        require(msg.value == .01 ether);
+        require(msg.value == .01 ether, "Minimal ether required");
         _;
     }
 }

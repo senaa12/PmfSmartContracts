@@ -4,4 +4,4 @@
 /dist
 
 # file containing contract address
-/src/utilities/contractAddress.json
+./src/utilities/*.json
