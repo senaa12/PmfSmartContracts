@@ -36,11 +36,13 @@ export default function App() {
 
 
     const [selectedIDs, setSelectedIDs] = useState([]);
+    const [selectedLabels, setSelectedLabels] = useState([]);
     const [amounts, setAmounts] = useState([]);
     
-    const onSelection = (newID) => {
-        if(!selectedIDs.includes(newID)){
+    const onSelection = (newID, newIDLabel) => {
+        if(!selectedIDs.includes(newID) && selectedIDs.length < 6){
             setSelectedIDs([...selectedIDs, newID]);
+            setSelectedLabels([...selectedLabels, newIDLabel]);
             setAmounts([...amounts, 1]);          
         }
     }
@@ -51,7 +53,9 @@ export default function App() {
     const removeSelection = (index) => {
         amounts.splice(index, 1);
         selectedIDs.splice(index, 1);
+        selectedLabels.splice(index, 1);
         setAmounts([...amounts]);
+        setSelectedLabels([...selectedLabels]);
         setSelectedIDs([...selectedIDs]);
     }
 
@@ -81,6 +85,7 @@ export default function App() {
                             spinWheel={spinWheel} 
                             updateSpinAmounts={updateSpinAmounts} 
                             removeSelection={removeSelection}
+                            selectedLabels={selectedLabels}
                         />
                         <PreviousBetsDashboard 
                             refreshPreviousBets={getLastSpins} 

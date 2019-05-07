@@ -7,7 +7,7 @@ export default function SingleBet(props) {
 
     return(
         <div className="flex-row single-bet">
-            <span className="font-weight-bold label">{props.bet}</span>
+            <span className="font-weight-bold label">{props.label}</span>
             <input 
                 type="number" 
                 min={0} 

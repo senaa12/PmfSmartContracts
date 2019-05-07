@@ -1,0 +1,270 @@
+[
+    {
+        "id": 0,
+        "data": {
+            "label" : 0,
+            "betID" : 0,
+            "background-color" : "green"
+        }
+    },
+    {
+        "id": 1,
+        "data" : [
+            {
+                "label" : 1,
+                "betID" : 1,
+                "background-color" : "red"
+            },
+            {
+                "label" : 2,
+                "betID" : 2,
+                "background-color" : "black"
+            },
+            {
+                "label" : 3,
+                "betID" : 3,
+                "background-color" : "red"
+            },
+            {
+                "label" : 4,
+                "betID" : 4,
+                "background-color" : "black"
+            },
+            {
+                "label" : 5,
+                "betID" : 5,
+                "background-color" : "red"
+            },
+            {
+                "label" : 6,
+                "betID" : 6,
+                "background-color" : "black"
+            },
+            {
+                "label" : 7,
+                "betID" : 7,
+                "background-color" : "red"
+            },
+            {
+                "label" : 8,
+                "betID" : 8,
+                "background-color" : "black"
+            },
+            {
+                "label" : 9,
+                "betID" : 9,
+                "background-color" : "red"
+            },
+            {
+                "label" : 10,
+                "betID" : 10,
+                "background-color" : "black"
+            },
+            {
+                "label" : 11,
+                "betID" : 11,
+                "background-color" : "black"
+            },
+            {
+                "label" : 12,
+                "betID" : 12,
+                "background-color" : "red"
+            },
+            {
+                "label" : 13,
+                "betID" : 13,
+                "background-color" : "black"
+            },
+            {
+                "label" : 14,
+                "betID" : 14,
+                "background-color" : "red"
+            },
+            {
+                "label" : 15,
+                "betID" : 15,
+                "background-color" : "black"
+            },
+            {
+                "label" : 16,
+                "betID" : 16,
+                "background-color" : "red"
+            },
+            {
+                "label" : 17,
+                "betID" : 17,
+                "background-color" : "black"
+            },
+            {
+                "label" : 18,
+                "betID" : 18,
+                "background-color" : "red"
+            },
+            {
+                "label" : 19,
+                "betID" : 19,
+                "background-color" : "red"
+            },
+            {
+                "label" : 20,
+                "betID" : 20,
+                "background-color" : "black"
+            },
+            {
+                "label" : 21,
+                "betID" : 21,
+                "background-color" : "red"
+            },
+            {
+                "label" : 22,
+                "betID" : 22,
+                "background-color" : "black"
+            },
+            {
+                "label" : 23,
+                "betID" : 23,
+                "background-color" : "red"
+            },
+            {
+                "label" : 24,
+                "betID" : 24,
+                "background-color" : "black"
+            },
+            {
+                "label" : 25,
+                "betID" : 25,
+                "background-color" : "red"
+            },
+            {
+                "label" : 26,
+                "betID" : 26,
+                "background-color" : "black"
+            },
+            {
+                "label" : 27,
+                "betID" : 27,
+                "background-color" : "red"
+            },
+            {
+                "label" : 28,
+                "betID" : 28,
+                "background-color" : "black"
+            },
+            {
+                "label" : 29,
+                "betID" : 29,
+                "background-color" : "black"
+            },
+            {
+                "label" : 30,
+                "betID" : 30,
+                "background-color" : "red"
+            },
+            {
+                "label" : 31,
+                "betID" : 31,
+                "background-color" : "black"
+            },
+            {
+                "label" : 32,
+                "betID" : 32,
+                "background-color" : "red"
+            },
+            {
+                "label" : 33,
+                "betID" : 33,
+                "background-color" : "black"
+            },
+            {
+                "label" : 34,
+                "betID" : 34,
+                "background-color" : "red"
+            },
+            {
+                "label" : 35,
+                "betID" : 35,
+                "background-color" : "black"
+            },
+            {
+                "label" : 36,
+                "betID" : 36,
+                "background-color" : "red"
+            }
+        ]
+    },
+    {
+        "id" : 2,
+        "data" : [
+            {
+                "label" : "2to1",
+                "betID" : 37,
+                "background-color" : "green"
+            },
+            {
+                "label" : "2to1",
+                "betID" : 38,
+                "background-color" : "green"
+            },
+            {
+                "label" : "2to1",
+                "betID" : 39,
+                "background-color" : "green"
+            }
+        ]
+    },
+    {
+        "id" : 3,
+        "data" : [
+            {
+                "label" : "1st 12",
+                "betID" : 40,
+                "background-color" : "green"
+            },
+            {
+                "label" : "2nd 12",
+                "betID" : 41,
+                "background-color" : "green"
+            },
+            {
+                "label" : "3rd 12",
+                "betID" : 42,
+                "background-color" : "green"
+            }
+        ]
+    },
+    {
+        "id" : 4,
+        "data" : [
+            {
+                "label" : "1to18",
+                "betID" : 43,
+                "background-color" : "green"
+            },
+            {
+                "label" : "EVEN",
+                "betID" : 44,
+                "background-color" : "green"
+            },
+            {
+                "label" : "RED",
+                "betID" : 45,
+                "background-color" : "red"
+            },
+            {
+                "label" : "BLACK",
+                "betID" : 46,
+                "background-color" : "black"
+            },
+            {
+                "label" : "ODD",
+                "betID" : 47,
+                "background-color" : "green"
+            },
+            {
+                "label" : "19to36",
+                "betID" : 48,
+                "background-color" : "green"
+            }
+        ]
+    }
+]

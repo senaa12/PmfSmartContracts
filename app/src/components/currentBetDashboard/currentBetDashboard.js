@@ -17,6 +17,7 @@ export default function CurrentBetDashboard(props) {
                         index={index} 
                         bet={bet}
                         removeSelection={props.removeSelection}
+                        label={props.selectedLabels[index]}
                      />)}
                 <button type="button" className="btn btn-primary" onClick={props.spinWheel}>SPIN WHEEL</button> 
                 </>
