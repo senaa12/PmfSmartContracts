@@ -3,8 +3,18 @@
     margin-left: 10px;
 }
 
-.address, .balance {
-    font-weight: 550;
+.holder{
+    display: flex;
+    flex-wrap: wrap;
+    width: fit-content;
+    justify-content: flex-end; 
+    .address, .balance {
+        font-weight: 550;
+    }
+}
+
+.navbar {
+    flex-wrap: nowrap !important;
 }
 
 .refresh-button {

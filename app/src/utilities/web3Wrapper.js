@@ -1,9 +1,8 @@
 import Web3 from 'web3';
 import appSettings from './appSettings';
-import { convertHexToDecimal, convertDecimalToHex, SpinMapper } from '../common/converters';
 import { getSumArray } from "../common/helpFunctions";
 
-class Web3Wrapper {
+export default class Web3Wrapper {
     constructor(){
         this._contract;
         this._web3;
@@ -16,7 +15,6 @@ class Web3Wrapper {
         //#region UserRecognition
         // checking if browser is injected with metamask (ethereum)
         if (window.ethereum) {
-
             this._web3 = new Web3(window.ethereum);
             try {
                 await window.ethereum.enable();
@@ -40,7 +38,6 @@ class Web3Wrapper {
 
         //#region UserData
         this._userAddress = this._web3.givenProvider.selectedAddress;
-        this._userBalance = await this._getCurrentUserBalance();
         //#endregion
 
         //#region SmartContractData
@@ -63,12 +60,6 @@ class Web3Wrapper {
         //#endregion 
     }
 
-    async _refreshCurrentUserBalance() {
-        this._userBalance = undefined;
-        let newBalance = await this._getCurrentUserBalance();
-        this._userBalance = newBalance;
-    }
-
     async _getCurrentUserBalance() {
         const res = await this._web3.eth.getBalance(this._userAddress);
         return this._web3.utils.fromWei(res, 'ether');
@@ -76,17 +67,16 @@ class Web3Wrapper {
 
     async _getLastSpinResults() {
         const res = await this._contract.methods.getSpinResults().call();
-        return convertHexToDecimal(res.map(r => r._hex));
+        return this._convertHexToDecimal(res.map(r => r._hex));
     }
 
     async _getLastSpins() {
         const res = await this._contract.methods.getLastSpins().call();
-        return SpinMapper(res);
+        return this._spinMapper(res);
     }
 
     async _getBalance() {
         const res = await this._contract.methods.getBalance().call();
-        console.log(this._web3.utils.fromWei(res.toString(), "ether"));
         return this._web3.utils.fromWei(res.toString(), "ether");
     }
 
@@ -96,16 +86,73 @@ class Web3Wrapper {
     }
 
     async _placeBet(betIDs, amountsPerBet) {
-        let hexBetIDs = convertDecimalToHex(betIDs);
+        let hexBetIDs = this._convertDecimalToHex(betIDs);
         this._contract.methods.placeBet(hexBetIDs, amountsPerBet.map(b => this._web3.utils.toWei(b.toString(), "ether"))).send({ 
             from: this._userAddress, 
             value: this._web3.utils.toWei(amountsPerBet.reduce(getSumArray, 0).toString(), "ether") 
         })
         .on('confirmation', (confirmationNumber, receipt) => console.log(receipt))
-        .catch(console.log) 
+        .catch(console.error) 
+    }
+
+    _convertHexToDecimal(hex) {
+        try{
+            if(hex.length){
+                let _decimal = [];
+                for(let i = 0; i < hex.length; i++) {
+                    _decimal.push(this._web3.utils.toDecimal(hex[i]));
+                } 
+                return _decimal;
+            }
+            else {
+                return this._web3.utils.toDecimal(hex).toString();
+            }
+            
+        }
+        catch(e){
+            console.error(e);
+        }
+    }
+
+    _convertDecimalToHex(decimal) {
+        try{
+            if(decimal.length){
+                let _hex = [];
+                for(let i = 0; i < decimal.length; i++) {
+                    _hex.push(this._web3.utils.toHex(decimal[i]));
+                } 
+                return _hex;
+            }
+            else {
+                return this._web3.utils.toHex(decimal);
+            }
+            
+        }
+        catch(e){
+            console.error(e);
+        }
+    }
+
+    _spinMapper(soliditySpin) {
+        try{
+            let jsSpins = [];
+            soliditySpin.forEach(s => {
+                let spin = {
+                    time: new Date(s.time*1000),
+                    address: s.better,
+                    isWinningSpin: s.isWinningSpin,
+                    selectedNumber: this._convertHexToDecimal(s.selectedNumber),
+                    placedBetsID: this._convertHexToDecimal(s.selectedItemID),
+                    totalFundsPlaced: this._web3.utils.fromWei(s.totalFundsPlaced.toString(), "ether")
+                };
+                jsSpins.push(spin);
+            });
+            return jsSpins.sort(function(x, y){
+                return new Date(y.time) - new Date(x.time); 
+            });
+        }
+        catch(e){
+            console.error(e);
+        }
     }
 }
-
-const web3Wrapper = new Web3Wrapper();
-
-export default web3Wrapper;

@@ -32,10 +32,10 @@ contract CryptoRoulette {
 
     function placeBet(uint[] memory betIDs, uint[] memory bets) public payable returns (Spin memory) {
         uint selectedNumber = wheelSpin();
-        bool isWinningSpin = isWinner(selectedNumber, betIDs);
-        if(isWinningSpin) {
+        uint payoutAmount = calculatePayout(selectedNumber, betIDs, bets);
+        if(payoutAmount != 0) {
             // transfers funds to winner
-            msg.sender.transfer(calculateWinAmount(bets, selectedNumber));
+            msg.sender.transfer(payoutAmount);
         }
         Spin memory newSpin = Spin({
             time: now,
@@ -43,7 +43,7 @@ contract CryptoRoulette {
             selectedItemID: betIDs,
             totalFundsPlaced: sumArray(bets),
             selectedNumber: selectedNumber,
-            isWinningSpin: isWinningSpin
+            isWinningSpin: payoutAmount != 0
         });
         _lastSpins.push(newSpin);
         return newSpin;
@@ -54,23 +54,6 @@ contract CryptoRoulette {
         uint _randomNumber = (uint(keccak256(abi.encodePacked(blockhash(block.number - 1), _lastSpinResults.length, block.timestamp)))) % 36;
         _lastSpinResults.push(_randomNumber);
         return _randomNumber;
-    }
-
-    function isWinner(uint spinResult, uint[] memory placedBetsID)  private pure returns (bool) {
-        // this function check whether array contains number, ie. if spinResult is among placed bets from user
-        for(uint i = 0; i < placedBetsID.length; i++) {
-            if(placedBetsID[i] == spinResult) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    function calculateWinAmount(uint[] memory placedBets, uint selectedNumber) private pure returns(uint) {
-        // function calculates total win amount that contract needs to send to user who won the bet
-        // TODO:
-        uint _win = 4000000000000000000;
-        return _win;
     }
 
     function sumArray(uint[] memory placedBets) private pure returns (uint _sum) {
@@ -98,5 +81,58 @@ contract CryptoRoulette {
         // minimum amount ether required for player to place bet
         require(msg.value == .01 ether, "Minimal ether required");
         _;
+    }
+
+    function calculatePayout(uint spinResult, uint[] memory placedBetsID, uint[] memory bets)  private pure returns (uint) {
+        // this function check whether array contains number, ie. if spinResult is among placed bets from user
+        uint payout = 0;
+        for(uint i = 0; i < placedBetsID.length; i++) {
+            if(placedBetsID[i] == spinResult && placedBetsID[i] < 37) {
+                payout += bets[i] * 36;
+            }
+            // rows 2to1
+            else if(placedBetsID[i] == 37 && spinResult % 3 == 0){
+                payout += bets[i] * 3;
+            }
+            else if(placedBetsID[i] == 38 && spinResult % 3 == 2) {
+                payout += bets[i] * 3;
+            }
+            else if(placedBetsID[i] == 39 && spinResult % 3 == 1)  {
+                payout += bets[i] * 3;
+            }
+            // cols => dozens
+            else if(placedBetsID[i] == 40 && spinResult > 0 && spinResult < 13) {
+                payout += bets[i] * 3;
+            }
+            else if(placedBetsID[i] == 41 && spinResult > 12 && spinResult < 25) {
+                payout += bets[i] * 3;
+            }
+            else if(placedBetsID[i] == 42 && spinResult > 24) {
+                payout += bets[i] * 3;
+            }
+            // low or high numbers
+            else if(placedBetsID[i] == 43 && spinResult > 0 && spinResult < 19) {
+                payout += bets[i] * 2;
+            }
+            else if(placedBetsID[i] == 48 && spinResult > 18) {
+                payout += bets[i] * 2;
+            }
+            // odd or even numbers
+            else if(placedBetsID[i] == 44 && spinResult % 2 == 0) {
+               payout += bets[i] * 2;
+            }
+            else if(placedBetsID[i] == 47 && spinResult % 2 == 1) {
+                payout += bets[i] * 2;
+            }
+            // red
+            else if(placedBetsID[i] == 45 && false) {
+                payout += bets[i] * 2;
+            }
+            // black
+            else if(placedBetsID[i] == 46 && false) {
+                payout += bets[i] * 2;
+            }
+        }
+        return payout;
     }
 }

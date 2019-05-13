@@ -1,16 +1,15 @@
 import React from "react";
-import Web3Wrapper from '../../utilities/web3Wrapper';
 import Number from './numberFields/number';
 
 import './boardBase.scss';
-const model = require("../../model/boardModel.json");
+import appSettings from "../../utilities/appSettings";
 
 export default function BoardBase(props) {
     const renderFields = (field) => {
         switch(field.id) {
             case 0:
                 let className = "numbers-zero board-items " + field.data["background-color"];
-                return (<div className={className} key={field.data.betID} onClick={() => props.onSelection(field.data.betID, field.data.label)}>{field.data.label}</div>)
+                return (<div className={className} key={field.data.betID} onClick={() => props.onSelection(field.data.betID, field.data.label)}><div className="numberCircle zero-height-fix">{field.data.label}</div></div>)
             case 1:
                 return <div key="numbers" className="numbers">{field.data.map(num => <Number backgroundColor={num["background-color"]} label={num.label} key={num.betID} onSelection={props.onSelection} number={num.betID}/>)}</div> 
             case 2:
@@ -32,7 +31,7 @@ export default function BoardBase(props) {
 
     return (
         <div className="col-lg-9 col-md-12 board-base">
-            {model.map(field => renderFields(field))}
+            {appSettings._boardModel.map(field => renderFields(field))}
         </div>
     );
 }

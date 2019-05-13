@@ -9,6 +9,6 @@ module.exports = function(deployer) {
             const address = {
                   "address" : CryptoRoulette.address
             };
-            fs.writeFile(saveContractAddressPath, JSON.stringify(address), 'utf8', console.log);           
+            fs.writeFile(saveContractAddressPath, JSON.stringify(address), 'utf8', console.error);           
       });
 }

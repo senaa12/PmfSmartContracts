@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Web3Wrapper from '../../../utilities/web3Wrapper';
 
 import "./singleBet.scss";
 

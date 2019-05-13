@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from "react";
-import Web3Wrapper from '../../utilities/web3Wrapper';
+import React from "react";
 import SingleBet from "./singleBet/singleBet";
 
 import "./currentBetDashboard.scss";
 
 export default function CurrentBetDashboard(props) {
     return(
-        <div className="col-lg-3 col-md-6 flex-cols current-bets-dashboard">
+        <div className="col-lg-3 col-md-3 flex-cols current-bets-dashboard">
             {props.selections.length ? 
                 <>
                 {props.selections.map((bet, index) => 

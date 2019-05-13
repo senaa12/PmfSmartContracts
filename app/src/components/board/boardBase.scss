@@ -8,6 +8,7 @@
     padding-top: 20px;
     padding-bottom: 20px;
     height: fit-content;
+    font: 23px Arial, sans-serif;
 
     .numbers{
         display:flex;
@@ -40,6 +41,23 @@
             width: percentage(1/6);
             height: 45px;
         }
+    }
+    .numberCircle {
+        border-radius: 50%;
+    
+        width: 90%;
+        height: 90%;
+        
+        background: #fff;
+        border: 2px solid #666;
+        color: #666;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .zero-height-fix{
+        height: 50px;
     }
 }
 

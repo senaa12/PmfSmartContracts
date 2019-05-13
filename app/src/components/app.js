@@ -12,10 +12,17 @@ import PreviousBetsDashboard from "./previosBetsDashboard/previousBetsDashBoard"
 export default function App() {
     const [appState, setAppState] = useState(AppState.IsNotInitialized);
     const [errorMessage, setErrorMessage] = useState("");
+    const [web3Wrapper, setWeb3Wrapper] = useState(undefined);
 
     useEffect(() => {
-        if(appState == AppState.IsNotInitialized) {
-            Web3Wrapper._initialization()
+        if(!web3Wrapper) {
+            setWeb3Wrapper(new Web3Wrapper());
+        }
+    }, [web3Wrapper]);
+
+    useEffect(() => {
+        if(appState == AppState.IsNotInitialized && web3Wrapper) {
+            web3Wrapper._initialization()
                 .then(res =>
                     {
                         if(!res.success) {
@@ -24,15 +31,16 @@ export default function App() {
                         }
                         else {
                             setAppState(AppState.SuccessfulInitialization);
+                            getUserBalance();
                             getLastSpins();
                         }
                     }).catch(err => {
                         setAppState(AppState.ErrorWhenInitializing);
                         setErrorMessage("Something weird happend!? Check ConsoleLog for details");
-                        console.log(err);   
+                        console.error(err);   
                     });
         }
-    }, [appState]);
+    }, [appState, web3Wrapper]);
 
 
     const [selectedIDs, setSelectedIDs] = useState([]);
@@ -62,18 +70,25 @@ export default function App() {
     const spinWheel = () => {
         setAmounts([]);
         setSelectedIDs([]);
-        Web3Wrapper._placeBet(selectedIDs, amounts);
+        setSelectedLabels([]);
+        web3Wrapper._placeBet(selectedIDs, amounts);
     }
 
     const [lastSpins, setLastSpins] = useState([]);
     const getLastSpins = () => {
-        Web3Wrapper._getLastSpins().then(setLastSpins).catch(console.log);
+        getUserBalance();
+        web3Wrapper._getLastSpins().then(setLastSpins).catch(console.error);
+    }
+
+    const [userBalance, setUserBalance] = useState(0);
+    const getUserBalance = () => {
+        web3Wrapper._getCurrentUserBalance().then(setUserBalance).catch(console.error);
     }
 
     return(
-        <div>
+        <div>             
                 {!(appState == AppState.IsNotInitialized) && <>
-                    <Header />
+                    <Header web3Wrapper={web3Wrapper} userBalance={userBalance} getUserBalance={getUserBalance} />
                      {appState == AppState.SuccessfulInitialization ?                   
                         <div className="row body">
                         <BoardBase 
