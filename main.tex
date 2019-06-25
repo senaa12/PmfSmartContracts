@@ -7,6 +7,68 @@
 \usepackage[croatian]{babel}
 \usepackage{csquotes}
 \MakeOuterQuote{"}
+\usepackage{tcolorbox}
+\usepackage{breqn}
+\usepackage{amsmath}
+
+%solidity kao jezik
+\usepackage{listings}
+\usepackage{color}
+\definecolor{lightgray}{rgb}{.9,.9,.9}
+\definecolor{purple}{rgb}{0.75, 0.47, 0.47}
+\definecolor{green}{rgb}{0.25, 0.65, 0.25}
+\definecolor{yellow}{rgb}{0.80, 0.77, 0.30}
+
+\lstdefinelanguage{solidity}{
+  keywordstyle=\color{blue},
+  morekeywords={function, memory, pure},
+  keywordstyle=[2]\color{purple},
+  keywords=[2]{returns, for},
+  keywordstyle=[3]\color{green},
+  keywords=[3]{uint},
+  keywordstyle=[4]\color{yellow},
+  keywords=[4]{sumArray},
+  identifierstyle=\color{black},
+  sensitive=false,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{purple}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  morestring=[b]',
+  morestring=[b]"
+}
+\lstset{
+   language=solidity,
+   backgroundcolor=\color{lightgray},
+   basicstyle=\footnotesize\ttfamily,
+   showstringspaces=false,
+   showspaces=false,
+   numbers=left,
+   numberstyle=\footnotesize,
+   numbersep=9pt,
+   tabsize=2,
+   breaklines=true,
+   showtabs=false,
+   captionpos=b,
+   columns=fullflexible,
+   numbers=none
+}
+
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+\usepackage{float}
+\usepackage{wrapfig}
+\restylefloat{figure}
+
+\usepackage{thmtools}
+\declaretheorem{teorem}
+\declaretheorem[sibling=teorem]{korolar}
+\declaretheorem[name=Činjenica,sibling=teorem,qed=\textup{EOČ}]{cinjenica}
+\declaretheorem[style=definition,sibling=teorem,qed=$\vartriangleleft$]{definicija}
+\declaretheorem[style=remark,sibling=teorem]{napomena}
+
+\usepackage{biblatex}
+\addbibresource{bibliografija.bib}
 
 \title{Ethereum: Smart contracts}
 \author{Luka Seničić}
@@ -19,15 +81,307 @@
 \tableofcontents
 
 \chapter{Uvod}
+\section{Motivacija}
+digitalne valute pokusavaju rjesit problem automated payment sistema
 
-\chapter{Bitcoin}
+\section{Povijest}
+Prva ideju i sam izraz \emph{smart contract} objavio je Nick Szabo 1994. godine\cite{smart_contract_idea}. U tom članku on smart contract predstavlja kao:
+\begin{definicija}
+Smart contract je digitalni transakcijski protokol koji izvršava odredbe ugovora. Ciljevi dizajna smart contracta su da zadovoljava uobičajene zahtjeve u ugovorima (načine plaćanjam, anonimnost itd.), minimiziraju potrebu za povjerljivom trećom osobom.
+\end{definicija}
+Kao primjer nanjbolji smart contracta daje DigitalCash, koji se smatra prvom digitalnom valutom i pojavio se 1982. godine\cite{digi_cash}. Szabo vrlo ambiciozno širi svoju ideju na razne načine. Koristi smart contract za izvršavanje kompleksnih načina plaćanja uz malu naknadu i jednostavnu izvedbu. Kao primjer čak daje i implemetaciju smart contracta u fizički objekt, auto.
+
+\section{Thesis outline}
+
+U ovom radu ću pokušati postepeno doći do potpune realizacije ideje smart contracta. U prvom poglavlju ćemo dati definicije primitivnih i novih kriptografskih alata koji su omogućili pojavu Bitcoina. Zatim ću u kratkim crtama predstaviti Bitcoin sa 
+
+\chapter{Blockchain}
+Struktura podataka koja je omogućila pojavu svih kriptovaluta je blockchain. Predstavljen u istom radu kao i sam Bitcoin\cite{bitcoin}, blockchain je \textbf{transparentno} i \textbf{nepromjenjivo} spremište podataka koji se nalaze u blokovima povezanim u jednosmjerni lanac. Također želimo da to spremište bude i \textbf{distribuirano} i kombinacija tih svojstava čini blockchain posebnim. U ovom poglavlju ćemo pokazati zašto je taj lanac toliko originalan. Prvo ćemo dati definicije i navesti kriptografske alate korištene u blockchainu, da bi kasnije objasnili kako se oni uklopljeni u strukturu blockchaina i nadalje objasniti Bitcoin.
+
+\section{Kriptografija}
+Jedinstvenost blockchaina je upravo u 3 ključna svojstva koja su naglašena u prethodnoj definiciji: distribuiranost, transparentnost i nepromjenjivost. Primjetimo da je svako svojstvo za sebe prilično jednostavno za izvesti, no ako želimo sva skupa dolazimo do problema. Kod blockchainu je taj problem rješen kombiniranjem raznih tehnika kriptografije. Dva osnovna kriptografska alata korištena su hash funckije i digitalni potpis. 
+
+\begin{definicija} 
+Hash funkcija je bilo koje preslikavanje $f\colon X \to Y$ koje za niz proizvoljne duljine daje izlaz fiksne duljine u vremenu $O(n)$. 
+\end{definicija}
+
+Vidimo da je prethodna definicija je prilično općenita i funkcije koje zadovoljavaju samo tu definiciju nam nebi bile pretjerano bitne. Zato ćemo dodatno proširiti prethodnu definiciju tako da dobijemo funkcije samo koje su nama zanimljive.
+
+\begin{definicija}
+Hash funkcija je bilo koje preslikavanje $f\colon X \to Y$ koje za niz proizvoljne duljine daje izlaz fiksne duljine u vremenu $O(n)$ i ima sljedeća svojstva:
+\begin{itemize}
+    \item \textbf{Jednosmjernost} Za neki $y \in Y$ nije moguće naći $x \in X$ tako da vrijedi $f(x)=y$
+    \item \textbf{Jednoznačnost} Za neki $x_{1} \in X$ nije moguće naći $x_{2} \in X$ tako da je $x_{1}\not=x_{2}$ i $f(x_{1}) \not= f(x_{2})$
+    \item \textbf{Općenita jednoznačnost} Nije moguće naći $x_{1}, x_{2} \in X$ tako da je $x_{1} \not= x_{2}$ i vrijedi $f(x_{1}) = f(x_{2})$
+\end{itemize}
+\end{definicija}
+
+Kada kažemo "nije moguće", mislimo da nije računski isplativo, jer iz definicije imamo da hash funkcija ulaz proizvoljne duljine preslikava u u izlaz fiksne, tj. kodomena funkcije je strogo manja od njene domene, što bi značilo da moraju postojati barem neki $x_{1}, x_{2} \in X$ tako da je $f(x_{1}) = f(x_{2})$. Hash funkcije se u kriptografiji koriste za autentikaciju poruka. 
+
+Funkcija na koju ćemo se fokusirati zasad je \textbf{SHA-256} koja zadovoljava sva navedena svojstva u prethodnoj definiciji i za svaki ulaz daje niz od 256 bitova.
+
+Nadalje ćemo dati definitiju drugog korištenog kriptografskog alata, a to je digitalni potpis. Kao što sama riječ kaže digitalni potpis je digitalna verzija vlastitog potpisa, tj. samo ti možeš izvesti svoj digitalni potpis, ali svi koji ga vide mogu verificirati, ili formalnije rečeno kao u\cite{bitcoincrypto}:
+
+\begin{definicija}
+Shema digitalnog potpisa sastoji se od tri algoritma: 
+\begin{itemize}
+    \item \textit{generacija ključeva} - algoritam generira uređeni par koji se sastoji od privatnog i javnog ključa
+    \item \textit{potpisivanje poruka} - algoritam koji pomoću privatnog ključa potpisuje proizvoljnu poruku
+    \item \textit{verifikacija potpisa} - algoritam koji pomoću javnog ključa i izvorne poruke provjerava da li je potpis stvaran
+\end{itemize}
+Također da iduća svojstva budu ispunjena:
+\begin{itemize}
+    \item \textit{autentifikacija} - svaka osoba pomoću mog javnog ključa može potvrditi moju poruku
+    \item \textit{autoribla} - potpis ne može biti krivotvoren
+\end{itemize}
+\end{definicija}
+
+Kao i kod hash funkcija i ovdje ćemo naglasiti jednu shemu digitalnog potpisa koju ćemo kasnije koristiti, a to je \textbf{ECDSA} (Eliptic Curve Digital Signature Algorithm). Najbitnije svojstvo jest da se ključevi generiraju preko eliptičke krivulje, njihova duljina je 256 bitova te uz dobru randomizaciju za ECDSA se vjeruje da je prilično siguran potpis.
+
+Sad kad imamo definicije dvije temeljne kriptografske metode možemo početi slagati strukturu blockchaina.
+
+\section{Hash pointeri \& Blockchain}
+
+Do sada smo spomenuli samo primitivne tehnike, no u ovom dijelu počinjemo sa novim izumima koji su omogućili pojavu prvo blockchaina i kasnije kriptovaluta. 
+
+\begin{definicija}
+Hash pointer je jednostavno pokazivač na mjesto gdje se nalaze neki podaci zajedno sa hash vrijednosti tih istih podataka.
+\end{definicija}
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.5]{hash_pointer}
+\caption{Hash pointer}
+\end{figure}
+
+Vidimo da hash pointer nije ništa revolucionarno novo već samo pametna kombinacija alata koje smo imali i prije, pokazivača i hash funkcija. Primjetimo da se sami podaci ne moraju kriptirati, što je ogromna prednost i ušteda jer nama sama hash vrijednost podataka garantira da nije bilo promjena (naravno to daje uvjet da hash vrijednost bude sigurno spremljena). Također hash pointeri su toliko jednostavna struktura da ju možemo koristiti u implementaciji već poznatih većih struktura podataka (lista, binarno stablo i sl).
+
+Mi ćemo se fokusirati na poboljšavanje vezane liste sa hash pointerima jer tako dolazimo do blockchaina (prikazano na slici \ref{fig:blockchain}).
+
+\begin{figure}[!]
+\centering
+\includegraphics[scale=0.8]{blockchain}
+\caption{Blockchain}
+\label{fig:blockchain}
+\end{figure}
+
+Kao što vidimo blockchain je lista koja je povezana pomoću gore objašnjenih hash pointera. Očita razlika od obične vezane liste jest u tome da svaki blok u blockchainu sadrži informacije ne samo o sebi, već i o prijašnjem bloku. 
+
+U uvodu naveli transparentnost, distribuiranost i nepromjenjivost kao ključna svojstva blockchaina. Ako malo bolje promotrimo ova svojstva, možemo zaključiti da ti zahtjevi sami za sebe nisu nikakav problem i da već postoje mnoge strukture koje imaju ista, no kada bi htjeli sva tri odjednom tu dolazimo do problema.
+
+Kombinacija transparentnosti i nepromjenjivosti postignuta je pametnim korištenjem hash pointera. Da to dokažemo trebamo se zapitati što bi se desilo kada bi napadač htio promjeniti neki podatak sadržan u blockchinu. Recimo da se taj podatak nalazi u bloku indexa $k$. Ako napadač promjeni sadržaj tog bloka, tada će se razlikovati i njegova hash vrijednost, a upravo ta hash vrijednost se nalazi u bloku $k+1$. Što znači da će napadač promjeniti i sadžaj bloka $k+1$, tj. promjeniti i njegovu hash vrijednost itd. Dakle vidimo ako napadač želi sakriti svoju jednu promjenu u podacima trebat će mjenjati sve blokove koji dolaze nakon bloka u kojem je nastala promjena. Znači pod uvjetom da \textbf{sigurno spremimo hash pointer samo zadnjega bloka} možemo garantirati za ispravnost sadržaja cijelog blockchaina. 
+
+Očito ako želimo svojstvo distribuiranosti, zbog lakšeg transporta, potrebno je ograničiti veličinu samoga bloka. No danas, memorija definitivno nije skup resurs, tako da u teoriji u blockchain zapravo možemo spremati podatke proizvoljne veličine.
+
+S blockchainom smo završili ovaj uvod u kojem smo predstavili sve alate koji će nam biti potrebni da objasnimo Bitcoin.
+
+\section{Bitcoin}
+
+U jednostavnoj tehničkoj definiciji Bitcoin je zapravo jedan blockchain koji sadrži popis svih transakcija koje su se ikada desile. Taj blockchain je povezan svojim Bitcoin protokolom u peer-to-peer mrežu. Svaki čvor u toj peer-to-peer mreži ima svoju kopiju toga blockchaina. On ju redovito održava i osvježuje u komunikaciji sa susjednim čvorovima. Pojedini čvor ne zna tko su mu susjedi, on svaku informaciju koju dobije provjerava za sebe. U slučaju da dobije različite informacije od susjeda, zbog takve implementacije protokola, uvijek je infomacija koju dobije od većine točna. Ključna stvar koja se postiže u ovakvoj definiciji je decentralizacija. U ovom radu se nećemo zamarati samim protokolom već ćemo se držati samo nama ključnim mehanizmima, a to su: identifikacija čvorova na mreži, struktura same transakcije i Bitcoin skripte.
+
+Prvo ćemo dati rješenje \textbf{decentraliziranog sustava identifikacije} čvorova na mreži. U prethodnom dijelu smo dali definiciju digitalnog potpisa koji služi za autentikaciju u digitalnom svijetu, no on sam od sebe nije dovoljan za idenitifikaciju jer bi također trebali imati centralnu jedinicu koja će upravljati ključevima. Bitcoin problem identifikacije rješava zanimljivim trikom da gleda na javni ključ iz sheme digitalnog potpisa kao identitet čvora, točnije za to koristi već spomenuti digitalni potpis ECDSA. Posljedica uzimanja javnog ključa kao digitalnog identiteta čvorova jest da nije fizički vezan za njega, već čvor može generirati novi ključ i stvoriti si novi identitet kada god poželi. Također već smo rekli da u ECDSA ključevi su proizvoljni 256-bitni niz nula i jedinica i nema nikakve sanše da se javni ključ poveže sa stvarnom osobom tako da imamo i prilično veliku razinu anonimnosti na mreži.
+
+Sada kada imamo sustav identifikacije možemo opisati kako Bitcoin implementira transakciju izmjeđu čvora. Transakcija je običan JSON objekt koji se vidi na slici \ref{fig:transakcija} koji se sastoji od 3 glavna dijela:
+\begin{enumerate}
+    \item \textit{metapodaci} - jedini bitan dio metapodataka nam je hash cijele transakcije, koji služi kao ID transakcije
+    \item\textit{ulazne transakcije} - blockchain ne sadrži informaciju koliko pojedina adresa sadrži coina, već se svaka transakcija referencira na neku prijašnju u kojoj je ta adresa sudjelovala
+    \item \textit{izlazni podaci} - izlazna vrijednost transakcije i \textbf{transakcijska skripta}
+\end{enumerate}
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.9]{transakcija}
+\caption{Bitcoin transakcija}
+\label{fig:transakcija}
+\end{figure}
+
+Jedan nama jako zanimljiv dio transakcije je transakcijska skripta. Pod tim pojmom mislimo na računalni program pisan u jeziku Script. Taj program se izvršava prilikom na svakom čvoru prilikom osvježavanja blockchaina, ili kada ta transakcija bude referencirana od neke buduće transakcije. Script\cite{script} je programski jezik napravljen specifično za Bitcoin. Izvršava se na stogu, vrlo je jednostavan (ima mjesta za samo 256 naredbi, tj svaka naredba je kodirana u 2 broja u heksadecimalnom zapisu), nije Turing-kompletan i nema petlji.
 
 \chapter{Ethereum}
 
+Dok je Bitcoin zamišljen za specifičnu svrhu decentraliziranog izvršavanja financijskih transakcija, 2013. godine Vitalik Buterin je u svoj radu\cite{eth_paper} predstavio svoju ideju za novu generaciju blockchaina nazvanu Ethereum čiji je cilj izvršavanje proizvoljnih programa, tj. smart contracta. U ovom poglavlju ćemo predstaviti Ethereum i pokušati objasniti zašto je to značajan napredak u odnosu na svoje prethodnike.
+
+\section{Decentralized application platform}
+
+S obzirom da mnogo ljudi dolazi do Ethereuma sa nekim prijašnjim iskustvima i znanjem o Bitcoinu, želim odmah na početku naglasiti razlike s obzirom da svoje prethodnike pa po \cite{ethbook}:
+
+\begin{definicija}
+\textit{Ethereum} je "open source", \textbf{globalno distribuirana računalna mreža} koja izvršava programe zvane smart contracti. Mreža koristi blockchain za sinkronizaciju i spremanje promjena stanja na mreži, a valutu zvanu \textbf{ether} za mjerenje i ograničavanje resursa mreže.
+\end{definicija}
+
+Vidimo odmah da je namjera ove definicije predstaljanje Ethereum kao mreže koja će biti pošlužitelj smart contractima, tj.  \textbf{decentralizirana platforma za aplikacije}, a digitalna valuta je samo sredstvo koje se koristi da bi mreža ispravno funkcionirala. Zbog toga bi se moglo zaključiti da građa Ethereuma potpuno drukčija od ostalih kriptovaluta no iznenađujuće, to uopće nije slučaj.
+
+I dalje je to u srcu blockchain sa potpuno istim kriptografskim alatima kao i kod Bitcoina, no stvar zbog koje je Ethereum bitno napredniji od svih svojih prethodnika je komunikacijski protokol. Bitcoinov komunikacijski protokol je bio prilično jednosmjeran, jedino su se mogle izvršavati transakcije koje su izmjenjivale tokene između acconta. Sa Ethereumovim komunikacijskim protokolom moguće je napisati proizvoljan program, staviti ga u transakciju kao transakcijsku skriptu i poslati ga da se izvršava na mrežu. Taj program se naziva \textbf{smart contract}, a cijeli proces nam omogućuje \textbf{Ethereum Virutal Machine} u kojem se oni izvršavaju. Ethereum Virtual Machine (kao i svaki Virtual machine) je sloj apstrakcije između koda koji se izvršava i fizičkog računala koje izvšava kod, tj. sloj koji programski kod pisan u high-level jezicima preslikava u low-level \textbf{bytecode}. Low-level jezik je to zapravo niz nula i jedinica razumljivih računalu koji ih izvodi, ali nije nama ljudima. Primjer \ref{eq:bytecode} prikazuje bytecode (ne cijeli) jednog smart contracta.
+
+\begin{dmath}
+0x608060405234801561001057600080fd5b5061018e806100206000396000f3\\fe608060405260043610610041576000357c0100000000000000000000000000\\000000000000000000000000000000900463ffffffff1680631e2aea0614610\\046575b600080fd5b34801561005257600080fd5b50610109600480360360208\\1101561006957600080fd5b8101908080359060200190640100...
+\label{eq:bytecode}
+\end{dmath}
+
+\section{Accounti}
+
+Princip identifikacije na mreži je također potpuno isti kao i prije, koristi se javni ključ iz sheme digitalnog potpisa ECDSA za identifikaciju uz jednu veliku razliku. Na Ethereumu postoje dvije vrste accounta: 
+\begin{enumerate}
+    \item External accounti
+    \item Contract accounti
+\end{enumerate}
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.25]{ethaccounts}
+\caption{Accounti na Ethereumu}
+\label{fig:ethaccounts}
+\end{figure}
+
+Kod Bitcoina je ponašanje svakog accounta (pod ponašanje mislimo izvršavanje transakcija) kontrolirano od strane neke fizičke osobe koja posjeduje privatni ključ od tog accounta, tj. postojali su samo External accounti. Ovdje postoji i drugi tip accounta, a to su adrese na kojima "žive" \textbf{smart contracti}. Kao što se vidi sa slike \ref{fig:ethaccounts} izvana su ti accounti potpuno jednaki, jedina razlika jest što je ponašanje accounta na čijoj je adresi smart contract, definirano pomoću koda koji se nalazi u njemu. Oba tipa accounta imaju svoju memoriju (neograničenu u teoriji) i svoj račun ethera.
+
+Kao i kod Bitcoina svaki čvor na mreži izvršava sve poslane transakcije i zapisuje stanje cijele mreže(pod stanje zapravo se misli smart contracti koji se nalaze trenutno na mreži i iznosi ethera koje pojedini account posjeduje). S obzirom da bilo koji User account može napisati smart contract i poslati ga na mrežu, a nisu svi user accounti pouzdani, može doći do pretjeranog iskorištavanja resursa svakog čvora na mreži, npr. u slučaju da smart contract koji ima napisan \textbf{halting problem} bude poslan na mrežu, cijela mreža nebi nikad procesirala nijednu drugu transakciju. Zbog toga je uveden sustav naplate feeja za izvršvanje svakog koraka u kodu transakcije i taj sustav ćemo promotriti u idućem dijelu.
+
+\section{Gas}
+
+Na mreži Ethereum postoje dva tokena zvani: \textbf{ether} i \textbf{gas}. Ether ne trebamo pretjerano objašnjavati jer je to zapravo digitalna valuta koja se nalazi na Ethereumu i ima fizičku protuvrijednost (na Ether zapravo većina ljudi misli kada se kada spomene Ethereum), dok je gas sredstvo, tj. cijena izvršavanja transakcija i rada mreže. Vrijednost gasa se izvršava preko ethera te taj broj nije fiksan.
+
+\begin{tcolorbox}
+Već u samom imenu gas vidimo analogiju sa stvarnim svijetom. Možemo zamisliti gas kao benzin, novac kao ether, a auto kao cijelu Ethereum mrežu. Novcem kupujemo benzin koji je neophodan da bi auto radio. Isto tako ovdje etherom kupujemo gas koji je neophodan da bi Ethereum mreža radila, tj. procesirala transakcije i zapisivala ih na blockchain.
+\end{tcolorbox}
+
+Uz svaku transakciju koja se šalje na mrežu, account koji ju šalje treba postaviti dvije vrijednosti:
+
+\begin{itemize}
+    \item \textbf{Gas limit} - maksimalna količina gas-a koju transakcija smije potrošiti na svoje izvršavanje
+    \item \textbf{Gas price} - vrijednost 1 gasa u etheru
+\end{itemize}
+
+Dakle dobivamo da je ukupna maksimalna vrijednost transakcije:
+\begin{equation}
+    MaxVrijednostTransakcije = GasLimit \times GasPrice
+\end{equation}
+
+Kažemo maksimalna vrijednost transakcije jer ne znamo za sve transakcije točan iznos s obzirom da možemo slati proizvoljan kod koji može ovisiti o argumentima koje pošaljemo. U slučaju da nije potrošen puni iznos koji smo naveli tada se ostatak vraća pošiljatelju. Potrošeni iznos ethera će dobiti čvor koji prvi izvrši transakciju i zapiše ju transakciju na blockchain. Primjetimo da mi sami određujemo koliko ćemo platiti jedinicu gasa, tj. ukupnu vrijednost koliko ćemo platiti transakciju. S obzirom da čvorovi koji procesiraju transakcije sami odbiru koje će transakcije procesirati, vrlo je vjerojatno što veći iznos stavimo za cijenu gasa i samim time povećamo joj vrijednost, da će nam transakcija brže biti izvršena i zapisana na blockchain.
+
+Također primjetimo da cijelo vrijeme govorimo transakcije i iako pod tim mislimo zapravo kod koji se izvršava, zapravo izraz transakcija je ispravan jer se kao i kod Bitcoina jedino pomoću njih mjenja stanje mreže i pokreću programi.
+
+Sada kada imamo objašnjenu naplatu izvršavanja transakcija, promotrit ćemo primjere iz stvarnog svijeta koliko je skupo održavati aplikaciju na Ethereumu. Na slici \ref{fig:ethunits} se nalazi tablica pretvaranja jedinica ethera.
+
+Primjeri za gas price u "standardnim" uvjetima: 
+\begin{itemize}
+    \item 40 GWEI - gotovo je sigurno da će transakcija biti zapisana u idući blok (vrijeme potrebno za 1 blok je u prosjeku 13 sekundi)
+    \item 20 GWEI - prosjek, gotovo sigurno će transakcija biti zapisana u idućih par blokova
+    \item 2 GWEI - gotovo sigurno će transakcija biti procesirana u idućih par minuta
+\end{itemize}
+
+\begin{figure}[!]
+\centering
+\includegraphics[scale=0.55]{ether_units}
+\caption{Pretvorba jedinica ethera}
+\label{fig:ethunits}
+\end{figure}
+
+Kao što smo prije napomenuli, svaki program se pomoću EMV-u kompajlira u bytecode. Bytecode sadrži samo jednostavne operacije koje različitu cijenu izvođenja (izraženu u gas-u) ovisno o tome koliko je pojedina operacija kompleksna. Tako na primjer postoje ADD što je najobičnije zbrajanje 2 broja koje košta 3 gasa, MUL je množenje i košta 5 gasa. Također postoje i malo kompleksnije operacije tipa BALANCE koje dohvaća iznos ethera koji pojedina adresa sadrži košta 700 gasa.
+
+i jos neki primjeri jednostavnih programa koje cu tu navesti
+
+\begin{lstlisting}[caption = Primjer 1, language=solidity, label={lst:suma}]
+function sumArray(uint[] memory arrayToSum) pure returns (uint _sum) {
+    _sum = 0;
+    for (uint i = 0; i < arrayToSum.length; i++) {
+        _sum += arrayToSum[i];
+    }
+}
+\end{lstlisting}
+
 \chapter{Smart Contracts}
 
-\chapter{Primjer:}
+U prvom poglavlju smo krenuli od najosnovnije kriptografije i blockchaina, kasnije ukratko predstavili Bitcoin te na kraju elemente Ethereuma koju su interesantni u sklopu smart contracta. U ovom poglavlju ćemo objasniti kako funkcionira sam smart contract, njegove mogućnosti i na kraju pogledati sigurnost.
+
+\section{EMV \& Solidity}
+
+Kao što smo rekli smart contract se izvodi u Ethereum Virtual Machineu (skraćeno EVM). EVM je stack-based virtual machine (izvršava sve operacije na stogu). Kompletno je izoliran od računala na kojem se nalazi (što znači da nema pristup filesystemu, mreži, okolini i sl.), ima neograničenu memoriju, ali što se više više memorije koristimo to više nas košta gasa, dakle granice u EVMa nisu statične već ekonomske. Da bi dobili bytecode koji EVM zna čitati, trebamo imati neki high level jezik koji je čitljiv nama ljudima, a može se prevesti u njega. Primjera takvih jezika je mnogo: Vyper, Bamboo, LLL, ali najpopularniji među njima je \textbf{Solidity}. Dizajniran specifično za pisanje smart contracta, Solidity je objektno orjentirani \textbf{Turing potpun} jezik vrlo sličan Javascriptu.
+
+\begin{napomena}
+Turing potpunost znači da se može izvršiti program proizvoljne kompleksnosti uz neograničenu memoriju.
+\end{napomena}
+
+Upravo u toj Turing potpunosti se vidi velik napredak u odnosu na Bitcoin, jer ako se prisjetimo Bitcoinova transakcijska skripta može samo izvršiti razmjenu tokena između accounta. Također valja napomenuti da nemaju svi gore navedeni jezici iste karakteristike, npr. Vyper nije uopće Turing potpun, ali zabog tih smanjenih mogućnosti mu je sigurnost puno veća no o sigurnosti Solidityja ćemo kasnije.
+
+\section{Pokretanje}
+
+Svaka promjena stanja na Ethereumu zahtjeva slanje neke transakcije. Pri svakom slanju moramo specificirati adresu primatelja i sadržaj transakcije, što je prilično očekivano. Rekli smo da na Ethereumu postoje dvije vrste accounta: user i contract accounti. Ako smo specificirali da poruku prima user account tada sve što ta transakcija radi jest prebacuje ether, no ako smo specificirali contract account tada aktiviramo smart contract i počinje se izvršavati kod. Smart contract \textbf{nema stanje} i slanjem transakcija je jedino moguće aktivirati ga i pokrenuti kod (ovaj dio je naglašen jer to znači da je nemoguće imati funkcije koje se same pokreću, npr. periodičke funkcije ili jobovi). Kod smart contracta može:
+
+\begin{itemize}
+    \item Slati ether na željene adrese
+    \item Čitati/pisati iz svoje memorije
+    \item Pozivati izvršavanja drugih smart contracta
+\end{itemize}
+
+Znamo da se contract piše u nekom high-level jeziku koji se onda kompajlira u bytecode. Taj bytecode se zatim objavljuje na Ethereum mrežu tako da se pošalje transakcijom (kao transakcijska skripta) na adresu koja još nije iskorištena i kada je na mreži se pokreće ponovnim slanjem nove transakcije na tu adresu. No kako pozvati točno određenu funkciju na contractu? Pri kompajliranju smart contracta dobijemo: bytecode,  \textbf{Application Binary Interface} (skraćeno ABI) i ostale ovdje nebitne informacije.
+
+\begin{definicija}
+ABI je interface između dva programska modula, od kojih jedan je često na nivou strojnog koda (niz nula i jedinica), a drugi program kojeg pokreće čovjek.
+\end{definicija}
+
+U kontekstu Ethereuma, ABI je popis svih funkcija koje se koriste u contractu zajedno sa argumentima i povratnim tipovima. Pozivanje funkcije se odvija tako da se djelovi ABIja zajedno sa argumentima funkcije kodiraju u bytecode koji se kasnije ubaci u transakciju za slanje.
+
+\begin{figure}[!]
+\centering
+\includegraphics[scale=0.7]{abi}
+\caption{Primjer ABI-ja}
+\label{fig:abi}
+\end{figure}
+
+Na slici \ref{fig:abi} se nalazi ABI funckije iz primjera \ref{lst:suma} koja računa zbroj svih elemenata polja. Ako želimo pozvati tu funkciju $sumArray([164, 46])$ tada bi poslali ukupno 36 bytova koji izgledaju: 
+
+
+\begin{dmath}
+\label{eq:sumabi}
+    0x1e2aea06a40000000000000000000000000000000000000000000\\00000000000000000002e000000000000000000000000000000000\\00000000000000000000000000000
+\end{dmath}
+
+Taj kod nam ne znači previše, ali ako razdvojimo na svoje djelove dobijemo: 
+
+\begin{itemize}
+    \item Prvih 4 bytea je ID funkcije. ID se dobije tako da se uzme početak hash vrijednosti potpisa funkcije, tj. u ovom slučaju primjeni Keccak256 hash funkcija na $arraySum(uint256[])$
+    \begin{equation*}
+        h(arraySum(uint256[])) = \textbf{1e2aea06}47440989b12156a7890618f416...
+    \end{equation*}
+    \item Ostatak su argumenti funkcije. Uvijek je to zapravo njihova hex vrijednost proširena da ima veličinu 32 byta. S obzirom da je ovdje polje brojeva u pitanju proširenje s nulama će doći s desne strane hex vrijednosti.
+    \begin{equation*}
+        paddedHex(164) = a40000000000000000000000000000000000000000...
+    \end{equation*}
+        \begin{equation*}
+        paddedHex(46) = 2e00000000000000000000000000000000000000000...
+    \end{equation*}
+\end{itemize}
+
+Algoritam takvog kodiranja se zove \textbf{Recursive Length Prefix} i kompleksniji primjeri se nalaze na \cite{rlp}.
+
+Još samo za kraj ću napraviti provjeru da nisam pogriješio u algoritmu. Naime smart contract koji se nalazi u primjeru \ref{eq:bytecode} sadrži upravo funkciju $sumArray$ i što znači da taj bytecode mora imati potpis te funkcije ($1e2aea06$), a to je istina.
+
+\begin{dmath}
+0x608060405234801561001057600080fd5b5061018e806100206000396000f3\\fe608060405260043610610041576000357c0100000000000000000000000000\\000000000000000000000000000000900463ffffffff168063\textcolor[rgb]{1,0,0}{1e2aea06}14610\\046575b600080fd5b34801561005257600080fd5b50610109600480360360208\\1101561006957600080fd5b8101908080359060200190640100...
+\label{eq:bytecode}
+\end{dmath}
+
+\section{Sigurnost}
+    
+\chapter{Primjer: Crypto Roullete}
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.55]{AppsVSdApps}
+\caption{Apps VS. dApps}
+\label{fig:appvsdapp}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.4]{dapp-architecture}
+\caption{dApp architecture}
+\label{fig:dapp}
+\end{figure}
 
 \chapter{Zaključak}
+
+\printbibliography
 
 \end{document}
