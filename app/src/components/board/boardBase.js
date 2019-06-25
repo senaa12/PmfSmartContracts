@@ -9,7 +9,7 @@ export default function BoardBase(props) {
         switch(field.id) {
             case 0:
                 let className = "numbers-zero board-items " + field.data["background-color"];
-                return (<div className={className} key={field.data.betID} onClick={() => props.onSelection(field.data.betID, field.data.label)}><div className="numberCircle zero-height-fix">{field.data.label}</div></div>)
+                return (<div className={className} key={field.data[0].betID} onClick={() => props.onSelection(field.data[0].betID, field.data[0].label)}><div className="numberCircle zero-height-fix">{field.data[0].label}</div></div>)
             case 1:
                 return <div key="numbers" className="numbers">{field.data.map(num => <Number backgroundColor={num["background-color"]} label={num.label} key={num.betID} onSelection={props.onSelection} number={num.betID}/>)}</div> 
             case 2:

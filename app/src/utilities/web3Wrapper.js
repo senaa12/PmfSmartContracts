@@ -54,7 +54,7 @@ export default class Web3Wrapper {
         this._contract = this._web3.eth.Contract(this._testContractAbi.abi, appSettings._contractAddress);
         
         const _contractOwner = await this._getContractOwner()
-        this._isUserContractOwner = _contractOwner.toLowerCase() == this._userAddress;
+        // this._isUserContractOwner = _contractOwner.toLowerCase() == this._userAddress;
         
         return { success: true };
         //#endregion 
@@ -81,7 +81,7 @@ export default class Web3Wrapper {
     }
 
     async _getContractOwner() {
-        const res = await this._contract.methods.getContractOwner().call()
+        const res = await this._contract.methods.getContractOwner().call();
         return res;
     }
 
@@ -135,6 +135,9 @@ export default class Web3Wrapper {
 
     _spinMapper(soliditySpin) {
         try{
+            if(!soliditySpin) {
+                return [];
+            }
             let jsSpins = [];
             soliditySpin.forEach(s => {
                 let spin = {

@@ -1,11 +1,13 @@
 [
     {
         "id": 0,
-        "data": {
-            "label" : 0,
-            "betID" : 0,
-            "background-color" : "green"
-        }
+        "data":  [ 
+            {
+                "label" : 0,
+                "betID" : 0,
+                "background-color" : "green"
+            } 
+        ]
     },
     {
         "id": 1,

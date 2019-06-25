@@ -5,6 +5,7 @@ import "./previousBetsDashboard.scss";
 import SingleSpin from "./singleSpin/singleSpin";
 
 export default function PreviousBetsDashboard(props) {
+
     return(
         <div className="col-lg-12 col-md-9 flex-cols previous-bets-dashboard">
             <table className="table table-striped table-dark table-responsive table-custom">

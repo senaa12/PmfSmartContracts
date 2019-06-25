@@ -56,10 +56,10 @@ contract CryptoRoulette {
         return _randomNumber;
     }
 
-    function sumArray(uint[] memory placedBets) private pure returns (uint _sum) {
+    function sumArray(uint[] memory arrayToSum) public pure returns (uint _sum) {
         _sum = 0;
-        for (uint i = 0; i < placedBets.length; i++) {
-            _sum += placedBets[i];
+        for (uint i = 0; i < arrayToSum.length; i++) {
+            _sum += arrayToSum[i];
         }
     }
 
