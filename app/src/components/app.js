@@ -14,6 +14,25 @@ export default function App() {
     const [errorMessage, setErrorMessage] = useState("");
     const [web3Wrapper, setWeb3Wrapper] = useState(undefined);
 
+    const eventCallBack = (err, ev) => {
+        if(err){
+            console.log(err);
+        }
+        else {
+            const etherAmount = web3Wrapper._web3.utils.fromWei(ev.returnValues.amountWon.toString(), "ether");
+            const winningBet = ev.returnValues.won;
+            console.log(winningBet);
+            console.log(etherAmount);
+            alert(winningBet);
+            refreshAllData();
+        }  
+    }   
+
+    const refreshAllData = () => {
+        getUserBalance();
+        getLastSpins();
+    }
+
     useEffect(() => {
         if(!web3Wrapper) {
             setWeb3Wrapper(new Web3Wrapper());
@@ -22,7 +41,7 @@ export default function App() {
 
     useEffect(() => {
         if(appState == AppState.IsNotInitialized && web3Wrapper) {
-            web3Wrapper._initialization()
+            web3Wrapper._initialization(eventCallBack)
                 .then(res =>
                     {
                         if(!res.success) {
@@ -31,8 +50,7 @@ export default function App() {
                         }
                         else {
                             setAppState(AppState.SuccessfulInitialization);
-                            getUserBalance();
-                            getLastSpins();
+                            refreshAllData();
                         }
                     }).catch(err => {
                         setAppState(AppState.ErrorWhenInitializing);
@@ -44,13 +62,11 @@ export default function App() {
 
 
     const [selectedIDs, setSelectedIDs] = useState([]);
-    const [selectedLabels, setSelectedLabels] = useState([]);
     const [amounts, setAmounts] = useState([]);
     
-    const onSelection = (newID, newIDLabel) => {
+    const onSelection = (newID) => {
         if(!selectedIDs.includes(newID) && selectedIDs.length < 6){
             setSelectedIDs([...selectedIDs, newID]);
-            setSelectedLabels([...selectedLabels, newIDLabel]);
             setAmounts([...amounts, 1]);          
         }
     }
@@ -61,16 +77,13 @@ export default function App() {
     const removeSelection = (index) => {
         amounts.splice(index, 1);
         selectedIDs.splice(index, 1);
-        selectedLabels.splice(index, 1);
         setAmounts([...amounts]);
-        setSelectedLabels([...selectedLabels]);
         setSelectedIDs([...selectedIDs]);
     }
 
     const spinWheel = () => {
         setAmounts([]);
         setSelectedIDs([]);
-        setSelectedLabels([]);
         web3Wrapper._placeBet(selectedIDs, amounts);
     }
 
@@ -95,12 +108,11 @@ export default function App() {
                             onSelection={onSelection}
                         />
                         <CurrentBetDashboard 
-                            selections={selectedIDs} 
+                            selectedIDs={selectedIDs} 
                             amounts={amounts} 
                             spinWheel={spinWheel} 
                             updateSpinAmounts={updateSpinAmounts} 
                             removeSelection={removeSelection}
-                            selectedLabels={selectedLabels}
                         />
                         <PreviousBetsDashboard 
                             refreshPreviousBets={getLastSpins} 

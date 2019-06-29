@@ -7,7 +7,7 @@ export default function SingleBet(props) {
 
     return(
         <div className="flex-row single-bet">
-            <span className="font-weight-bold label">{mapperBoardIdToDisplayNameMapper(props.selectionId)}</span>
+            <span className="font-weight-bold label">{mapperBoardIdToDisplayNameMapper(props.selectionID)}</span>
             <input 
                 type="number" 
                 min={0} 

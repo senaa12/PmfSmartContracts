@@ -11,7 +11,7 @@ export default class Web3Wrapper {
         this._isUserContractOwner;
     }
 
-    async _initialization() {
+    async _initialization(eventCallBack) {
         //#region UserRecognition
         // checking if browser is injected with metamask (ethereum)
         if (window.ethereum) {
@@ -53,6 +53,12 @@ export default class Web3Wrapper {
         }
         this._contract = this._web3.eth.Contract(this._testContractAbi.abi, appSettings._contractAddress);
         
+        this._contract.events.SpinResultEvent(
+            { 
+                fromBlock: "latest", 
+                filter: { sender: this._userAddress } 
+            }, eventCallBack);
+
         const _contractOwner = await this._getContractOwner()
         // this._isUserContractOwner = _contractOwner.toLowerCase() == this._userAddress;
         
@@ -91,7 +97,8 @@ export default class Web3Wrapper {
             from: this._userAddress, 
             value: this._web3.utils.toWei(amountsPerBet.reduce(getSumArray, 0).toString(), "ether") 
         })
-        .on('confirmation', (confirmationNumber, receipt) => console.log(receipt))
+        .on('confirmation', (confirmationNumber, receipt) => 
+            confirmationNumber == 1 && console.log(receipt))
         .catch(console.error) 
     }
 
@@ -106,8 +113,7 @@ export default class Web3Wrapper {
             }
             else {
                 return this._web3.utils.toDecimal(hex).toString();
-            }
-            
+            }    
         }
         catch(e){
             console.error(e);

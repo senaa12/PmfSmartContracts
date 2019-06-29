@@ -30,7 +30,13 @@ contract CryptoRoulette {
         _contractOwner = msg.sender;
     }
 
-    function placeBet(uint[] memory betIDs, uint[] memory bets) public payable returns (Spin memory) {
+    event SpinResultEvent (
+        address indexed sender,
+        bool won,
+        uint256 amountWon
+    );
+
+    function placeBet(uint[] memory betIDs, uint[] memory bets) public payable {
         uint selectedNumber = wheelSpin();
         uint payoutAmount = calculatePayout(selectedNumber, betIDs, bets);
         if(payoutAmount != 0) {
@@ -46,12 +52,12 @@ contract CryptoRoulette {
             isWinningSpin: payoutAmount != 0
         });
         _lastSpins.push(newSpin);
-        return newSpin;
+        emit SpinResultEvent(msg.sender, payoutAmount != 0, payoutAmount);
     }
 
     function wheelSpin() public returns (uint) {
         // actually this function just generates random number
-        uint _randomNumber = (uint(keccak256(abi.encodePacked(blockhash(block.number - 1), _lastSpinResults.length, block.timestamp)))) % 36;
+        uint _randomNumber = (uint(keccak256(abi.encodePacked(blockhash(block.number - 1), _lastSpinResults.length)))) % 36;
         _lastSpinResults.push(_randomNumber);
         return _randomNumber;
     }
