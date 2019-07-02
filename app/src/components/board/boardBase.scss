@@ -1,3 +1,5 @@
+@import "../../common/styleAssets";
+
 .board-base{
     display: flex !important;
     flex-direction: row;
@@ -5,10 +7,14 @@
     align-content: flex-start;
     align-items: flex-start;
     border: solid 1px black;
+    border-radius: 32px;
     padding-top: 20px;
     padding-bottom: 20px;
     height: fit-content;
     font: 23px Arial, sans-serif;
+    background-color: $dark-green;
+    border-color: $white;
+    color: $white;
 
     .numbers{
         display:flex;
@@ -16,18 +22,24 @@
         height: 180px;
         flex-wrap: wrap;
         align-content:flex-start; 
+        border-color: $white;
+        color: $white;
     }
     .numbers-zero{
         width: 6.66%;
         height: 180px;
         border-top-left-radius: 180px;
         border-bottom-left-radius: 180px;
+        border-color: $white;
+        color: $white;
     }
     .two2one{
         width: 13.3%;
         height: 180px;
         .item{
             height: percentage(1/3);
+            border-color: $white;
+            color: $white;
         }
     }
     .twelfth{
@@ -35,29 +47,45 @@
         margin-left: 6.66%;
         .item{
             width: percentage(1/3);
-            height: 45px; 
+            height: 45px;
+            border-color: $white;
+            color: $white; 
         }
         .item-second {
             width: percentage(1/6);
             height: 45px;
+            border-color: $white;
+            color: $white;
         }
     }
     .numberCircle {
         border-radius: 50%;
-    
+        
         width: 90%;
         height: 90%;
         
-        background: #fff;
-        border: 2px solid #666;
-        color: #666;
+        border: 2px solid $white;
+        color: $white;
 
         display: flex;
         justify-content: center;
         align-items: center;
     }
+    .black{
+        .numberCircle{
+            background-color: $black;            
+        }
+    }
+    .red{
+        .numberCircle{
+            background-color: $red;
+        }
+    }
+
     .zero-height-fix{
         height: 50px;
+        border-color: $white;
+        color: $white;
     }
 }
 
@@ -65,7 +93,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border: solid 1px black;
+    border: solid 1px $white;
 }
 
 .board-items:hover {

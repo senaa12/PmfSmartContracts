@@ -1,9 +1,9 @@
 import React from "react";
 import { mapperBoardIdToDisplayNameMapper } from "../../../common/helpFunctions";
 
-import "./singleSpin.scss";
+import "./SingleBet.scss";
 
-export default function SingleSpin(props) {
+export default function SingleBet(props) {
     return(
         <tr>
             <th scope="row">{props.time.toLocaleString()}</th>

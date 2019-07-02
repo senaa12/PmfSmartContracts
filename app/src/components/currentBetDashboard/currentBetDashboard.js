@@ -9,6 +9,7 @@ export default function CurrentBetDashboard(props) {
         <div className="col-lg-3 col-md-3 flex-cols current-bets-dashboard">
             {props.selectedIDs.length ? 
                 <>
+                <div>
                 {props.selectedIDs.map((bet, index) => 
                     <SingleBet
                         key={index} 
@@ -19,9 +20,10 @@ export default function CurrentBetDashboard(props) {
                         removeSelection={props.removeSelection}
                         selectionID={props.selectedIDs[index]}
                      />)}
+                     </div>
                 <button type="button" className="btn btn-primary" onClick={props.spinWheel}>SPIN WHEEL</button> 
                 </>
-                : <h2>NO SELECTIONS</h2>}
+                : <div className="no-selections">NO SELECTIONS</div>}
         </div>
     );
 }

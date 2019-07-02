@@ -1,10 +1,10 @@
 import React from "react";
 import Web3Wrapper  from "../../utilities/web3Wrapper";
 
-import "./previousBetsDashboard.scss";
-import SingleSpin from "./singleSpin/singleSpin";
+import "./previousBetDashboard.scss";
+import SingleBet from "./singleBet/singleBet";
 
-export default function PreviousBetsDashboard(props) {
+export default function PreviousBetDashboard(props) {
 
     return(
         <div className="col-lg-12 col-md-9 flex-cols previous-bets-dashboard">
@@ -21,7 +21,7 @@ export default function PreviousBetsDashboard(props) {
                 </thead>
                 <tbody>
                 {props.lastSpins.map((s, index)=> 
-                    <SingleSpin 
+                    <SingleBet
                         key={index}
                         time={s.time}
                         address={s.address} 

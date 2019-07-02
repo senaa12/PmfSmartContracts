@@ -7,7 +7,7 @@ import BoardBase from './board/boardBase';
 import { AppState } from '../common/enums'; 
 import "./app.scss";
 import CurrentBetDashboard from "./currentBetDashboard/currentBetDashboard";
-import PreviousBetsDashboard from "./previosBetsDashboard/previousBetsDashBoard";
+import PreviousBetDashboard from "./previosBetDashboard/previousBetDashBoard";
 
 export default function App() {
     const [appState, setAppState] = useState(AppState.IsNotInitialized);
@@ -99,7 +99,7 @@ export default function App() {
     }
 
     return(
-        <div>             
+        <div className="app">             
                 {!(appState == AppState.IsNotInitialized) && <>
                     <Header web3Wrapper={web3Wrapper} userBalance={userBalance} getUserBalance={getUserBalance} />
                      {appState == AppState.SuccessfulInitialization ?                   
@@ -114,7 +114,7 @@ export default function App() {
                             updateSpinAmounts={updateSpinAmounts} 
                             removeSelection={removeSelection}
                         />
-                        <PreviousBetsDashboard 
+                        <PreviousBetDashboard 
                             refreshPreviousBets={getLastSpins} 
                             lastSpins={lastSpins} 
                         />

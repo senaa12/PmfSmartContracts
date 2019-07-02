@@ -1,0 +1,38 @@
+$blue: #25a7ef;
+$green: #70aa2e;
+$yellow: #f9cb3a;
+$red: #e44126;
+$grey: #4d4d4f;
+$black: #000;
+$white: #fff;
+
+/* board colors */
+$brown: #3c1912;
+$yellow: #f3c620;
+$dark-green: #01431e;
+$light-green: #02632c;
+$red: #e0080b;
+$black: #000;
+$white: #fff;
+
+@mixin color-shades($color, $name) {
+    --#{$name}-3: #{rgba($color, 0.03)};
+    --#{$name}-6: #{rgba($color, 0.06)};
+    --#{$name}-10: #{rgba($color, 0.1)};
+    --#{$name}-20: #{rgba($color, 0.2)};
+    --#{$name}-30: #{rgba($color, 0.3)};
+    --#{$name}-40: #{rgba($color, 0.4)};
+    --#{$name}-50: #{rgba($color, 0.5)};
+    --#{$name}-60: #{rgba($color, 0.6)};
+    --#{$name}-70: #{rgba($color, 0.7)};
+    --#{$name}-80: #{rgba($color, 0.8)};
+    --#{$name}-6-solid: #{opaquify-color(rgba($color, 0.06))};
+    --#{$name}-10-solid: #{opaquify-color(rgba($color, 0.1))};
+    --#{$name}-20-solid: #{opaquify-color(rgba($color, 0.2))};
+    --#{$name}-30-solid: #{opaquify-color(rgba($color, 0.3))};
+    --#{$name}-40-solid: #{opaquify-color(rgba($color, 0.4))};
+    --#{$name}-50-solid: #{opaquify-color(rgba($color, 0.5))};
+    --#{$name}-60-solid: #{opaquify-color(rgba($color, 0.6))};
+    --#{$name}-70-solid: #{opaquify-color(rgba($color, 0.7))};
+    --#{$name}-80-solid: #{opaquify-color(rgba($color, 0.8))};
+}

@@ -1,3 +1,5 @@
+@import "../../../common/styleAssets";
+
 .single-bet{
     width: 100%;
     align-items: end;
@@ -6,6 +8,16 @@
 
     .custom-form-control{
         width: 40% !important;
+        background-color: $light-green;
+        border: solid 1px $white;
+        color: $white;
+        font-weight: 550;
+    }
+    .custom-form-control:focus {
+        background-color: $light-green;
+        border: solid 1px $white;
+        color: $white;
+        font-weight: 550;
     }
 
     .label{

@@ -1,5 +1,35 @@
+@import "./common/styleAssets";
+
 html {
     height: 100%;
     width: 100%;
     min-width: 890px;
+}
+
+body{
+    height: 100%;
+}
+
+#root{
+    height: 100%;
+    .app{
+        height: 100%;
+    }
+}
+
+:root {
+    /** colors **/
+    $blue: #25a7ef;
+    $green: #70aa2e;
+    $yellow: #f9cb3a;
+    $red: #e44126;
+    $grey: #4d4d4f;
+    $black: #000;
+    $white: #fff;
+
+    @include color-shades($blue, blue);
+    @include color-shades($green, green);
+    @include color-shades($yellow, yellow);
+    @include color-shades($red, red);
+    @include color-shades($grey, grey);
 }

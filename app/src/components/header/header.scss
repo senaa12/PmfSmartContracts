@@ -1,3 +1,4 @@
+@import "../../common/styleAssets";
 
 .refresh-button, .balance-holder {
     margin-left: 10px;
@@ -7,7 +8,8 @@
     display: flex;
     flex-wrap: wrap;
     width: fit-content;
-    justify-content: flex-end; 
+    justify-content: flex-end;
+     
     .address, .balance {
         font-weight: 550;
     }
@@ -15,8 +17,7 @@
 
 .navbar {
     flex-wrap: nowrap !important;
-}
-
-.refresh-button {
-    border: solid 1px;
+    height: 56px !important;
+    background-color: $dark-green;
+    color: $white !important;
 }

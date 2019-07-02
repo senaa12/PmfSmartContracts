@@ -1,5 +1,10 @@
+@import "../common/styleAssets";
+
 .body{
     padding: 15px 25px;
+    background-color: $light-green;
+    height: calc(100% - 56px);
+    color: $white;
 }
 
 .row{
@@ -16,4 +21,15 @@
 .flex-cols{
     display: flex;
     flex-direction: column;
+}
+
+.btn{
+    border: solid 2px $white !important;
+    background-color: $dark-green !important;  
+}
+
+.close{
+    span{
+        color: $white;
+    }
 }

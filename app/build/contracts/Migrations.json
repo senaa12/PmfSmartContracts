@@ -1396,10 +1396,16 @@
       "links": {},
       "address": "0xD00d0D75D80931822bBDD1685b9f2C07533Da64b",
       "transactionHash": "0xc35e0766bbe7619e0d6d12ec255f671bbd7286e908180eaa0fef83a7d5a3d7f4"
+    },
+    "1562092472470": {
+      "events": {},
+      "links": {},
+      "address": "0x356a4851390B7832B219dc7288BEFA8Ab7Dc3d2a",
+      "transactionHash": "0xe9a84e555adcb56fa5458be50824af5eca6b4e380251eb65b835dd5c8f5ec6d2"
     }
   },
   "schemaVersion": "3.0.8",
-  "updatedAt": "2019-06-29T10:44:00.606Z",
+  "updatedAt": "2019-07-02T18:36:14.364Z",
   "devdoc": {
     "methods": {}
   },
