@@ -7,10 +7,10 @@ import SingleBet from "./singleBet/singleBet";
 export default function PreviousBetDashboard(props) {
 
     return(
-        <div className="col-lg-12 col-md-9 flex-cols previous-bets-dashboard">
-            <table className="table table-striped table-dark table-responsive table-custom">
+        <div className="flex-cols previous-bets-dashboard">
+            <table className="table table-striped table-custom">
                 <thead>
-                    <tr>
+                    <tr className="header">
                         <th scope="col">Time</th>
                         <th scope="col">Address</th>
                         <th scope="col">Selected Fields</th>
@@ -20,19 +20,21 @@ export default function PreviousBetDashboard(props) {
                     </tr>
                 </thead>
                 <tbody>
-                {props.lastSpins.map((s, index)=> 
+                {props.lastSpins.length ? props.lastSpins.map((s, index)=> 
                     <SingleBet
                         key={index}
+                        index={index}
                         time={s.time}
                         address={s.address} 
                         isWinningSpin={s.isWinningSpin}
                         placedBetsID={s.placedBetsID}
                         selectedNumber={s.selectedNumber}
                         totalFundsPlaced={s.totalFundsPlaced}  
-                    />)}
+                    />) : 
+                    <tr className="no-selections">NO PREVIOUS BETS</tr>}
                 </tbody>
             </table>
-            <div className="col-lg-6 offset-lg-3 col-md-8 offset-md-2 refresh-button-container">
+            <div className="refresh-button-container">
                 <button type="button" className="btn btn-primary col-md-12" onClick={props.refreshPreviousBets}>REFRESH</button>
             </div>
             {Web3Wrapper._isUserContractOwner && 

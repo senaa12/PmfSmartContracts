@@ -6,7 +6,7 @@ import "./currentBetDashboard.scss";
 export default function CurrentBetDashboard(props) {
 
     return(
-        <div className="col-lg-3 col-md-3 flex-cols current-bets-dashboard">
+        <div className="flex-cols current-bets-dashboard">
             {props.selectedIDs.length ? 
                 <>
                 <div>

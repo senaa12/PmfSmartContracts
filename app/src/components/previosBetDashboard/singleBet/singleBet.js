@@ -5,7 +5,7 @@ import "./SingleBet.scss";
 
 export default function SingleBet(props) {
     return(
-        <tr>
+        <tr className={props.index === 1 ? "dark" : ""}>
             <th scope="row">{props.time.toLocaleString()}</th>
             <td>{props.address}</td>
             <td>{props.placedBetsID.map((id, index) => <span key={index}>{mapperBoardIdToDisplayNameMapper(id)} </span>)}</td>

@@ -39,7 +39,7 @@ export default function BoardBase(props) {
     } 
 
     return (
-        <div className="col-lg-9 col-md-12 board-base">
+        <div className="board-base">
             {appSettings._boardModel.map(field => renderFields(field))}
         </div>
     );

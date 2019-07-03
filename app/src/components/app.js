@@ -7,7 +7,7 @@ import BoardBase from './board/boardBase';
 import { AppState } from '../common/enums'; 
 import "./app.scss";
 import CurrentBetDashboard from "./currentBetDashboard/currentBetDashboard";
-import PreviousBetDashboard from "./previosBetDashboard/previousBetDashBoard";
+import PreviousBetDashboard from "./previosBetDashboard/previousBetDashboard";
 
 export default function App() {
     const [appState, setAppState] = useState(AppState.IsNotInitialized);
@@ -103,7 +103,7 @@ export default function App() {
                 {!(appState == AppState.IsNotInitialized) && <>
                     <Header web3Wrapper={web3Wrapper} userBalance={userBalance} getUserBalance={getUserBalance} />
                      {appState == AppState.SuccessfulInitialization ?                   
-                        <div className="row body">
+                        <div className="container">
                         <BoardBase 
                             onSelection={onSelection}
                         />

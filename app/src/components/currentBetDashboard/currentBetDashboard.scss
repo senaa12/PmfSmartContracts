@@ -7,6 +7,12 @@
     padding: 15px;
     border: solid 1px $white;
     border-radius: 16px;
+    width: 29%;
+    min-height: fit-content;
+    @media (min-width: 960px){
+        height: 312px;
+    }
+    background-color: $dark-green;
 
     .no-selections{
         font-size: 2rem;

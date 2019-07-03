@@ -1,10 +1,18 @@
 @import "../common/styleAssets";
 
-.body{
-    padding: 15px 25px;
+.container{
+    padding: 15px 1%;
     background-color: $light-green;
-    height: calc(100% - 56px);
+    width: 100%;
+    margin: 0 !important;
+    max-width: 100% !important;
     color: $white;
+    height: calc(100% - 56px);
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: flex-start;
 }
 
 .row{
@@ -24,8 +32,9 @@
 }
 
 .btn{
-    border: solid 2px $white !important;
+    border: solid 2.5px $white !important;
     background-color: $dark-green !important;  
+    font-weight: 600 !important; 
 }
 
 .close{

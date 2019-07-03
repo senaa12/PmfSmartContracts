@@ -1,11 +1,35 @@
+@import "../../common/styleAssets";
+
 .previous-bets-dashboard{
     padding: 10px 15px;
+    width: 88%;
+    flex-grow: 1;
+    height: calc(100% - 322px);
+    justify-content: space-between;
+    align-items: center;
+
+    @media (max-width: 960px){
+        width:69%;
+    }
+
+    .header{
+        background-color: $dark-green;
+        color: $white !important;
+    }
 
     .refresh-button-container{
         margin-bottom: 15px;
         max-height: 40px;
+        width: 60%;
     }
     .table-custom{
         max-height: 600px;
+        color: $white;
+    }
+
+    .no-selections{
+        font-size: 2rem;
+        font-weight: 550;
+        text-align: center;
     }
 }

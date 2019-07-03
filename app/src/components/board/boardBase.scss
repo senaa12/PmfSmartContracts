@@ -15,6 +15,14 @@
     background-color: $dark-green;
     border-color: $white;
     color: $white;
+    width: 69%;
+    height: 312px;
+    margin-bottom: 10px;
+
+    @media (max-width: 960px){
+        width:88%;
+        margin: 0 auto 15px
+    }
 
     .numbers{
         display:flex;
