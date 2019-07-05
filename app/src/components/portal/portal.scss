@@ -1,0 +1,27 @@
+@import "../../common/styleAssets";
+
+.portal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba($grey, 0.4);
+    z-index: 1111;
+
+    .dashboard{
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        width: 450px;
+        height: 300px;
+        margin-left: -225px;
+        margin-top: -150px;
+        background-color: $white;
+        border-radius: 32px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+}

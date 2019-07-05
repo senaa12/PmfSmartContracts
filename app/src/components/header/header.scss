@@ -16,6 +16,9 @@
 }
 
 .navbar {
+    z-index: 12 !important;
+    position: fixed !important;
+    width: 100% !important;
     flex-wrap: nowrap !important;
     height: 56px !important;
     background-color: $dark-green;

@@ -8,36 +8,21 @@ import { AppState } from '../common/enums';
 import "./app.scss";
 import CurrentBetDashboard from "./currentBetDashboard/currentBetDashboard";
 import PreviousBetDashboard from "./previosBetDashboard/previousBetDashboard";
+import Portal from "./portal/portal";
 
 export default function App() {
     const [appState, setAppState] = useState(AppState.IsNotInitialized);
     const [errorMessage, setErrorMessage] = useState("");
     const [web3Wrapper, setWeb3Wrapper] = useState(undefined);
 
-    const eventCallBack = (err, ev) => {
-        if(err){
-            console.log(err);
-        }
-        else {
-            const etherAmount = web3Wrapper._web3.utils.fromWei(ev.returnValues.amountWon.toString(), "ether");
-            const winningBet = ev.returnValues.won;
-            console.log(winningBet);
-            console.log(etherAmount);
-            alert(winningBet);
-            refreshAllData();
-        }  
-    }   
-
-    const refreshAllData = () => {
+    const refreshAllData = async () => {
         getUserBalance();
-        getLastSpins();
+        await getLastSpins();
     }
 
     useEffect(() => {
-        if(!web3Wrapper) {
-            setWeb3Wrapper(new Web3Wrapper());
-        }
-    }, [web3Wrapper]);
+        setWeb3Wrapper(new Web3Wrapper());
+    }, []);
 
     useEffect(() => {
         if(appState == AppState.IsNotInitialized && web3Wrapper) {
@@ -60,6 +45,16 @@ export default function App() {
         }
     }, [appState, web3Wrapper]);
 
+    const [isPortalOpen, openPortal] = useState(false); 
+    const eventCallBack = async (err, ev) => {
+        if(err){
+            console.log(err);
+        }
+        else {
+            await refreshAllData();
+            openPortal(true);
+        }  
+    }
 
     const [selectedIDs, setSelectedIDs] = useState([]);
     const [amounts, setAmounts] = useState([]);
@@ -88,9 +83,9 @@ export default function App() {
     }
 
     const [lastSpins, setLastSpins] = useState([]);
-    const getLastSpins = () => {
+    const getLastSpins = async () => {
         getUserBalance();
-        web3Wrapper._getLastSpins().then(setLastSpins).catch(console.error);
+        await web3Wrapper._getLastSpins().then(setLastSpins).catch(console.error);
     }
 
     const [userBalance, setUserBalance] = useState(0);
@@ -99,11 +94,12 @@ export default function App() {
     }
 
     return(
-        <div className="app">             
+        <div className="app">
+            <Portal isOpen={isPortalOpen} lastSpin={lastSpins[lastSpins.length - 1]} openPortal={openPortal} />             
                 {!(appState == AppState.IsNotInitialized) && <>
                     <Header web3Wrapper={web3Wrapper} userBalance={userBalance} getUserBalance={getUserBalance} />
                      {appState == AppState.SuccessfulInitialization ?                   
-                        <div className="container">
+                        <div className="app-body">
                         <BoardBase 
                             onSelection={onSelection}
                         />

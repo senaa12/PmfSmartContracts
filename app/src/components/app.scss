@@ -1,44 +1,51 @@
 @import "../common/styleAssets";
 
-.container{
-    padding: 15px 1%;
-    background-color: $light-green;
-    width: 100%;
-    margin: 0 !important;
-    max-width: 100% !important;
-    color: $white;
-    height: calc(100% - 56px);
-
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-content: flex-start;
-}
-
-.row{
-    margin-right: 0px !important;
-    margin-left: 0px !important;
-}
-
-.flex-row{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-}
-
-.flex-cols{
-    display: flex;
-    flex-direction: column;
-}
-
-.btn{
-    border: solid 2.5px $white !important;
-    background-color: $dark-green !important;  
-    font-weight: 600 !important; 
-}
-
-.close{
-    span{
+.app{
+    height: 100%;
+    .app-body{
+        position: relative;
+        top: 56px;
+        padding: 15px 1%;
+        background-color: $light-green;
+        min-width: 100%;
+        width: fit-content;
+        margin: 0 !important;
+        max-width: 100% !important;
         color: $white;
+        height: fit-content;
+        min-height: calc(100% - 56px);
+    
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-content: flex-start;
+    }
+    
+    .row{
+        margin-right: 0px !important;
+        margin-left: 0px !important;
+    }
+    
+    .flex-row{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    
+    .flex-cols{
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .btn{
+        border: solid 2.5px $white !important;
+        background-color: $dark-green !important;  
+        font-weight: 600 !important; 
+    }
+    
+    .close{
+        span{
+            color: $white;
+        }
     }
 }
