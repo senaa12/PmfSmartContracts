@@ -23,4 +23,18 @@
     height: 56px !important;
     background-color: $dark-green;
     color: $white !important;
+    min-width: 775px !important;
+
+    .app-name{
+        font-family: "Comic Sans MS"
+    }
+
+    .navbar-brand{
+        display: flex;
+        align-items: center;
+    }
+
+    .logo-image{
+        margin-right: 5px;
+    }
 }

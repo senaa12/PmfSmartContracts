@@ -18,9 +18,9 @@
     }
 
     .refresh-button-container{
-        margin-bottom: 15px;
+        margin: 15px 0;
         max-height: 40px;
-        width: 40%;
+        width: 30%;
     }
     .table-custom{
         max-height: 600px;
@@ -31,5 +31,11 @@
         font-size: 2rem;
         font-weight: 550;
         text-align: center;
+    }
+
+    .table-holder{
+        position: relative;
+        width: 100%;
+        overflow-x: auto;
     }
 }

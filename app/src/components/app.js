@@ -95,11 +95,12 @@ export default function App() {
 
     return(
         <div className="app">
-            <Portal isOpen={isPortalOpen} lastSpin={lastSpins[lastSpins.length - 1]} openPortal={openPortal} />             
+            <Portal isOpen={isPortalOpen} lastSpin={lastSpins[0]} openPortal={openPortal} />             
                 {!(appState == AppState.IsNotInitialized) && <>
                     <Header web3Wrapper={web3Wrapper} userBalance={userBalance} getUserBalance={getUserBalance} />
-                     {appState == AppState.SuccessfulInitialization ?                   
-                        <div className="app-body">
+                    <div className="app-body">
+                    {appState == AppState.SuccessfulInitialization ?  
+                    <>                 
                         <BoardBase 
                             onSelection={onSelection}
                         />
@@ -114,8 +115,8 @@ export default function App() {
                             refreshPreviousBets={getLastSpins} 
                             lastSpins={lastSpins} 
                         />
-                        </div>
-                     : <h1>{errorMessage}</h1>}
+                    </> : <h1>{errorMessage}</h1>}
+                    </div>
                  </> }
         </div>
     )

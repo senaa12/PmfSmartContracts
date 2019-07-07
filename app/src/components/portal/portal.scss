@@ -17,11 +17,36 @@
         height: 300px;
         margin-left: -225px;
         margin-top: -150px;
-        background-color: $white;
+        background-color: $light-green;
         border-radius: 32px;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        color: $white;
+
+        .win{
+            font-size: 23px;
+            font-weight: 700;
+            color: $green;
+        }
+
+        .lost{
+            color: $red;
+            font-weight: 800;
+        }
+
+        .title{
+            margin: 20px auto;
+            font-size: 27px;
+        }
+
+        .btn{
+            border: solid 2.5px $white !important;
+            width: 100px !important;
+            margin: 15px 0;
+            background-color: $dark-green !important;  
+            font-weight: 600 !important; 
+        }
     }
 }

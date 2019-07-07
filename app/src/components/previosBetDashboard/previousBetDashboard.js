@@ -8,6 +8,7 @@ export default function PreviousBetDashboard(props) {
 
     return(
         <div className="flex-cols previous-bets-dashboard">
+            <div className="table-holder">
             <table className="table table-striped table-custom">
                 <thead>
                     <tr className="header">
@@ -31,9 +32,10 @@ export default function PreviousBetDashboard(props) {
                         selectedNumber={s.selectedNumber}
                         totalFundsPlaced={s.totalFundsPlaced}  
                     />) : 
-                    <tr className="no-selections">NO PREVIOUS BETS</tr>}
+                    <tr><td className="no-selections" colSpan={6}>NO PREVIOUS BETS</td></tr>}
                 </tbody>
             </table>
+            </div>
             <div className="refresh-button-container">
                 <button type="button" className="btn btn-primary col-md-12" onClick={props.refreshPreviousBets}>REFRESH</button>
             </div>

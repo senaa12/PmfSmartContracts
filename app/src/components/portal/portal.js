@@ -18,9 +18,13 @@ export default function Portal(props) {
 
     const portalComponent = props.lastSpin && <div className="portal">
         <div className="dashboard">
-            <div>{props.lastSpin.placedBetsID.map((id, index) => <span key={index}>{mapperBoardIdToDisplayNameMapper(id)}  </span>)}</div>
-            <div>{props.isWinningSpin ? "WIN" : "LOST"}</div>
-            <div>{props.lastSpin.totalFundsPlaced}</div>
+            <span className="title">Your transaction is processed!</span>
+            <div>
+                <span>Your selections are: </span>
+                {props.lastSpin.placedBetsID.map((id, index) => <span key={index}>{index != 0 && ", "}{mapperBoardIdToDisplayNameMapper(id)}</span>)}
+            </div>
+            <div>Number drawn is {props.lastSpin.selectedNumber}, you {props.lastSpin.isWinningSpin ? <span className="win">WIN</span> : <span className="lost">LOST</span>} your bet.</div>
+            <div>Winning amount: {props.lastSpin.isWinningSpin ? props.lastSpin.totalFundsPlaced : "0"} ETH.</div>
             <button type="button" className="btn btn-primary" onClick={()=>props.openPortal(false)}>CLOSE</button> 
         </div>
     </div>;
