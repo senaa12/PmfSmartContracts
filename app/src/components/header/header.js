@@ -15,7 +15,7 @@ export default function Header(props) {
                 <div className="address-holder">Address: <span className="address">{props.web3Wrapper._userAddress}</span></div>
                 <div className="balance-holder">Balance: <span className="balance">{props.userBalance} ETH</span></div>
             </div>
-            <button className="btn btn-dark refresh-button" onClick={() => props.getUserBalance()}> Refresh</button> 
+            {/* <button className="btn btn-dark refresh-button" onClick={() => props.getUserBalance()}> Refresh</button>  */}
         </div>
     );
 }

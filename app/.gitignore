@@ -5,3 +5,8 @@
 
 # file containing contract address
 ./src/utilities/*.json
+
+# firebase stuff
+.firebaserc
+.firebase
+firebase.json

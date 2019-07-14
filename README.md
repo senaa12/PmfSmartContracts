@@ -2,7 +2,9 @@
 
 This git repository contains the code used in my master thesis project.
 
-Crypto roulette dapp screenshot.
+Currently hosted on [firebase](https://masterthesisv2.firebaseapp.com/).
+
+Crypto roulette dapp screenshot. 
 
 [Crypto roulette](./images/app-screen.png)
 

@@ -32,6 +32,11 @@ module.exports = {
       {
         test: /\.(png|jpe?g|gif)$/,
         use: ["url-loader"]
+      },
+      {
+          test: /\.svg$/,
+          loader: "svg-sprite-loader",
+          include: [path.resolve("./src/common")]
       }
     ]
   },

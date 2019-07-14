@@ -4,6 +4,9 @@ import Web3Wrapper  from "../../utilities/web3Wrapper";
 import "./previousBetDashboard.scss";
 import SingleBet from "./singleBet/singleBet";
 
+const refreshIcon = require("../../common/refresh-icon.svg");
+console.log(refreshIcon)
+
 export default function PreviousBetDashboard(props) {
 
     return(
@@ -17,7 +20,7 @@ export default function PreviousBetDashboard(props) {
                         <th scope="col">Selected Fields</th>
                         <th scope="col">Total Funds Placed</th>
                         <th scope="col">Number Drawn</th>
-                        <th scope="col">Winner</th>
+                        <th scope="col">Result</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -37,7 +40,15 @@ export default function PreviousBetDashboard(props) {
             </table>
             </div>
             <div className="refresh-button-container">
-                <button type="button" className="btn btn-primary col-md-12" onClick={props.refreshPreviousBets}>REFRESH</button>
+                <button type="button" className="btn btn-primary col-md-12 refresh-button" onClick={props.refreshPreviousBets}>
+                    <span>REFRESH</span>
+                    <svg
+                        className="refresh-icon"
+                        dangerouslySetInnerHTML={{ __html: '<use xlink:href="#' + refreshIcon.default.id + '\"></use>' }}
+                        width={18}
+                        height={18}
+                    />
+                </button>
             </div>
             {Web3Wrapper._isUserContractOwner && 
             <div className="col-lg-6 offset-lg-3 col-md-8 offset-md-2 refresh-button-container">
