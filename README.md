@@ -6,7 +6,7 @@ Currently hosted on [firebase](https://masterthesisv2.firebaseapp.com/).
 
 Crypto roulette dapp screenshot. 
 
-[Crypto roulette](./images/app-screen.png)
+![Crypto roulette](./images/app-screen.PNG)
 
 ## Author
 
