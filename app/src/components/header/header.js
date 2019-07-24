@@ -3,6 +3,7 @@ import React from "react";
 import "./header.scss";
 import logo from "../../common/roulette.png";
 
+import UnitsDropdown from "./unitsDropdown/unitsDropdown";
 
 export default function Header(props) {
     return (
@@ -13,8 +14,12 @@ export default function Header(props) {
             </a>
             <div className="holder">
                 <div className="address-holder">Address: <span className="address">{props.web3Wrapper._userAddress}</span></div>
-                <div className="balance-holder">Balance: <span className="balance">{props.userBalance} ETH</span></div>
+                <div className="balance-holder">Balance: <span className="balance">{Math.round(props.userBalance * 100) / 100}</span> <span>{props.selectedUnit.label}</span></div>
             </div>
+            <UnitsDropdown 
+                selectedUnit={props.selectedUnit}
+                changeSelectedUnit={props.changeSelectedUnit}
+            />
             {/* <button className="btn btn-dark refresh-button" onClick={() => props.getUserBalance()}> Refresh</button>  */}
         </div>
     );

@@ -9,9 +9,10 @@ export default class Web3Wrapper {
         this._userAddress;
         this._userBalance;
         this._isUserContractOwner;
+        this._selectedUnit;
     }
 
-    async _initialization(eventCallBack) {
+    async _initialization(eventCallBack, selectedUnit) {
         //#region UserRecognition
         // checking if browser is injected with metamask (ethereum)
         if (window.ethereum) {
@@ -51,7 +52,7 @@ export default class Web3Wrapper {
         if(appSettings._contractAddress === null) {
             return { success: false, errorMessage: "No Address for smart contract provided" };
         }
-        this._contract = this._web3.eth.Contract(this._testContractAbi.abi, appSettings._contractAddress);
+        this._contract = this._web3.eth.Contract(this._testContractAbi.abi, "0x3bfff2564bd4527534fd985eed04b20500a9481d");
         
         this._contract.events.SpinResultEvent(
             { 
@@ -59,16 +60,17 @@ export default class Web3Wrapper {
                 filter: { sender: this._userAddress } 
             }, eventCallBack);
 
-        const _contractOwner = await this._getContractOwner()
+        const _contractOwner = await this._getContractOwner();
         // this._isUserContractOwner = _contractOwner.toLowerCase() == this._userAddress;
         
+        this._selectedUnit = selectedUnit;
         return { success: true };
         //#endregion 
     }
 
     async _getCurrentUserBalance() {
         const res = await this._web3.eth.getBalance(this._userAddress);
-        return this._web3.utils.fromWei(res, 'ether');
+        return this._customFromWei(res);
     }
 
     async _getLastSpinResults() {
@@ -83,7 +85,7 @@ export default class Web3Wrapper {
 
     async _getBalance() {
         const res = await this._contract.methods.getBalance().call();
-        return this._web3.utils.fromWei(res.toString(), "ether");
+        return this._customFromWei(res);
     }
 
     async _getContractOwner() {
@@ -93,9 +95,9 @@ export default class Web3Wrapper {
 
     async _placeBet(betIDs, amountsPerBet) {
         let hexBetIDs = this._convertDecimalToHex(betIDs);
-        this._contract.methods.placeBet(hexBetIDs, amountsPerBet.map(b => this._web3.utils.toWei(b.toString(), "ether"))).send({ 
+        this._contract.methods.placeBet(hexBetIDs, amountsPerBet.map(b => this._customToWei(b))).send({ 
             from: this._userAddress, 
-            value: this._web3.utils.toWei(amountsPerBet.reduce(getSumArray, 0).toString(), "ether") 
+            value: this._customToWei(amountsPerBet.reduce(getSumArray, 0).toString())
         })
         .on('confirmation', (confirmationNumber, receipt) => 
             confirmationNumber == 1 && console.log(receipt))
@@ -152,7 +154,7 @@ export default class Web3Wrapper {
                     isWinningSpin: s.isWinningSpin,
                     selectedNumber: this._convertHexToDecimal(s.selectedNumber),
                     placedBetsID: this._convertHexToDecimal(s.selectedItemID),
-                    totalFundsPlaced: this._web3.utils.fromWei(s.totalFundsPlaced.toString(), "ether")
+                    totalFundsPlaced: this._customFromWei(s.totalFundsPlaced)
                 };
                 jsSpins.push(spin);
             });
@@ -163,5 +165,17 @@ export default class Web3Wrapper {
         catch(e){
             console.error(e);
         }
+    }
+
+    _setUnit(unit) {
+        this._selectedUnit = unit;
+    }
+
+    _customToWei(number) {
+        return this._web3.utils.toWei(number.toString(), this._selectedUnit);
+    }
+
+    _customFromWei(number) {
+        return this._web3.utils.fromWei(number.toString(), this._selectedUnit);
     }
 }

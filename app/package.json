@@ -34,6 +34,7 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "svg-sprite-loader": "^4.1.6",
+    "truffle-hdwallet-provider": "^1.0.14",
     "web3": "^1.0.0-beta.55"
   },
   "devDependencies": {

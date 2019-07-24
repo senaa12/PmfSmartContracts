@@ -1,10 +1,9 @@
-
 import React, { useEffect, useState } from "react";
 import Web3Wrapper from '../utilities/web3Wrapper';
 import Header from './header/header';
 import BoardBase from './board/boardBase';
 
-import { AppState } from '../common/enums'; 
+import { AppState, Units } from '../common/enums'; 
 import "./app.scss";
 import CurrentBetDashboard from "./currentBetDashboard/currentBetDashboard";
 import PreviousBetDashboard from "./previosBetDashboard/previousBetDashboard";
@@ -14,6 +13,7 @@ export default function App() {
     const [appState, setAppState] = useState(AppState.IsNotInitialized);
     const [errorMessage, setErrorMessage] = useState("");
     const [web3Wrapper, setWeb3Wrapper] = useState(undefined);
+    const [selectedUnit, changeSelectedUnit] = useState(Units.Ether);
 
     const refreshAllData = async () => {
         getUserBalance();
@@ -21,12 +21,19 @@ export default function App() {
     }
 
     useEffect(() => {
+        if(web3Wrapper){
+            web3Wrapper._setUnit(selectedUnit.value);
+            refreshAllData();
+        }
+    }, [selectedUnit]);
+
+    useEffect(() => {
         setWeb3Wrapper(new Web3Wrapper());
     }, []);
 
     useEffect(() => {
         if(appState == AppState.IsNotInitialized && web3Wrapper) {
-            web3Wrapper._initialization(eventCallBack)
+            web3Wrapper._initialization(eventCallBack, selectedUnit.value)
                 .then(res =>
                     {
                         if(!res.success) {
@@ -97,7 +104,13 @@ export default function App() {
         <div className="app">
             <Portal isOpen={isPortalOpen} lastSpin={lastSpins[0]} openPortal={openPortal} />             
                 {!(appState == AppState.IsNotInitialized) && <>
-                    <Header web3Wrapper={web3Wrapper} userBalance={userBalance} getUserBalance={getUserBalance} />
+                    <Header 
+                        web3Wrapper={web3Wrapper} 
+                        userBalance={userBalance} 
+                        getUserBalance={getUserBalance} 
+                        selectedUnit={selectedUnit}
+                        changeSelectedUnit={changeSelectedUnit}
+                    />
                     <div className="app-body">
                     {appState == AppState.SuccessfulInitialization ?  
                     <>                 
@@ -114,6 +127,7 @@ export default function App() {
                         <PreviousBetDashboard 
                             refreshPreviousBets={getLastSpins} 
                             lastSpins={lastSpins} 
+                            selectedUnit={selectedUnit}
                         />
                     </> : <h1>{errorMessage}</h1>}
                     </div>

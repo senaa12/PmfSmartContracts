@@ -5,7 +5,7 @@ const saveContractAddressPath = "./src/utilities/contractAddress.json";
 
 // value pise u wei jedinicima
 module.exports = function(deployer) {
-      deployer.deploy(CryptoRoulette, { value: 1000000000000000000 }).then(function(){
+      deployer.deploy(CryptoRoulette, { value: 10000000000000000 }).then(function(){
             const address = {
                   "address" : CryptoRoulette.address
             };

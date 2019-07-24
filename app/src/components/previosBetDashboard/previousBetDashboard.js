@@ -5,7 +5,6 @@ import "./previousBetDashboard.scss";
 import SingleBet from "./singleBet/singleBet";
 
 const refreshIcon = require("../../common/refresh-icon.svg");
-console.log(refreshIcon)
 
 export default function PreviousBetDashboard(props) {
 
@@ -18,7 +17,7 @@ export default function PreviousBetDashboard(props) {
                         <th scope="col">Time</th>
                         <th scope="col">Address</th>
                         <th scope="col">Selected Fields</th>
-                        <th scope="col">Total Funds Placed</th>
+                        <th scope="col">Total Funds Placed ({props.selectedUnit.label})</th>
                         <th scope="col">Number Drawn</th>
                         <th scope="col">Result</th>
                     </tr>
@@ -33,7 +32,7 @@ export default function PreviousBetDashboard(props) {
                         isWinningSpin={s.isWinningSpin}
                         placedBetsID={s.placedBetsID}
                         selectedNumber={s.selectedNumber}
-                        totalFundsPlaced={s.totalFundsPlaced}  
+                        totalFundsPlaced={s.totalFundsPlaced}
                     />) : 
                     <tr><td className="no-selections" colSpan={6}>NO PREVIOUS BETS</td></tr>}
                 </tbody>

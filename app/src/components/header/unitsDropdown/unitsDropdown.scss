@@ -1,0 +1,32 @@
+@import "../../../common/styleAssets";
+
+.dropdown-custom{
+    z-index: 999;
+    margin-left: 5px;
+    .custom-button{
+        width: 90px !important;
+    }
+    .dropdown-content{
+        position: absolute;
+        border: 1px solid $white;
+        border-radius: 20px;
+        background-color: $light-green;
+        margin-right: 1rem;
+        display: flex;
+        flex-direction: column;
+        .dropdown-item-custom{
+            border-top: 1.5px solid $white;
+            color: $white;
+            padding: .25rem 1.5rem;
+
+            &:hover{
+                color: $white;
+                text-decoration: underline;
+                cursor: pointer;
+            }
+        }
+        .first{
+            border-top: none;
+        }
+    }
+}
