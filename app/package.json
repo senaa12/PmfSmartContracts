@@ -4,7 +4,7 @@
   "description": "Smart contract master thesis example",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --mode development  --progress --colors --config ./webpack.config.dev.js --open",
+    "start": "cross-env NODE_ENV=development webpack-dev-server --mode development  --progress --colors --config ./webpack.config.dev.js --open",
     "build": "webpack --config ./webpack.config.prod.js --mode production",
     "open-cypress": "./node_modules/.bin/cypress open",
     "test": "start-server-and-test start http://localhost:1212 open-cypress",
@@ -42,6 +42,7 @@
     "@babel/preset-env": "^7.4.3",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.5",
+    "cross-env": "^5.2.0",
     "css-loader": "^2.1.1",
     "cypress": "^3.2.0",
     "html-webpack-plugin": "^3.2.0",

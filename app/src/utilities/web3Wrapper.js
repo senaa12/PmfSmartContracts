@@ -16,13 +16,17 @@ export default class Web3Wrapper {
         //#region UserRecognition
         // checking if browser is injected with metamask (ethereum)
         if (window.ethereum) {
-            this._web3 = new Web3(window.ethereum);
+            if(window.ethereum.networkVersion != "3" && !appSettings._isDevelopment) {
+                return { success: false, errorMessage: "Select Ropsten testnet in Metamask menu or application wont  work" };
+            }
             try {
                 await window.ethereum.enable();
             } catch (e) {
                 // user denied premissions
                 return { success: false, errorMessage: e.message };
             }
+
+            this._web3 = new Web3(window.ethereum);
         }
         // Legacy dapp browsers, they can always read everything they need
         else if (window.web3) {
@@ -35,6 +39,7 @@ export default class Web3Wrapper {
             //TODO: MUST THROW ERROR IN PRODUCTION;
             return { success: false, errorMessage: "You must have Metamask in your browser to access Ethereum blockchain"}
         }
+
         //#endregion
 
         //#region UserData
@@ -52,7 +57,8 @@ export default class Web3Wrapper {
         if(appSettings._contractAddress === null) {
             return { success: false, errorMessage: "No Address for smart contract provided" };
         }
-        this._contract = this._web3.eth.Contract(this._testContractAbi.abi, "0x3bfff2564bd4527534fd985eed04b20500a9481d");
+        this._contract = this._web3.eth.Contract(this._testContractAbi.abi, 
+            !appSettings._isDevelopment ? "0x3bfff2564bd4527534fd985eed04b20500a9481d" : appSettings._contractAddress);
         
         this._contract.events.SpinResultEvent(
             { 

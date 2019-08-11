@@ -46,7 +46,7 @@ export default function App() {
                         }
                     }).catch(err => {
                         setAppState(AppState.ErrorWhenInitializing);
-                        setErrorMessage("Something weird happend!? Check ConsoleLog for details");
+                        setErrorMessage(err.message);
                         console.error(err);   
                     });
         }
