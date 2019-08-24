@@ -16,9 +16,6 @@ export default class Web3Wrapper {
         //#region UserRecognition
         // checking if browser is injected with metamask (ethereum)
         if (window.ethereum) {
-            if(window.ethereum.networkVersion != "3" && !appSettings._isDevelopment) {
-                return { success: false, errorMessage: "Select Ropsten testnet in Metamask menu or application wont  work" };
-            }
             try {
                 await window.ethereum.enable();
             } catch (e) {
@@ -26,6 +23,10 @@ export default class Web3Wrapper {
                 return { success: false, errorMessage: e.message };
             }
 
+            if(window.ethereum.networkVersion != "3" && !appSettings._isDevelopment) {
+                return { success: false, errorMessage: "Select Ropsten testnet in Metamask menu or application wont  work" };
+            }
+            
             this._web3 = new Web3(window.ethereum);
         }
         // Legacy dapp browsers, they can always read everything they need
@@ -63,7 +64,7 @@ export default class Web3Wrapper {
         this._contract.events.SpinResultEvent(
             { 
                 fromBlock: "latest", 
-                filter: { sender: this._userAddress } 
+                filter: { sender: this._userAddress }
             }, eventCallBack);
 
         const _contractOwner = await this._getContractOwner();

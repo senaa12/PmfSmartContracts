@@ -2,14 +2,10 @@
 
 .previous-bets-dashboard{
     padding: 10px 15px;
-    width: 88%;
-    flex-grow: 1;
-    height: calc(100% - 322px);
-    justify-content: space-between;
     align-items: center;
-
-    @media (max-width: 960px){
-        width:69%;
+    width: 69vw;
+    @media (min-width: $screen-resolution-breakpoint){
+        width: 100%;
     }
 
     .header{
@@ -22,9 +18,6 @@
         max-height: 40px;
         width: 27%;
         .refresh-button{
-            display: flex;
-            justify-content: center;
-            align-items: center;
             .refresh-icon {
                 fill: $white;
                 margin-left: 5px;
@@ -32,7 +25,6 @@
         }
     }
     .table-custom{
-        max-height: 600px;
         color: $white;
     }
 
@@ -46,5 +38,10 @@
         position: relative;
         width: 100%;
         overflow-x: auto;
+        border-radius: 16px;
+        max-height: 500px;
+        @media (min-width: $screen-resolution-breakpoint){
+            max-height: 800px;
+        }
     }
 }

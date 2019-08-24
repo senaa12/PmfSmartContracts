@@ -1,6 +1,6 @@
 @import "../../common/styleAssets";
 
-.portal {
+.background {
     position: fixed;
     top: 0;
     left: 0;
@@ -8,15 +8,13 @@
     height: 100%;
     background-color: rgba($grey, 0.4);
     z-index: 1111;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
-    .dashboard{
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        width: 450px;
-        height: 300px;
-        margin-left: -225px;
-        margin-top: -150px;
+
+    .portal{
         background-color: $light-green;
         border-radius: 32px;
         display: flex;
@@ -24,29 +22,23 @@
         align-items: center;
         justify-content: center;
         color: $white;
+        padding: 15px 30px;
+    }
 
-        .win{
-            font-size: 23px;
-            font-weight: 700;
-            color: $green;
-        }
+    .body{
+        margin: 5px;
+    }
 
-        .lost{
-            color: $red;
-            font-weight: 800;
-        }
+    .title{
+        margin: 20px auto;
+        font-size: 27px;
+    }   
 
-        .title{
-            margin: 20px auto;
-            font-size: 27px;
-        }
-
-        .btn{
-            border: solid 2.5px $white !important;
-            width: 100px !important;
-            margin: 15px 0;
-            background-color: $dark-green !important;  
-            font-weight: 600 !important; 
-        }
+    .btn{
+        border: solid 2.5px $white !important;
+        width: 100px !important;
+        margin: 15px 0;
+        background-color: $dark-green !important;  
+        font-weight: 600 !important; 
     }
 }

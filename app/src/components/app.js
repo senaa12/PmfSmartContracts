@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Web3Wrapper from '../utilities/web3Wrapper';
 import Header from './header/header';
 import BoardBase from './board/boardBase';
+import Result from './portal/result/result';
 
 import { AppState, Units } from '../common/enums'; 
 import "./app.scss";
@@ -52,14 +53,18 @@ export default function App() {
         }
     }, [appState, web3Wrapper]);
 
-    const [isPortalOpen, openPortal] = useState(false); 
+    const [isPortalOpen, changePortalState] = useState(false); 
+    const [portalContent, setPortalContent] = useState(null);
     const eventCallBack = async (err, ev) => {
         if(err){
             console.log(err);
         }
         else {
-            await refreshAllData();
-            openPortal(true);
+            const refreshedLastSpins = await web3Wrapper._getLastSpins();
+            getUserBalance();
+            setLastSpins(refreshedLastSpins);
+            setPortalContent(<Result lastSpin={refreshedLastSpins[0]} />);
+            changePortalState(true);
         }  
     }
 
@@ -92,7 +97,7 @@ export default function App() {
     const [lastSpins, setLastSpins] = useState([]);
     const getLastSpins = async () => {
         getUserBalance();
-        await web3Wrapper._getLastSpins().then(setLastSpins).catch(console.error);
+        return await web3Wrapper._getLastSpins().then(setLastSpins).catch(console.error);
     }
 
     const [userBalance, setUserBalance] = useState(0);
@@ -102,7 +107,7 @@ export default function App() {
 
     return(
         <div className="app">
-            <Portal isOpen={isPortalOpen} lastSpin={lastSpins[0]} openPortal={openPortal} />             
+            <Portal isOpen={isPortalOpen} content={portalContent} closePortal={changePortalState} />             
                 {!(appState == AppState.IsNotInitialized) && <>
                     <Header 
                         web3Wrapper={web3Wrapper} 

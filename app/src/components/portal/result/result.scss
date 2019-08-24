@@ -1,0 +1,13 @@
+@import "../../../common/styleAssets";
+
+
+.win{
+    font-size: 23px;
+    font-weight: 700;
+    color: $green;
+}
+
+.lost{
+    color: $red;
+    font-weight: 800;
+}

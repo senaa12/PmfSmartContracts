@@ -7,13 +7,15 @@
     padding: 15px;
     border: solid 1px $white;
     border-radius: 16px;
-    width: 29%;
     min-height: fit-content;
-    @media (min-width: 960px){
-        height: 312px;
-    }
     background-color: $dark-green;
-    max-height: 350px;
+    width: calc(97% - 69vw);
+    height: 500px;
+
+    @media(min-width: $screen-resolution-breakpoint){
+        width: calc(99% - 69vw);
+        height: calc(69vw * 0.42);
+    }
 
     .no-selections{
         font-size: 2rem;

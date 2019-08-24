@@ -1,9 +1,17 @@
 import React from "react";
-import Number from './numberFields/number';
 
 import './boardBase.scss';
 import appSettings from "../../utilities/appSettings";
 
+function Number(props) {
+    let className = "number board-items " + props.backgroundColor;
+    return (
+        <div className={className} onClick={() => props.onSelection(props.number)}>
+            <div className="numberCircle">{props.label}</div>
+        </div>
+    );
+}
+    
 export default function BoardBase(props) {
     const renderFields = (field) => {
         switch(field.id) {

@@ -9,7 +9,8 @@
     .dropdown-content{
         position: absolute;
         border: 1px solid $white;
-        border-radius: 20px;
+        width: 90px;
+        border-radius: 4px;
         background-color: $light-green;
         margin-right: 1rem;
         display: flex;
