@@ -3,8 +3,11 @@
 /node_modules
 /dist
 
+#smart contracts
+/build
+
 # file containing contract address
-./src/utilities/*.json
+/src/utilities/contractAddress.json
 
 # firebase stuff
 .firebaserc
