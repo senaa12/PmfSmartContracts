@@ -1,10 +1,6 @@
 # Smart contract example - master thesis
 
-This git repository contains the code used in my master thesis project.
-
-Currently hosted on [firebase](https://masterthesisv2.firebaseapp.com/).
-
-Crypto roulette dapp screenshot. 
+https://masterthesisv2.firebaseapp.com/.
 
 ![Crypto roulette](./images/app-screen.PNG)
 

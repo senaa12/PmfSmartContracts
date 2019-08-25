@@ -70,11 +70,15 @@ export default function App() {
 
     const [selectedIDs, setSelectedIDs] = useState([]);
     const [amounts, setAmounts] = useState([]);
+    const [warningAnimation, showWarningAnimation] = useState(false);
     
     const onSelection = (newID) => {
-        if(!selectedIDs.includes(newID) && selectedIDs.length < 6){
+        if(!selectedIDs.includes(newID) && selectedIDs.length < 4){
             setSelectedIDs([...selectedIDs, newID]);
             setAmounts([...amounts, 1]);          
+        }
+        if(selectedIDs.length == 4){
+            showWarningAnimation(true);
         }
     }
     const updateSpinAmounts = (newAmount, index) => {
@@ -88,10 +92,18 @@ export default function App() {
         setSelectedIDs([...selectedIDs]);
     }
 
+    const [spinAnimation, showSpinAnimation] = useState(false);
+    const showAnimation = () => {
+        showSpinAnimation(true);
+    }
+    const endAnimation = () => {
+        showSpinAnimation(false);
+    }
+
     const spinWheel = () => {
         setAmounts([]);
         setSelectedIDs([]);
-        web3Wrapper._placeBet(selectedIDs, amounts);
+        web3Wrapper._placeBet(selectedIDs, amounts, showAnimation);
     }
 
     const [lastSpins, setLastSpins] = useState([]);
@@ -115,6 +127,9 @@ export default function App() {
                         getUserBalance={getUserBalance} 
                         selectedUnit={selectedUnit}
                         changeSelectedUnit={changeSelectedUnit}
+                        spinAnimation={spinAnimation}
+                        endAnimation={endAnimation}
+                        showAnimation={showAnimation}
                     />
                     <div className="app-body">
                     {appState == AppState.SuccessfulInitialization ?  
@@ -128,6 +143,9 @@ export default function App() {
                             spinWheel={spinWheel} 
                             updateSpinAmounts={updateSpinAmounts} 
                             removeSelection={removeSelection}
+                            web3Wrapper={web3Wrapper}
+                            showWarningAnimation={showWarningAnimation}
+                            warningAnimation={warningAnimation}
                         />
                         <PreviousBetDashboard 
                             refreshPreviousBets={getLastSpins} 

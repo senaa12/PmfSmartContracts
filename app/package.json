@@ -9,7 +9,7 @@
     "open-cypress": "./node_modules/.bin/cypress open",
     "test": "start-server-and-test start http://localhost:1212 open-cypress",
     "restart": "truffle networks --clean && truffle migrate && npm start",
-    "chain-start": "ganache-cli -b 15 --account=0xB185A9D3E19C720DE07A1D57901AA7956562AFF175AF7A7AAB2BFEDCA7C6BE24,100000000000000000000"
+    "chain-start": "ganache-cli -b 15 --account=,100000000000000000000"
   },
   "repository": {
     "type": "git",

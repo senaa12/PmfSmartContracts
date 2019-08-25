@@ -37,4 +37,45 @@
     .logo-image{
         margin-right: 5px;
     }
+    .logo-image:hover{
+        cursor: pointer;
+    }
+
+    @keyframes animate-position {
+        0%{
+            position: fixed;
+            top: calc(.5rem + 5px);
+            left: 1rem;
+            height: 32px;
+            width: 32px;
+        }
+        50%{
+            position: fixed;
+            top: calc((100% - 100vmin) / 2);
+            left: calc((100% - 100vmin) / 2);
+            height: 100vmin;
+            width: 100vmin;
+        }
+        100%{
+            position: fixed;
+            top: calc(.5rem + 5px);
+            left: 1rem;
+            height: 32px;
+            width: 32px;
+        }
+    }
+
+    @keyframes animate-rotation {
+        100%{
+            transform: rotate(360deg);
+        }
+    }
+
+    .show-animation{
+        animation: animate-position 4s ease, animate-rotation 1.5s linear infinite;
+    }
+
+    .offset{
+        margin-left: 37px;
+    }
 }

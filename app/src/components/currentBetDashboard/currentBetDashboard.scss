@@ -17,6 +17,18 @@
         height: calc(69vw * 0.42);
     }
 
+    @keyframes fadeout {
+        from { opacity: 1; }
+        to   { opacity: 0; }
+    }
+
+    .warning-animation{
+        animation-delay: 3s;
+        animation: fadeout 7s ease-out;
+        color: $red;
+        font-weight: 700;
+    }
+
     .no-selections{
         font-size: 2rem;
         font-weight: 550;

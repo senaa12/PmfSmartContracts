@@ -1,6 +1,7 @@
 import Web3 from 'web3';
 import appSettings from './appSettings';
 import { getSumArray } from "../common/helpFunctions";
+import EthereumValueFetcher from "../utilities/ethereumValueFetcher";
 
 export default class Web3Wrapper {
     constructor(){
@@ -100,12 +101,13 @@ export default class Web3Wrapper {
         return res;
     }
 
-    async _placeBet(betIDs, amountsPerBet) {
+    async _placeBet(betIDs, amountsPerBet, showAnimation) {
         let hexBetIDs = this._convertDecimalToHex(betIDs);
         this._contract.methods.placeBet(hexBetIDs, amountsPerBet.map(b => this._customToWei(b))).send({ 
             from: this._userAddress, 
             value: this._customToWei(amountsPerBet.reduce(getSumArray, 0).toString())
         })
+        .on('transactionHash', showAnimation)
         .on('confirmation', (confirmationNumber, receipt) => 
             confirmationNumber == 1 && console.log(receipt))
         .catch(console.error) 
@@ -184,5 +186,10 @@ export default class Web3Wrapper {
 
     _customFromWei(number) {
         return this._web3.utils.fromWei(number.toString(), this._selectedUnit);
+    }
+
+    _toCurrencyValue(number) {
+        const weiValue = this._customToWei(number);
+        return EthereumValueFetcher._prices && (EthereumValueFetcher._prices.USD / 1000000000000000000) * weiValue;
     }
 }
