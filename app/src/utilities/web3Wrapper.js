@@ -71,6 +71,11 @@ export default class Web3Wrapper {
         const _contractOwner = await this._getContractOwner();
         // this._isUserContractOwner = _contractOwner.toLowerCase() == this._userAddress;
         
+        const pricesFetch = await EthereumValueFetcher._refreshEthereumPrice();
+        if(!pricesFetch.success){
+            return prices;
+        }
+
         this._selectedUnit = selectedUnit;
         return { success: true };
         //#endregion 

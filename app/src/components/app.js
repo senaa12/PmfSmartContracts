@@ -60,6 +60,7 @@ export default function App() {
             console.log(err);
         }
         else {
+            endAnimation();
             const refreshedLastSpins = await web3Wrapper._getLastSpins();
             getUserBalance();
             setLastSpins(refreshedLastSpins);

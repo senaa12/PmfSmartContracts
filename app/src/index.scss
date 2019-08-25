@@ -17,9 +17,7 @@ html, body, #root {
     $black: #000;
     $white: #fff;
 
-    @include color-shades($blue, blue);
-    @include color-shades($green, green);
-    @include color-shades($yellow, yellow);
-    @include color-shades($red, red);
-    @include color-shades($grey, grey);
+    @include color-shades($light-green, light-green);
+    @include color-shades($dark-green, dark-green);
+
 }
