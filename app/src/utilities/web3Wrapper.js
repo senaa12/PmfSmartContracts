@@ -23,7 +23,7 @@ export default class Web3Wrapper {
                 return { success: false, errorMessage: JSON.stringify(e) };
             } finally {
                 if(window.ethereum.networkVersion != "3" && !appSettings._isDevelopment) {
-                    return { success: false, errorMessage: `Select Ropsten testnet in Metamask menu or application wont work, ${JSON.stringify(window.ethereum)}` };
+                    return { success: false, errorMessage: `Select Ropsten testnet in Metamask menu or application wont work` };
                 }
             }
             
