@@ -8,8 +8,8 @@ import UnitsDropdown from "./unitsDropdown/unitsDropdown";
 export default function Header(props) {
     let className = "logo-image";
     let appNameClassName = "app-name";
-    className += props.spinAnimation ? ' show-animation ' : '';
-    appNameClassName += props.spinAnimation ? ' offset' : '';
+    className += props.shouldShowSpinAnimation ? ' show-animation ' : '';
+    appNameClassName += props.shouldShowSpinAnimation ? ' offset' : '';
     return (
         <div className="navbar navbar-expand-lg navbar-light">
             <a className="navbar-brand mr-auto flex-fill">

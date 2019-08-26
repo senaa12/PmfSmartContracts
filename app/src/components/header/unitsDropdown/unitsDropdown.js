@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from "react";
+import React, {useState, useEffect, useRef, useCallback} from "react";
 import { Units } from "../../../common/enums";
 
 import "./unitsDropdown.scss";
@@ -6,13 +6,13 @@ import "./unitsDropdown.scss";
 function OusideClickHandler(props) {
     const wrapperRef = useRef(null);
 
-    const handleClick = (e) => {
+    const handleClick = useCallback((e) => {
         if(wrapperRef.current && !wrapperRef.current.contains(e.target)){
             props.onOutsideClick();
         }
 
         document.removeEventListener("mousedown", handleClick);
-    }
+    })
 
     useEffect(() => {
         if(props.shouldAddEvenetListener){
@@ -36,10 +36,10 @@ export default function UnitsDropdown(props) {
     const [isMenuOpen, openMenu] = useState(false);
     const dropdownRef = useRef(null);
 
-    const handleUnitClick = (unit) => {
+    const handleUnitClick = useCallback((unit) => {
         props.changeSelectedUnit(unit);
         openMenu(false);
-    }
+    });
 
     return(
         <OusideClickHandler 

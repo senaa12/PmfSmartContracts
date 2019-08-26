@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import Web3Wrapper from '../utilities/web3Wrapper';
 import Header from './header/header';
-import BoardBase from './board/boardBase';
+import Board from './board/board';
 import Result from './portal/result/result';
 
 import { AppState, Units } from '../common/enums'; 
@@ -16,10 +16,10 @@ export default function App() {
     const [web3Wrapper, setWeb3Wrapper] = useState(undefined);
     const [selectedUnit, changeSelectedUnit] = useState(Units.Ether);
 
-    const refreshAllData = async () => {
+    const refreshAllData = useCallback(async () => {
         getUserBalance();
         await getLastSpins();
-    }
+    });
 
     useEffect(() => {
         if(web3Wrapper){
@@ -55,7 +55,7 @@ export default function App() {
 
     const [isPortalOpen, changePortalState] = useState(false); 
     const [portalContent, setPortalContent] = useState(null);
-    const eventCallBack = async (err, ev) => {
+    const eventCallBack = useCallback (async (err, ev) => {
         if(err){
             console.log(err);
         }
@@ -67,13 +67,13 @@ export default function App() {
             setPortalContent(<Result lastSpin={refreshedLastSpins[0]} />);
             changePortalState(true);
         }  
-    }
+    });
 
     const [selectedIDs, setSelectedIDs] = useState([]);
     const [amounts, setAmounts] = useState([]);
     const [warningAnimation, showWarningAnimation] = useState(false);
     
-    const onSelection = (newID) => {
+    const onSelection = useCallback((newID) => {
         if(!selectedIDs.includes(newID) && selectedIDs.length < 4){
             setSelectedIDs([...selectedIDs, newID]);
             setAmounts([...amounts, 1]);          
@@ -81,42 +81,38 @@ export default function App() {
         if(selectedIDs.length == 4){
             showWarningAnimation(true);
         }
-    }
-    const updateSpinAmounts = (newAmount, index) => {
+    });
+    const updateSpinAmounts = useCallback((newAmount, index) => {
         amounts[index] = newAmount;
         setAmounts([...amounts]);
-    }
-    const removeSelection = (index) => {
+    });
+    const removeSelection = useCallback((index) => {
         amounts.splice(index, 1);
         selectedIDs.splice(index, 1);
         setAmounts([...amounts]);
         setSelectedIDs([...selectedIDs]);
-    }
+    });
 
     const [spinAnimation, showSpinAnimation] = useState(false);
-    const showAnimation = () => {
-        showSpinAnimation(true);
-    }
-    const endAnimation = () => {
-        showSpinAnimation(false);
-    }
+    const showAnimation = useCallback(() => { showSpinAnimation(true); })
+    const endAnimation = useCallback(() => { showSpinAnimation(false); })
 
-    const spinWheel = () => {
+    const spinWheel = useCallback(() => {
         setAmounts([]);
         setSelectedIDs([]);
         web3Wrapper._placeBet(selectedIDs, amounts, showAnimation);
-    }
+    });
 
     const [lastSpins, setLastSpins] = useState([]);
-    const getLastSpins = async () => {
+    const getLastSpins = useCallback(async () => {
         getUserBalance();
         return await web3Wrapper._getLastSpins().then(setLastSpins).catch(console.error);
-    }
+    });
 
     const [userBalance, setUserBalance] = useState(0);
-    const getUserBalance = () => {
+    const getUserBalance = useCallback(() => {
         web3Wrapper._getCurrentUserBalance().then(setUserBalance).catch(console.error);
-    }
+    });
 
     return(
         <div className="app">
@@ -128,14 +124,15 @@ export default function App() {
                         getUserBalance={getUserBalance} 
                         selectedUnit={selectedUnit}
                         changeSelectedUnit={changeSelectedUnit}
-                        spinAnimation={spinAnimation}
+                        shouldShowSpinAnimation={spinAnimation}
                         endAnimation={endAnimation}
                         showAnimation={showAnimation}
                     />
+                    <div className="not-supported-message">Application is not supported for mobile devices</div>
                     <div className="app-body">
                     {appState == AppState.SuccessfulInitialization ?  
                     <>                 
-                        <BoardBase 
+                        <Board 
                             onSelection={onSelection}
                         />
                         <CurrentBetDashboard 

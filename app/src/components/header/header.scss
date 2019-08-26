@@ -9,6 +9,10 @@
     flex-wrap: wrap;
     width: fit-content;
     justify-content: flex-end;
+
+    @media (max-width: $mobile-resolution-breakpoint){
+        display: none;
+    }
      
     .address, .balance {
         font-weight: 550;

@@ -8,7 +8,6 @@ export default class Web3Wrapper {
         this._contract;
         this._web3;
         this._userAddress;
-        this._userBalance;
         this._isUserContractOwner;
         this._selectedUnit;
     }
@@ -21,11 +20,11 @@ export default class Web3Wrapper {
                 await window.ethereum.enable();
             } catch (e) {
                 // user denied premissions
-                return { success: false, errorMessage: e.message };
-            }
-
-            if(window.ethereum.networkVersion != "3" && !appSettings._isDevelopment) {
-                return { success: false, errorMessage: "Select Ropsten testnet in Metamask menu or application wont  work" };
+                return { success: false, errorMessage: JSON.stringify(e) };
+            } finally {
+                if(window.ethereum.networkVersion != "3" && !appSettings._isDevelopment) {
+                    return { success: false, errorMessage: `Select Ropsten testnet in Metamask menu or application wont work, ${JSON.stringify(window.ethereum)}` };
+                }
             }
             
             this._web3 = new Web3(window.ethereum);
@@ -73,7 +72,7 @@ export default class Web3Wrapper {
         
         const pricesFetch = await EthereumValueFetcher._refreshEthereumPrice();
         if(!pricesFetch.success){
-            return prices;
+            return pricesFetch;
         }
 
         this._selectedUnit = selectedUnit;

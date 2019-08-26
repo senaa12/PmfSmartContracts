@@ -44,33 +44,4 @@
             max-height: 800px;
         }
     }
-
-    // custom scroll https://css-tricks.com/almanac/properties/s/scrollbar/
-    // 1. scroll u globalu
-    .table-holder::-webkit-scrollbar{
-        width: 20px;
-    }
-
-    // 2. scroll traka
-    .table-holder::-webkit-scrollbar-track{
-        box-shadow: inset 0 0 5px grey; 
-        background-color: $light-green;
-        border-radius: 10px;
-    }
-
-    // 3. scroll thumb
-    .table-holder::-webkit-scrollbar-thumb{
-        background: var(--dark-green-80); 
-        border-radius: 10px;
-    }
-
-    // 4. donji lijevi ugao di se trake nalaze 
-    .table-holder::-webkit-scrollbar-corner{
-        display: none;
-    }
-
-    .table-holder::-webkit-scrollbar-thumb:hover{
-        background: var(--dark-green-80); 
-        box-shadow: 0 0 10px var(--dark-green-80);
-    }
 }

@@ -4,10 +4,10 @@ class EthereumValueFetcher {
     }
 
     async _refreshEthereumPrice() {
-        const priceResponse = await fetch("https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=BTC,USD,EUR");
+        const priceResponse = await fetch("https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=HRK,USD,EUR");
         const prices = await priceResponse.json();
-        if(prices.Response == "Error"){
-            return { success: false, errorMessage: "EthereumValueFetcher: " + prices.Message };
+        if(!prices.HRK || !prices.USD || !prices.EUR){
+            return { success: false, errorMessage: "EthereumValueFetcher: " + JSON.stringify(prices) };
         }
 
         this._prices = prices;

@@ -6,12 +6,10 @@
         position: relative;
         top: 56px;
         padding: 15px 1%;
-        background-color: $light-green;
         min-width: 100%;
         width: fit-content;
         margin: 0 !important;
         max-width: 100% !important;
-        color: $white;
         height: fit-content;
         min-height: calc(100% - 56px);
     
@@ -19,6 +17,10 @@
         flex-wrap: wrap;
         justify-content: space-between;
         align-content: flex-start;
+
+        @media (max-width: $mobile-resolution-breakpoint){
+            display: none;
+        }
     }
     
     .row{
@@ -47,6 +49,19 @@
     .close{
         span{
             color: $white;
+        }
+    }
+
+    .not-supported-message{
+        display: none;
+
+        @media (max-width: $mobile-resolution-breakpoint){
+            display: block;
+            position: fixed;
+            top: 56px;
+            padding: 10px;
+            font-size: 24px;
+            font-weight: 480;
         }
     }
 }

@@ -1,6 +1,6 @@
 import React from "react";
 
-import './boardBase.scss';
+import './board.scss';
 import appSettings from "../../utilities/appSettings";
 
 function Number(props) {
@@ -12,7 +12,7 @@ function Number(props) {
     );
 }
     
-export default function BoardBase(props) {
+export default function Board(props) {
     const renderFields = (field) => {
         switch(field.id) {
             case 0:
