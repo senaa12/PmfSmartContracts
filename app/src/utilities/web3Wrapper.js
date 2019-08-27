@@ -3,7 +3,7 @@ import appSettings from './appSettings';
 import { getSumArray } from "../common/helpFunctions";
 import EthereumValueFetcher from "../utilities/ethereumValueFetcher";
 
-export default class Web3Wrapper {
+class Web3Wrapper {
     constructor(){
         this._contract;
         this._web3;
@@ -40,7 +40,6 @@ export default class Web3Wrapper {
             //TODO: MUST THROW ERROR IN PRODUCTION;
             return { success: false, errorMessage: "You must have Metamask in your browser to access Ethereum blockchain"}
         }
-
         //#endregion
 
         //#region UserData
@@ -154,13 +153,13 @@ export default class Web3Wrapper {
         }
     }
 
-    _spinMapper(soliditySpin) {
+    _spinMapper(soliditySpins) {
         try{
-            if(!soliditySpin) {
+            if(!soliditySpins) {
                 return [];
             }
             let jsSpins = [];
-            soliditySpin.forEach(s => {
+            soliditySpins.forEach(s => {
                 let spin = {
                     time: new Date(s.time*1000),
                     address: s.better,
@@ -177,6 +176,15 @@ export default class Web3Wrapper {
         }
         catch(e){
             console.error(e);
+        }
+    }
+
+    _resultEventMapper(returnValues) {
+        return {
+            // placedBetsID: this._convertHexToDecimal(returnValues.selectedItemID),
+            amountWon: this._convertHexToDecimal(returnValues.amountWon),
+            address: returnValues.sender,
+            isWinningSpin: returnValues.won
         }
     }
 
@@ -197,3 +205,6 @@ export default class Web3Wrapper {
         return EthereumValueFetcher._prices && (EthereumValueFetcher._prices.USD / 1000000000000000000) * weiValue;
     }
 }
+
+const web3Wrapper = new Web3Wrapper();
+export default web3Wrapper;

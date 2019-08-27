@@ -3,6 +3,8 @@ import { Units } from "../../../common/enums";
 
 import "./unitsDropdown.scss";
 
+import { useAppState } from "../../../entities";
+
 function OusideClickHandler(props) {
     const wrapperRef = useRef(null);
 
@@ -33,11 +35,13 @@ function DropdownItem(props) {
 }
 
 export default function UnitsDropdown(props) {
+    const [ appState, { changeSelectedUnit }] = useAppState();
+
     const [isMenuOpen, openMenu] = useState(false);
     const dropdownRef = useRef(null);
 
     const handleUnitClick = useCallback((unit) => {
-        props.changeSelectedUnit(unit);
+        appState.changeSelectedUnit(unit);
         openMenu(false);
     });
 
@@ -48,7 +52,7 @@ export default function UnitsDropdown(props) {
         >
             <div className="dropdown-custom" ref={dropdownRef} >
                 <button className="btn dropdown-toggle custom-button" onClick={() => openMenu(!isMenuOpen)}>
-                    {props.selectedUnit.label}
+                    {appState.selectedUnit.label}
                 </button>
                 {isMenuOpen && <div className="dropdown-content">
                     {Object.keys(Units).map((k, index) => 

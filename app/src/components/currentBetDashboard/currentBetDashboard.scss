@@ -24,6 +24,10 @@
     }
 
     .warning-animation{
+        display: none;
+    }
+    .showWarningAnimation{
+        display: block;
         animation-delay: 3s;
         animation: fadeout 7s ease-out;
         color: $red;

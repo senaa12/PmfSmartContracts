@@ -4,9 +4,13 @@ import Web3Wrapper  from "../../utilities/web3Wrapper";
 import "./previousBetDashboard.scss";
 import SingleBet from "./singleBet/singleBet";
 
+import { useAppState, useAppData } from "../../entities";
+
 const refreshIcon = require("../../common/refresh-icon.svg");
 
 export default function PreviousBetDashboard(props) {
+    const [ appState ] = useAppState();
+    const [ appData ] = useAppData();
 
     return(
         <div className="flex-cols previous-bets-dashboard">
@@ -17,13 +21,13 @@ export default function PreviousBetDashboard(props) {
                         <th scope="col">Time</th>
                         <th scope="col">Address</th>
                         <th scope="col">Selected Fields</th>
-                        <th scope="col">Total Funds Placed ({props.selectedUnit.label})</th>
+                        <th scope="col">Total Funds Placed ({appState.selectedUnit.label})</th>
                         <th scope="col">Number Drawn</th>
                         <th scope="col">Result</th>
                     </tr>
                 </thead>
                 <tbody>
-                {props.lastSpins.length ? props.lastSpins.map((s, index)=> 
+                {appData.lastSpins.length ? appData.lastSpins.map((s, index)=> 
                     <SingleBet
                         key={index}
                         index={index}
@@ -38,7 +42,7 @@ export default function PreviousBetDashboard(props) {
                 </tbody>
             </table>
             </div>
-            <div className="refresh-button-container">
+            {/* <div className="refresh-button-container">
                 <button type="button" className="btn btn-primary col-md-12 refresh-button" onClick={props.refreshPreviousBets}>
                     <span>REFRESH</span>
                     <svg
@@ -48,7 +52,7 @@ export default function PreviousBetDashboard(props) {
                         height={18}
                     />
                 </button>
-            </div>
+            </div> */}
             {Web3Wrapper._isUserContractOwner && 
             <div className="col-lg-6 offset-lg-3 col-md-8 offset-md-2 refresh-button-container">
                 <button type="button" className="btn btn-primary col-md-12" onClick={() => Web3Wrapper._getBalance()}>GET BALANCE</button>

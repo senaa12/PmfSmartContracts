@@ -1,46 +1,53 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
+import classNames from "classnames";
 import SingleBet from "./singleBet/singleBet";
-import EthereumValueFetcher from "../../utilities/ethereumValueFetcher";
-import Web3Wrapper from "../../utilities/web3Wrapper";
+import web3Wrapper from "../../utilities/web3Wrapper";
+import { useAppData, useAnimations } from "../../entities";
 
 import "./currentBetDashboard.scss";
 
 export default function CurrentBetDashboard(props) {
+    const [ appData, { 
+        removeCurrentSelection, 
+        updateCurrentSelectionSpinAmounts } ] = useAppData();
+    const [ animations, { toggleWarningAnimation }] = useAnimations();
+
+    const updateSpinAmounts = useCallback((newAmount, index) => updateCurrentSelectionSpinAmounts(newAmount, index));
+    const removeSelection = useCallback((index) => removeCurrentSelection(index));
+    const endAnimation = useCallback(() => toggleWarningAnimation(false));
+
     const [amountSum, setAmountSum] = useState(0);
     useEffect(() => {
-        if(!props.amounts || !props.amounts.length){
+        if(!appData.currentSelectedAmounts || !appData.currentSelectedAmounts.length){
             return;
         }
         let sum = 0;
-        props.amounts.forEach(el => sum += parseInt(el));
-        setAmountSum(props.web3Wrapper._toCurrencyValue(sum));
-    }, [props.amounts, props.web3Wrapper._selectedUnit])
+        appData.currentSelectedAmounts.forEach(el => sum += parseInt(el));
+        setAmountSum(web3Wrapper._toCurrencyValue(sum));
+    }, [appData.currentSelectedAmounts, web3Wrapper._selectedUnit]);
 
-    useEffect(() => {
-        if(props.warningAnimation) {
-            setTimeout(() => props.showWarningAnimation(false), 10000);
-        }
-    }, [props.warningAnimation])
+    const warningClassname = classNames("warning-animation", { showWarningAnimation: animations.warningAnimation });
 
     return(
         <div className="flex-cols current-bets-dashboard">
-            {props.selectedIDs.length ? 
+            {appData.currentSelectedIDs.length ? 
                 <>
                 <div>
-                {props.selectedIDs.map((bet, index) => 
+                {appData.currentSelectedIDs.map((bet, index) => 
                     <SingleBet
                         key={index} 
-                        updateSpinAmounts={props.updateSpinAmounts} 
-                        amount={props.amounts[index]} 
+                        updateSpinAmounts={updateSpinAmounts} 
+                        amount={appData.currentSelectedAmounts[index]} 
                         index={index} 
                         bet={bet}
-                        removeSelection={props.removeSelection}
-                        selectionID={props.selectedIDs[index]}
+                        removeSelection={removeSelection}
+                        selectionID={appData.currentSelectedIDs[index]}
                      />)}
-                     <div><b>Value:</b> {Math.round(amountSum * 100) / 100}$</div>
-                     {props.warningAnimation && 
-                        <div className="warning-animation">{"You cannot have more than 4 bets!"}</div>}
-                     </div>
+                    <div><b>Value:</b> {Math.round(amountSum * 100) / 100}$</div>
+                    <div className={warningClassname} onAnimationEnd={endAnimation}>
+                        You cannot have more than 4 bets!
+                    </div>
+                </div>
                 <button type="button" className="btn btn-primary" onClick={props.spinWheel}>SPIN WHEEL</button> 
                 </>
                 : <div className="no-selections">NO SELECTIONS</div>}
