@@ -1,4 +1,5 @@
 import React, {useState, useEffect, useRef, useCallback} from "react";
+import classNames from "classnames";
 import { Units } from "../../../common/enums";
 
 import "./unitsDropdown.scss";
@@ -27,11 +28,13 @@ function OusideClickHandler(props) {
 }
 
 function DropdownItem(props) {
-    let customClass = "dropdown-item-custom";
-    customClass += props.index === 0 ? " first" : "";
-    return (<div className={customClass} onClick={() => props.handleUnitClick(props.unit) }>
-        {props.unit.label}
-    </div>);
+    const customClass = classNames("dropdown-item-custom", { first: props.index === 0 });
+
+    return (
+        <div className={customClass} onClick={() => props.handleUnitClick(props.unit) }>
+            {props.unit.label}
+        </div>
+    );
 }
 
 export default function UnitsDropdown(props) {
@@ -41,17 +44,19 @@ export default function UnitsDropdown(props) {
     const dropdownRef = useRef(null);
 
     const handleUnitClick = useCallback((unit) => {
-        appState.changeSelectedUnit(unit);
+        changeSelectedUnit(unit);
         openMenu(false);
     });
+    const closeMenu = useCallback(() => openMenu(false));
+    const toogleMenu = useCallback(() => openMenu(!isMenuOpen), [isMenuOpen]);
 
     return(
         <OusideClickHandler 
-            onOutsideClick={() => openMenu(false)} 
+            onOutsideClick={closeMenu} 
             shouldAddEvenetListener={isMenuOpen}
         >
             <div className="dropdown-custom" ref={dropdownRef} >
-                <button className="btn dropdown-toggle custom-button" onClick={() => openMenu(!isMenuOpen)}>
+                <button className="btn dropdown-toggle custom-button" onClick={toogleMenu}>
                     {appState.selectedUnit.label}
                 </button>
                 {isMenuOpen && <div className="dropdown-content">
