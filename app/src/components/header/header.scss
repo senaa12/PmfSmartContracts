@@ -13,9 +13,19 @@
     @media (max-width: $mobile-resolution-breakpoint){
         display: none;
     }
+
+    .address-holder, .balance-holder{
+        display: flex;
+    }
      
-    .address, .balance {
+    .address {
+        font-weight: 550; 
+    }
+    .balance{
         font-weight: 550;
+        max-width: 130px !important;
+        text-overflow: ellipsis;
+        overflow: hidden;
     }
 }
 

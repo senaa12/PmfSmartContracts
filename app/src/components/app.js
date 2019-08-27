@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useCallback } from "react";
 import web3Wrapper from '../utilities/web3Wrapper';
 
 import { AppState } from '../common/enums';
@@ -14,7 +14,7 @@ import Portal from "./portal/portal";
 import "./app.scss";
 
 export default function App() {
-    const [appState, { setAppState, setErrorMessage }] = useAppState();
+    const [appState, { setAppState, setErrorMessage, setUserAddress }] = useAppState();
     const [animations , { toggleSpinResultAnimation, toggleWarningAnimation }] = useAnimations();
     const [ portal, { openPortal }] = usePortal();
     const [appData, {
@@ -32,16 +32,22 @@ export default function App() {
     });
 
     useEffect(() => {
-        web3Wrapper._initialization(eventResultCallBack, appState.selectedUnit.value)
+        web3Wrapper._initialization(eventResultCallBack, appState.selectedUnit.value, setUserAddress)
             .then(res =>
             {
                 if(!res.success) {
                     setAppState(AppState.ErrorWhenInitializing);
                     setErrorMessage(res.errorMessage);
-                } else {
-                    refreshAllData();
-                    setAppState(AppState.SuccessfulInitialization);
-                }
+                    return;
+                } else if(res.errorMessage){
+                    openPortal({
+                        showPortal: true,
+                        portalContent: res.errorMessage,
+                        portalTitle: "Wrong network!"
+                    })
+                } 
+                refreshAllData();
+                setAppState(AppState.SuccessfulInitialization);
             }).catch(err => {
                 setAppState(AppState.ErrorWhenInitializing);
                 setErrorMessage(err.message);
@@ -88,7 +94,7 @@ export default function App() {
         <div className="app">
             <Portal />             
                 {!(appState.intializationState == AppState.IsNotInitialized) && <>
-                    <Header />
+                    <Header refreshAllData={refreshAllData} />
                     <div className="not-supported-message">Application is not supported for mobile devices</div>
                     <div className="app-body">
                     {appState.intializationState == AppState.SuccessfulInitialization ?  

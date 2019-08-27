@@ -1,6 +1,5 @@
 import React, { useCallback } from "react";
 import classNames from "classnames";
-import web3Wrapper from "../../utilities/web3Wrapper";
 
 import "./header.scss";
 import logo from "../../common/roulette.png";
@@ -34,10 +33,10 @@ export default function Header(props) {
                 <span className={appNameClassName}>CRYPTO ROULETTE</span>
             </a>
             <div className="holder">
-                <div className="address-holder">Address: <span className="address">{web3Wrapper._userAddress}</span></div>
-                <div className="balance-holder">Balance: <span className="balance">{Math.round(appData.userBalance * 100) / 100}</span> <span>{appState.selectedUnit.label}</span></div>
+                <div className="address-holder">Address: <div className="address">{appState.userAddress}</div></div>
+                <div className="balance-holder">Balance: <div className="balance">{Math.round(appData.userBalance * 100) / 100}</div> <span>{appState.selectedUnit.label}</span></div>
             </div>
-            <UnitsDropdown />
+            <UnitsDropdown refreshAllData={props.refreshAllData} />
         </div>
     );
 }

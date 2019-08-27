@@ -28,10 +28,10 @@ function OusideClickHandler(props) {
 }
 
 function DropdownItem(props) {
-    const customClass = classNames("dropdown-item-custom", { first: props.index === 0 });
+    const onClick = useCallback(() => props.handleUnitClick(props.unit));
 
     return (
-        <div className={customClass} onClick={() => props.handleUnitClick(props.unit) }>
+        <div className={"dropdown-item-custom"} onClick={onClick}>
             {props.unit.label}
         </div>
     );
@@ -45,10 +45,13 @@ export default function UnitsDropdown(props) {
 
     const handleUnitClick = useCallback((unit) => {
         changeSelectedUnit(unit);
+        props.refreshAllData();
         openMenu(false);
     });
     const closeMenu = useCallback(() => openMenu(false));
     const toogleMenu = useCallback(() => openMenu(!isMenuOpen), [isMenuOpen]);
+
+    const buttonClassname = classNames({ dropdownIsOpen: isMenuOpen }, "btn dropdown-toggle custom-button");
 
     return(
         <OusideClickHandler 
@@ -56,7 +59,7 @@ export default function UnitsDropdown(props) {
             shouldAddEvenetListener={isMenuOpen}
         >
             <div className="dropdown-custom" ref={dropdownRef} >
-                <button className="btn dropdown-toggle custom-button" onClick={toogleMenu}>
+                <button className={buttonClassname} onClick={toogleMenu}>
                     {appState.selectedUnit.label}
                 </button>
                 {isMenuOpen && <div className="dropdown-content">

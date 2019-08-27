@@ -12,9 +12,10 @@ class Web3Wrapper {
         this._selectedUnit;
     }
 
-    async _initialization(eventCallBack, selectedUnit) {
+    async _initialization(eventCallBack, selectedUnit, setUserAddress) {
         //#region UserRecognition
         // checking if browser is injected with metamask (ethereum)
+        let errorMessage;
         if (window.ethereum) {
             try {
                 await window.ethereum.enable();
@@ -23,7 +24,7 @@ class Web3Wrapper {
                 return { success: false, errorMessage: JSON.stringify(e) };
             } finally {
                 if(window.ethereum.networkVersion != "3" && !appSettings._isDevelopment) {
-                    return { success: false, errorMessage: `Select Ropsten testnet in Metamask menu or application wont work` };
+                    errorMessage = "Select Ropsten testnet in Metamask menu or application wont work.";
                 }
             }
             
@@ -44,6 +45,7 @@ class Web3Wrapper {
 
         //#region UserData
         this._userAddress = this._web3.givenProvider.selectedAddress;
+        setUserAddress(this._userAddress);
         //#endregion
 
         //#region SmartContractData
@@ -58,7 +60,7 @@ class Web3Wrapper {
             return { success: false, errorMessage: "No Address for smart contract provided" };
         }
         this._contract = this._web3.eth.Contract(this._testContractAbi.abi, 
-            !appSettings._isDevelopment ? "0x3bfff2564bd4527534fd985eed04b20500a9481d" : appSettings._contractAddress);
+            !appSettings._isDevelopment ? "0x305f369c5dcad17d23da504ef8c562beefd925fe" : appSettings._contractAddress);
         
         this._contract.events.SpinResultEvent(
             { 
@@ -75,7 +77,7 @@ class Web3Wrapper {
         }
 
         this._selectedUnit = selectedUnit;
-        return { success: true };
+        return { success: true, errorMessage: errorMessage };
         //#endregion 
     }
 
@@ -181,10 +183,12 @@ class Web3Wrapper {
 
     _resultEventMapper(returnValues) {
         return {
-            // placedBetsID: this._convertHexToDecimal(returnValues.selectedItemID),
-            amountWon: this._convertHexToDecimal(returnValues.amountWon),
+            placedBetsID: this._convertHexToDecimal(returnValues.selectedItemID),
+            amountWon: this._customFromWei(returnValues.amountWon),
             address: returnValues.sender,
-            isWinningSpin: returnValues.won
+            isWinningSpin: returnValues.won,
+            selectedNumber: this._convertHexToDecimal(returnValues.selectedNumber),
+
         }
     }
 

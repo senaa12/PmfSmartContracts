@@ -33,7 +33,9 @@ contract CryptoRoulette {
     event SpinResultEvent (
         address indexed sender,
         bool won,
-        uint256 amountWon
+        uint256 amountWon,
+        uint[] selectedItemID,
+        uint selectedNumber
     );
 
     function placeBet(uint[] memory betIDs, uint[] memory bets) public payable {
@@ -52,7 +54,7 @@ contract CryptoRoulette {
             isWinningSpin: payoutAmount != 0
         });
         _lastSpins.push(newSpin);
-        emit SpinResultEvent(msg.sender, payoutAmount != 0, payoutAmount);
+        emit SpinResultEvent(msg.sender, payoutAmount != 0, payoutAmount, betIDs, selectedNumber);
     }
 
     function wheelSpin() public returns (uint) {
@@ -85,12 +87,6 @@ contract CryptoRoulette {
 
     function payout() public onlyOwner payable {
         return msg.sender.transfer(address(this).balance);
-    }
-
-    modifier minBet() {
-        // minimum amount ether required for player to place bet
-        require(msg.value == .01 ether, "Minimal ether required");
-        _;
     }
 
     function calculatePayout(uint spinResult, uint[] memory placedBetsID, uint[] memory bets)  private pure returns (uint) {
@@ -134,13 +130,16 @@ contract CryptoRoulette {
             else if(placedBetsID[i] == 47 && spinResult % 2 == 1) {
                 payout += bets[i] * 2;
             }
-            // red
-            else if(placedBetsID[i] == 45 && false) {
-                payout += bets[i] * 2;
+            // red of black
+            else if(placedBetsID[i] == 45 &&
+                (spinResult % 2 == 1 && (spinResult > 0 && spinResult < 11 || spinResult > 18 && spinResult < 29) ||
+                spinResult % 2 == 0 && (spinResult > 10 && spinResult < 19 || spinResult > 29))) {
+                    payout += bets[i] * 2;
             }
-            // black
-            else if(placedBetsID[i] == 46 && false) {
-                payout += bets[i] * 2;
+            else if(placedBetsID[i] == 46 &&
+                !(spinResult % 2 == 1 && (spinResult > 0 && spinResult < 11 || spinResult > 18 && spinResult < 29) ||
+                spinResult % 2 == 0 && (spinResult > 10 && spinResult < 19 || spinResult > 29))){
+                    payout += bets[i] * 2;
             }
         }
         return payout;

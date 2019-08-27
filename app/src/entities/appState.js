@@ -4,7 +4,8 @@ import web3Wrapper from "../utilities/web3Wrapper";
 export const initialState = {
     intializationState: AppState.IsNotInitialized,
     errorMessage: "",
-    selectedUnit: Units.Ether
+    selectedUnit: Units.Ether,
+    userAddress: ""
 };
 
 export const setAppState = appState => newState => {
@@ -18,4 +19,8 @@ export const setErrorMessage = appState => newMessage => {
 export const changeSelectedUnit = appState => newUnit => {
     web3Wrapper._setUnit(newUnit.value)
     appState.setState({ ...appState, selectedUnit: newUnit });
+}
+
+export const setUserAddress = appState => address => {
+    appState.setState({ ...appState, userAddress: address });
 }
