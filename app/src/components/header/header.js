@@ -36,7 +36,7 @@ export default function Header(props) {
                 <div className="address-holder">Address: <div className="address">{appState.userAddress}</div></div>
                 <div className="balance-holder">Balance: <div className="balance">{Math.round(appData.userBalance * 100) / 100}</div> <span>{appState.selectedUnit.label}</span></div>
             </div>
-            <UnitsDropdown refreshAllData={props.refreshAllData} />
+            <UnitsDropdown />
         </div>
     );
 }

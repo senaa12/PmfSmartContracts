@@ -6,6 +6,13 @@ App link: https://masterthesisv2.firebaseapp.com/.
 
 ![Crypto roulette](./images/app-screen.PNG)
 
+Key dependencies:
+
+* React
+* React-entities
+* Web3js
+* Webpack
+
 ## Author
 
 * **Luka Seničić** 

@@ -36,4 +36,10 @@
         font-size: 20px;
         min-width: 70px;
     }
+
+    .custom-form-control::-webkit-outer-spin-button,
+    .custom-form-control::-webkit-inner-spin-button { 
+        -webkit-appearance: none; 
+        margin: 0; 
+      }
 }

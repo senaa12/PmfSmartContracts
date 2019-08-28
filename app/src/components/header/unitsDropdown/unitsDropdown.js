@@ -4,7 +4,7 @@ import { Units } from "../../../common/enums";
 
 import "./unitsDropdown.scss";
 
-import { useAppState } from "../../../entities";
+import { useAppState, useAppData } from "../../../entities";
 
 function OusideClickHandler(props) {
     const wrapperRef = useRef(null);
@@ -39,13 +39,14 @@ function DropdownItem(props) {
 
 export default function UnitsDropdown(props) {
     const [ appState, { changeSelectedUnit }] = useAppState();
+    const [ appData, { refreshAllData }] = useAppData();
 
     const [isMenuOpen, openMenu] = useState(false);
     const dropdownRef = useRef(null);
 
     const handleUnitClick = useCallback((unit) => {
         changeSelectedUnit(unit);
-        props.refreshAllData();
+        refreshAllData();
         openMenu(false);
     });
     const closeMenu = useCallback(() => openMenu(false));

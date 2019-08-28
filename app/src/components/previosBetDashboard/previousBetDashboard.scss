@@ -44,4 +44,8 @@
             max-height: 800px;
         }
     }
+
+    .table th, .table td{
+        border-top: none;
+    }
 }

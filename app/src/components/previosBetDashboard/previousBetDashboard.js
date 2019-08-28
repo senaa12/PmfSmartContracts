@@ -11,7 +11,7 @@ const refreshIcon = require("../../common/refresh-icon.svg");
 export default function PreviousBetDashboard(props) {
     const [ appState ] = useAppState();
     const [ appData ] = useAppData();
-
+    
     return(
         <div className="flex-cols previous-bets-dashboard">
             <div className="table-holder">
@@ -27,7 +27,8 @@ export default function PreviousBetDashboard(props) {
                     </tr>
                 </thead>
                 <tbody>
-                {appData.lastSpins.length ? appData.lastSpins.map((s, index)=> 
+                {appData.lastSpins.length ? 
+                    appData.lastSpins.map((s, index)=> 
                     <SingleBet
                         key={index}
                         index={index}
@@ -38,7 +39,7 @@ export default function PreviousBetDashboard(props) {
                         selectedNumber={s.selectedNumber}
                         totalFundsPlaced={s.totalFundsPlaced}
                     />) : 
-                    <tr><td className="no-selections" colSpan={6}>NO PREVIOUS BETS</td></tr>}
+                    !appData.refreshInProgress && <tr><td className="no-selections" colSpan={6}>NO PREVIOUS BETS</td></tr>}
                 </tbody>
             </table>
             </div>

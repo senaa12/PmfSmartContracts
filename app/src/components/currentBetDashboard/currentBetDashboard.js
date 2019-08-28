@@ -22,7 +22,7 @@ export default function CurrentBetDashboard(props) {
             return;
         }
         let sum = 0;
-        appData.currentSelectedAmounts.forEach(el => sum += parseInt(el));
+        appData.currentSelectedAmounts.forEach(el => sum += el ? parseInt(el) : 0);
         setAmountSum(web3Wrapper._toCurrencyValue(sum));
     }, [appData.currentSelectedAmounts, web3Wrapper._selectedUnit]);
 

@@ -16,20 +16,12 @@ import "./app.scss";
 export default function App() {
     const [appState, { setAppState, setErrorMessage, setUserAddress }] = useAppState();
     const [animations , { toggleSpinResultAnimation, toggleWarningAnimation }] = useAnimations();
-    const [ portal, { openPortal }] = usePortal();
+    const [portal, { openPortal }] = usePortal();
     const [appData, {
-        setLastSpins, 
         setAmounts, 
         setSelectedIDs,
-        setUserBalance
+        refreshAllData
     }] = useAppData();
-
-    const getUserBalance = useCallback(async () => { await web3Wrapper._getCurrentUserBalance().then(setUserBalance).catch(console.error); });
-    const getLastSpins = useCallback(async () => { await web3Wrapper._getLastSpins().then(setLastSpins).catch(console.error); });
-    const refreshAllData = useCallback(async () => {
-        await getUserBalance();
-        await getLastSpins();
-    });
 
     useEffect(() => {
         web3Wrapper._initialization(eventResultCallBack, appState.selectedUnit.value, setUserAddress)
@@ -45,9 +37,8 @@ export default function App() {
                         portalContent: res.errorMessage,
                         portalTitle: "Wrong network!"
                     })
-                } 
-                refreshAllData();
-                setAppState(AppState.SuccessfulInitialization);
+                }
+                refreshAllData(setAppState);
             }).catch(err => {
                 setAppState(AppState.ErrorWhenInitializing);
                 setErrorMessage(err.message);
@@ -61,13 +52,13 @@ export default function App() {
         }
         else {
             toggleSpinResultAnimation(false);
-            refreshAllData();
             const spin = web3Wrapper._resultEventMapper(ev.returnValues);
             openPortal({
                 showPortal: true,
                 portalContent: <Result resultData={spin} />,
                 portalTitle: "Your transaction is processed!"
             });
+            refreshAllData();
         }  
     });
 
@@ -94,7 +85,7 @@ export default function App() {
         <div className="app">
             <Portal />             
                 {!(appState.intializationState == AppState.IsNotInitialized) && <>
-                    <Header refreshAllData={refreshAllData} />
+                    <Header />
                     <div className="not-supported-message">Application is not supported for mobile devices</div>
                     <div className="app-body">
                     {appState.intializationState == AppState.SuccessfulInitialization ?  

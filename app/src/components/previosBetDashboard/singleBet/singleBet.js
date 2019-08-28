@@ -12,12 +12,13 @@ export default function SingleBet(props) {
             animationName: "animate",
             animationDuration: "1s",
             animationDelay: `${delay}ms`,
-            animationTimingFunction: "ease-out" 
+            animationTimingFunction: "ease-out",
+            animationFillMode: "forwards"
         };
     }, [])
     
 
-    const rowClassName = classNames("anate-row", { dark: props.index % 2 });
+    const rowClassName = classNames("custom-row", { dark: props.index % 2 });
     return(
         <tr className={rowClassName} style={style}>
             <th scope="row">{props.time.toLocaleString()}</th>
