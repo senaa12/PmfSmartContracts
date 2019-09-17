@@ -33,8 +33,8 @@ export default function Header(props) {
                 <span className={appNameClassName}>CRYPTO ROULETTE</span>
             </a>
             <div className="holder">
-                <div className="address-holder">Address: <div className="address">{appState.userAddress}</div></div>
-                <div className="balance-holder">Balance: <div className="balance">{Math.round(appData.userBalance * 100) / 100}</div> <span>{appState.selectedUnit.label}</span></div>
+                <div className="address-holder">Address:<div className="address"> {appState.userAddress}</div></div>
+                <div className="balance-holder">Balance:<div className="balance"> {Math.round(appData.userBalance * 100) / 100}</div> <span>{appState.selectedUnit.label}</span></div>
             </div>
             <UnitsDropdown />
         </div>

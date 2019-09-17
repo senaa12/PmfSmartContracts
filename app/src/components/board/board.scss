@@ -10,7 +10,7 @@
     border-radius: 32px;
     padding: 20px 10px;
     height: fit-content;
-    font: 2vw Arial, sans-serif;
+    font: px-to-rem(18px) Arial, sans-serif;
     background-color: $dark-green;
     border-color: $white;
     color: $white;
@@ -94,7 +94,7 @@
     }
 
     .zero-height-fix{
-        height: 50px;
+        height: calc(1 / 3 * 90%);
         border-color: $white;
         color: $white;
     }

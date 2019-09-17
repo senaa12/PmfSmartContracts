@@ -19,6 +19,11 @@ $red: #e0080b;
 $black: #000;
 $white: #fff;
 
+@function px-to-rem($value, $root-value: 14px) {
+    @return 1rem * ($value / $root-value);
+ 
+} 
+
 @mixin color-shades($color, $name) {
     --#{$name}-3: #{rgba($color, 0.03)};
     --#{$name}-6: #{rgba($color, 0.06)};

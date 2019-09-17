@@ -30,8 +30,9 @@ function OusideClickHandler(props) {
 function DropdownItem(props) {
     const onClick = useCallback(() => props.handleUnitClick(props.unit));
 
+    const itemClassname = classNames({first: props.index == 0}, "dropdown-item-custom")
     return (
-        <div className={"dropdown-item-custom"} onClick={onClick}>
+        <div className={itemClassname} onClick={onClick}>
             {props.unit.label}
         </div>
     );
@@ -39,14 +40,12 @@ function DropdownItem(props) {
 
 export default function UnitsDropdown(props) {
     const [ appState, { changeSelectedUnit }] = useAppState();
-    const [ appData, { refreshAllData }] = useAppData();
 
     const [isMenuOpen, openMenu] = useState(false);
     const dropdownRef = useRef(null);
 
     const handleUnitClick = useCallback((unit) => {
         changeSelectedUnit(unit);
-        refreshAllData();
         openMenu(false);
     });
     const closeMenu = useCallback(() => openMenu(false));

@@ -18,6 +18,8 @@
         justify-content: space-between;
         align-content: flex-start;
 
+        font-size: px-to-rem(15px);
+
         @media (max-width: $mobile-resolution-breakpoint){
             display: none;
         }
