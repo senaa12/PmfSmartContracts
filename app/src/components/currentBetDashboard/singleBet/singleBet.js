@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { mapperBoardIdToDisplayNameMapper } from "../../../common/helpFunctions";
 
 import "./singleBet.scss";

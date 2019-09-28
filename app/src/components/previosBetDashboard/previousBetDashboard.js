@@ -4,14 +4,11 @@ import Web3Wrapper  from "../../utilities/web3Wrapper";
 import "./previousBetDashboard.scss";
 import SingleBet from "./singleBet/singleBet";
 
-import { useAppState, useAppData } from "../../entities";
-
-const refreshIcon = require("../../common/refresh-icon.svg");
+import { useAppData } from "../../entities";
 
 export default function PreviousBetDashboard(props) {
-    const [ appState ] = useAppState();
     const [ appData ] = useAppData();
-    console.log(appData.lastSpins)
+
     return(
         <div className="flex-cols previous-bets-dashboard">
             <div className="table-holder">

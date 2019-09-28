@@ -24,6 +24,8 @@
 \definecolor{green}{rgb}{0.25, 0.65, 0.25}
 \definecolor{yellow}{rgb}{0.80, 0.77, 0.30}
 
+
+
 \lstdefinelanguage{solidity}{
   keywordstyle=\color{blue},
   morekeywords={function, memory, pure, public, msg, blockhash, block, this, payable, modifier},
@@ -59,6 +61,7 @@
    numbers=none
 }
 
+
 \usepackage{graphicx} % kad stavis ovo [pdftex] ispred baci error
 \graphicspath{ {./images/} }
 \usepackage{float}
@@ -86,9 +89,9 @@
 \pagestyle{headings}
 % uz paket fancyhdr mogu se lako kreirati fancy zaglavlja i podnozja
 
-\title{Pametni ugovori  CRYPTO-ROULETTE}
+\title{Pametni ugovori \\ crypto roulette}
 \author{Luka Seničić}
-\advisor{prof.dr.sc. Matija Kazalicki}  % obavezno s titulom (prof. dr. sc ili doc. dr. sc.)
+\advisor{izv.prof.dr.sc. Matija Kazalicki}  % obavezno s titulom (prof. dr. sc ili doc. dr. sc.)
 \date{rujan 2019.}  % oblika mjesec, godina
 
 % Moguce je unijeti i posvetu
@@ -106,7 +109,7 @@
 \chapter{Uvod}
 \section{Motivacija}
 
-Satoshi Nakamoto, pseudonim čovjeka koji je 2009. izumio prvu kriptovalutu Bitcoin. U trenutku pisanja ovoga rada Bitcoin vrijedi 10.831,79\$, a još uvijek nije otkriven stvaran identitet njegova izumitelja. Razlog tome je motiv koji stoji iza Satoshijeva izuma, a to jest izmjena cijelog financijskog sustava ukidanjem svih posrednika, tj. banaka. Po samoj vrijednosti tog digitalnog novca moglo bi se zaključiti da ta ideja ima smisla. Nadogradnjom osnovne tehnologije, blockchaina, dokazano se može zamjeniti posrednik gotovo bilo kojem sustavu. Izbacivanje posrednika znači nužna transparentnost sustava tako da sve uključene strane mogu potvrditi jednoznačnu istinu. To je glavno stvojstvo koje razlikuje ovu ideju od trenutnog stanja i s njenom realizacijom bi brojne firme i tijela postala nepotrebna. Samo neke od ideja su: sigurni razni zapisi o nama npr. životopisa, medicinski karton, zemljišne knjige, također transparentna burza, sigurni crowdfunding i glasački sistem itd. Sve to se može implementirati programiranjem digitalnog novca pomoću \emph{pametnih ugovora}. Gornji argumenti daju dodatno na težini već ionako bitnom procesu razvoja kriptovaluta i upravo ta mogućnost da nam kriptovalute postanu svakodnevnica mi je glavna motivacija ovoga rada. 
+Satoshi Nakamoto, pseudonim čovjeka koji je 2009. izumio prvu kriptovalutu Bitcoin, u trenutku pisanja ovoga rada jedan Bitcoin vrijedi 10.831,79\$, a još uvijek nije otkriven stvaran identitet njegova izumitelja. Razlog tome je motiv koji stoji iza Satoshijeva izuma, a to jest izmjena cijelog financijskog sustava ukidanjem svih posrednika, tj. banaka. Po samoj vrijednosti tog digitalnog novca moglo bi se zaključiti da ta ideja ima smisla. Malom nadogradnjom osnovne tehnologije, blockchaina, možemo ne samo promjeniti cijeli financijski sustav već i puno toga više. To nam omogućuju \emph{pametni ugovori}, tj. računalni programi koje može napisati bilo koji korisnik kriptovalute i koji se izvršavaju na blockchainu. U radu ćemo iz svojstava pametnih ugovora vidjeti kakve nam opcije oni otvaraju. Taj argument dodatno daje na težini već ionako bitnom procesu razvoja kriptovaluta i upravo ta mogućnost da nam kriptovalute postanu svakodnevnica mi je glavna motivacija ovoga rada. 
 
 \section{Povijest}
 
@@ -116,18 +119,18 @@ Prvi puta izraz pametni ugovor upotrebljava Nick Szabo 1994. godine\cite{smart_c
 Pametni ugovor je digitalni transakcijski protokol koji izvršava odredbe ugovora. Ciljevi dizajna pametnog ugovora su zadovoljavanje uobičajenih zahtjeva u ugovorima (načine plaćanjam, anonimnost itd.) i minimiziranje potrebe za povjerljivom trećom osobom.
 \end{definicija}
 
-Za primjer pametnog ugovora navodi DigitalCash (prva digitalna valuta objavljena još 1982. godine \cite{digi_cash}). Szabo vrlo ambiciozno širi svoju ideju na razne načine. Koristi pametne ugovore za izvršavanje kompleksnih načina plaćanja uz malu naknadu i jednostavnu izvedbu. Kao primjer čak daje i implemetaciju pametnog ugovora u fizički objekt. On bi ugradio pametni ugovor u auto za iznajmljivanje koji računa koliku udaljenost auto smije proći s obzirom na sredstva koja je korisnik platio. Odmah se primjeti koliko je zapravo njegova ideja bila ambiciozna, no u to vrijeme nije postojala potrebna tehnologija tako da se prva implementacija stvarnih pametnih ugovora desila tek 2013. godine kada je Vitalik Buterin predstavio globalno distribuiranu računalnu mrežu Ethereum.
+Za primjer pametnog ugovora navodi DigitalCash (prva digitalna valuta objavljena još 1982. godine \cite{digi_cash}). Szabo vrlo ambiciozno širi svoju ideju na razne načine. Koristi pametne ugovore za izvršavanje kompleksnih načina plaćanja uz malu naknadu i jednostavnu izvedbu. Kao primjer čak daje i implemetaciju pametnog ugovora u fizički objekt. On bi ugradio pametni ugovor u auto za iznajmljivanje tako da taj ugovor računa koliku udaljenost auto smije proći s obzirom na sredstva koja je korisnik platio. Odmah se primjeti koliko je zapravo njegova ideja bila ambiciozna, no u to vrijeme nije postojala potrebna tehnologija tako da se prva implementacija stvarnih pametnih ugovora desila tek 2013. godine kada je Vitalik Buterin predstavio globalno distribuiranu računalnu mrežu Ethereum.
 
 \section{Pregled sadržaja}
 
-Ovaj rad je zamišljen da bude praktična implementacija jedne decentralizirane aplikacije nazvane Crypto Roullete.
+Ovaj rad je zamišljen da bude praktična implementacija jedne decentralizirane aplikacije nazvane Crypto Roulette.
 
 \begin{definicija}
 \label{def:dapp}
-Decentralizirana aplikacija je open-source aplikacija koja se izvršava samostalno na nekoj blockchain mreži i kao takva, ne može biti kontrolirana od strane jednog entiteta. 
+Decentralizirana aplikacija je open source aplikacija koja se izvršava samostalno na nekoj blockchain mreži i kao takva, ne može biti kontrolirana od strane jednog entiteta. 
 \end{definicija}
 
-Definicija sama za sebe ne znači previše i njeno ćemo objašnjavanje ostaviti za kasnije. Pisani dio rada je podjeljen na teoriju (poglavlja 2-4) i priču o samoj implementaciji (poglavlje 5). Teorijski dio rada ćemo pokušati kronološki podjeliti i pričati samo o stvarima koje ćemo kasnije koristiti i koje su bitne za temu ovoga rada. Dakle u početku se iznose osnovne definicije i tehnologije od kojih su građene sve kriptovalute da bi se ukratko predstavio Bitcoin. Nadalje ćemo detaljnije promotriti Ethereum i teoriju pametnih ugovora i na kraju implementaciju. 
+Definicija sama za sebe ne znači previše i njeno ćemo objašnjavanje ostaviti za kasnije. Pisani dio rada je podjeljen na teoriju (poglavlja 2-4) i priču o samoj implementaciji (poglavlje 5). Teorijski dio rada ćemo pokušati kronološki podjeliti i pričati samo o stvarima koje ćemo kasnije koristiti i koje su bitne za temu ovoga rada. Dakle u početku se iznose osnovne definicije i tehnologije od kojih su građene sve kriptovalute da bi se ukratko predstavio Bitcoin. Nadalje ćemo detaljnije promotriti Ethereum i teoriju pametnih ugovora te na kraju implementaciju. 
 
 \chapter{Blockchain}
 Struktura podataka koja je omogućila pojavu svih kriptovaluta je blockchain. Predstavljen je u istom radu kao i Bitcoin\cite{bitcoin}, a njegova definicija glasi:
@@ -137,19 +140,19 @@ Struktura podataka koja je omogućila pojavu svih kriptovaluta je blockchain. Pr
 Blockchain je struktura podataka koja se sastoji od blokova povezanih hash pointerima u jednosmjerni lanac. Glavna svojstva blockchaina su \textbf{transparentnost}, \textbf{nepromjenjivost} i \textbf{distribuiranost}. 
 \end{definicija}
 
-U ovom poglavlju ću navesti prvo osnovne kriptografske alate koji su poznati dugi niz godina, a kasnije i objasniti kako su oni uklopljeni u strukturu novih tehnologija:  blockchaina i Bitcoina.
+U ovom poglavlju ćemo navesti prvo osnovne kriptografske alate koji su poznati dugi niz godina, a kasnije i objasniti kako su oni uklopljeni u strukturu novih tehnologija:  blockchaina i Bitcoina.
 
 \section{Osnovna kriptografija}
-Jedinstvenost blockchaina je upravo u tri ključna svojstva koja su naglašena u prethodnoj definiciji. Svako svojstvo za sebe je prilično jednostavno za izvesti, no ako želimo sva skupa dolazimo do problema. U blockchainu taj problem je rješen kombiniranjem raznih tehnika kriptografije. Dva osnovna kriptografska alata korištena su hash funckije i digitalni potpis. 
+Jedinstvenost blockchaina je upravo u tri ključna svojstva koja su naglašena u prethodnoj definiciji. Svako svojstvo za sebe je prilično jednostavno za izvesti, no ako želimo sva skupa dolazimo do problema. Kod blockchaina taj problem je rješen kombiniranjem raznih tehnika kriptografije. Dva osnovna kriptografska alata korištena su hash funkcije i digitalni potpis. 
 
 \begin{definicija} 
-Hash funkcija je bilo koje preslikavanje $f\colon X \to Y$ koje za niz proizvoljne duljine daje izlaz fiksne duljine u vremenu $O(n)$, $n \in \mathbb{N}$. 
+Hash funkcija je bilo koje preslikavanje $f\colon X \to Y$ koje za polje znakova proizvoljne duljine daje polje fiksne duljine $n$, u vremenu $O(n)$, $n \in \mathbb{N}$. 
 \end{definicija}
 
 Prethodna definicija je prilično općenita i postoji velik broj funkcija koje ju zadovoljavaju. Zato ćemo definiciju dodatno proširiti tako da dobijemo funkcije samo koje su nama zanimljive i korisne za kasnije.
 
 \begin{definicija}
-Hash funkcija je bilo koje preslikavanje $f\colon X \to Y$ koje za niz proizvoljne duljine daje izlaz fiksne duljine u vremenu $O(n), n \in \mathbb{N}$ i ima sljedeća svojstva:
+Hash funkcija je bilo koje preslikavanje $f\colon X \to Y$ koje za polje proizvoljne duljine daje polje fiksne duljine $n$, u vremenu $O(n), n \in \mathbb{N}$ i ima sljedeća svojstva:
 \begin{itemize}
     \item \textit{jednosmjernost} - za neki $y \in Y$ nije moguće naći $x \in X$ tako da vrijedi $f(x)=y$
     \item \textit{jednoznačnost}- za neki $x_{1} \in X$ nije moguće naći $x_{2} \in X$ tako da je $x_{1}\not=x_{2}$ i $f(x_{1}) \not= f(x_{2})$
@@ -157,9 +160,9 @@ Hash funkcija je bilo koje preslikavanje $f\colon X \to Y$ koje za niz proizvolj
 \end{itemize}
 \end{definicija}
 
-Kada kažemo "nije moguće", mislimo da nije računski isplativo, jer iz definicije imamo da hash funkcija ulaz proizvoljne duljine preslikava u u izlaz fiksne, tj. kodomena funkcije je strogo manja od njene domene, što bi značilo da moraju postojati barem neki $x_{1}, x_{2} \in X$ tako da je $f(x_{1}) = f(x_{2})$. Hash funkcije se u kriptografiji koriste za \textbf{autentikaciju poruka}, tj. dokazivanje da sadržaj poruke nije mjenjan. 
+Kada kažemo "nije moguće", mislimo da nije računski isplativo, jer iz definicije imamo da hash funkcija ulazno polje proizvoljne duljine preslikava u izlazno fiksne, tj. kodomena funkcije je strogo manja od njene domene, što bi značilo da moraju postojati barem neki $x_{1}, x_{2} \in X$ tako da je $f(x_{1}) = f(x_{2})$. Hash funkcije se u kriptografiji koriste za \textbf{autentikaciju poruka}, tj. dokazivanje da sadržaj poruke nije mjenjan. 
 
-Funkcija na koju ćemo se fokusirati zasad je \textbf{SHA-256} koja zadovoljava sva navedena svojstva u prethodnoj definiciji i za svaki ulaz daje niz od 256 bitova.
+Funkcija na koju ćemo se fokusirati je \textbf{SHA-256} koja zadovoljava sva navedena svojstva u prethodnoj definiciji i za svaki ulaz daje niz od 256 bitova.
 
 Nadalje ćemo dati definiciju drugog korištenog kriptografskog alata, a to je digitalni potpis. Kao što sama riječ kaže digitalni potpis je digitalna verzija vlastitog potpisa, tj. samo osoba može proizvesti svoj digitalni potpis, ali svi koji ga vide mogu verificirati, ili formalnije rečeno kao u\cite{bitcoincrypto}:
 
@@ -168,11 +171,11 @@ Shema digitalnog potpisa sastoji se od tri algoritma:
 \begin{itemize}
     \item \textit{generacija ključeva} - algoritam generira uređeni par koji se sastoji od privatnog i javnog ključa
     \item \textit{potpisivanje poruka} - algoritam koji pomoću privatnog ključa potpisuje proizvoljnu poruku
-    \item \textit{verifikacija potpisa} - algoritam koji pomoću javnog ključa i izvorne poruke provjerava da li je potpis stvaran
+    \item \textit{verifikacija potpisa} - algoritam koji pomoću javnog ključa i izvorne poruke provjerava da li je potpis ispravan
 \end{itemize}
 Također da iduća svojstva trebaju biti ispunjena:
 \begin{itemize}
-    \item \textit{autentifikacija} - svaka osoba pomoću mog javnog ključa može potvrditi poruku
+    \item \textit{autentifikacija} - svaka osoba pomoću javnog ključa pošiljatelja poruke može ustvrditi ispravnost
     \item \textit{nužna autorizacija} - potpis ne može biti krivotvoren
 \end{itemize}
 \end{definicija}
@@ -193,7 +196,7 @@ Hash pointer je pokazivač na mjesto u memoriji gdje se nalaze neki podaci zajed
 \caption{Hash pointer}
 \end{figure}
 
-Iz definicije se vidi da hash pointer nije ništa revolucionarno novo već samo pametna kombinacija alata koji su postojali i prije. Primjetimo da se sami podaci ne moraju kriptirati, što je ogromna prednost jer nama sama hash vrijednost podataka garantira da nije bilo promjena (naravno to daje uvjet da hash vrijednost bude sigurno spremljena). Također hash pointeri su toliko jednostavna struktura da ju možemo koristiti u implementaciji već poznatih većih struktura podataka (lista, binarno stablo i sl).
+Iz definicije se vidi da hash pointer nije ništa revolucionarno novo već samo pametna kombinacija alata koji su postojali i prije. Primjetimo da se sami podaci na koje pokazuje hash pointer ne moraju kriptirati, što je ogromna prednost jer nama sama hash vrijednost podataka garantira da nije bilo promjena (naravno uz uvjet da hash vrijednost bude sigurno spremljena). Također hash pointeri su toliko jednostavna struktura da ju možemo koristiti u implementaciji već poznatih većih struktura podataka lista, binarno stablo i sl.
 
 \begin{figure}[!]
 \centering
@@ -204,14 +207,14 @@ Iz definicije se vidi da hash pointer nije ništa revolucionarno novo već samo 
 
 Blockchain je vezana lista čije su veze hash pointeri. Očita razlika od obične vezane liste koja prozilazi iz toga da je veza hash pointer jest u tome da svaki blok sadrži informacije ne samo o sebi, već i o prijašnjem bloku. 
 
-Kombinacija transparentnosti i nepromjenjivosti, koja je spomenuta u definiciji \ref{def:block}, postignuta je pametnim korištenjem hash pointera. Da to objasnimo trebamo se zapitati što bi se desilo kada bi napadač htio promjeniti neki podatak sadržan u blockchinu. Recimo da se taj podatak nalazi u bloku indexa $k$. Ako napadač promjeni sadržaj tog bloka, tada će se razlikovati i njegova hash vrijednost, a upravo ta hash vrijednost se nalazi u bloku $k+1$. Što znači da će napadač promjeniti i sadžaj bloka $k+1$, tj. promjeniti i njegovu hash vrijednost itd. Dakle vidimo ako napadač želi sakriti svoju jednu promjenu u podacima trebat će mjenjati sve blokove koji dolaze nakon bloka u kojem je nastala promjena. Znači pod uvjetom da \textbf{sigurno spremimo hash pointer samo zadnjega bloka} možemo garantirati za ispravnost sadržaja cijelog blockchaina. No u prethodnoj definiciji blockchain je naveden kao distribuirano spremište podataka pa u takvoj situaciji nije praktično da svaki čvor mreže na kojoj se nalazi blockchain mora spremati hash poiner zadnjeg bloka jer mreža je asinkrona i lanac nije svugdje iste duljine. Tada ako uzimamo da je najdulji lanac uvijek ispravan, tj. ako je 50\% mreže iskreno tada također možemo garantirati da je blockchain siguran. Također zbog svojstva distribuiranosti i lakšeg transaporta po mreži valjalo bi i ograničiti veličinu bloka. No danas, memorija nije skup resurs, tako da u teoriji u pojedine blokove možemo spremati podatke proizvoljne veličine.
+Kombinacija transparentnosti i nepromjenjivosti, koja je spomenuta u definiciji \ref{def:block}, postignuta je pametnim korištenjem hash pointera. Da objasnimo zašto je to tako trebamo se zapitati što bi se desilo kada bi napadač htio promjeniti neki podatak napisan na blockchinu. Recimo da se taj podatak nalazi u bloku indexa $k$. Ako napadač promjeni sadržaj tog bloka, tada će se razlikovati i njegova hash vrijednost, a upravo ta hash vrijednost se nalazi u bloku $k+1$. Što znači da će napadač promjeniti i sadžaj bloka $k+1$, tj. promjeniti i njegovu hash vrijednost itd. Dakle vidimo ako napadač želi sakriti svoju jednu promjenu u podacima trebat će mjenjati sve blokove koji dolaze nakon bloka u kojem je nastala promjena. Znači pod uvjetom da \textbf{sigurno spremimo hash pointer samo zadnjega bloka} možemo garantirati za ispravnost sadržaja cijelog blockchaina. No u prethodnoj definiciji blockchain je naveden kao distribuirano spremište podataka (dakle čuva se na mreži), pa u takvoj situaciji nije praktično da svaki čvor mreže na kojoj se nalazi blockchain mora spremati hash pointer zadnjeg bloka jer mreža je asinkrona i lanac nije svugdje iste duljine. U tom slučaju ako dizajniramo komunikacijski protokol gdje svaki čvor čuva cijeli lanac i pri međusobnoj komunikaciji uzima se najdulji lanac kao ispravan, tada uz uvjet da je \textbf{50\% mreže iskreno} možemo garantirati sigurnost blockchaina. Također zbog svojstva distribuiranosti i lakšeg transaporta po mreži valjalo bi i ograničiti veličinu bloka. No danas, memorija nije skup resurs, tako da u teoriji u pojedine blokove možemo spremati podatke proizvoljne veličine.
 
 \section{Bitcoin}
 
-Danas većina ljudi pod pojmom Bitcoin na digitalni novac pomoću kojeg se obavljaju transakcije. No Bitcoin je cijela zasebna platna mreža u kojoj token služi kao sredstvo za izvršavanje transakcija. Na toj mreži se zapravo nalazi samo jedan blockchain koji sadrži popis svih transakcija koje su se ikad desile na mreži. U tehničkom smislu ta mreža je zapravo jedna \textit{peer-to-peer} mreža, što znači da nema centralne jedinice koje dijeli blockchain već svaki čvor mreže ima svoju kopiju blockchaina. On ju redovito održava i osvježuje u komunikaciji sa susjednim čvorovima. Pojedini čvor ne zna tko su mu susjedi i svaku informaciju koju dobije kompletno provjerava za sebe. U slučaju da od susjeda dobije lance različitog sadržaja, protokol pretpostavlja da je lanac najveće duljine točan. Ključna stvar koja se postiže ovakvom definicijom je decentralizacija. Na mreži žive korisnici koji komuniciraju između sebe jedino pomoću transakcija (dakle jedino što mogu jest izmjenjivati tokene) koje se konstantno zapisiju na blockchain. 
+Danas većina ljudi pod pojmom Bitcoin na digitalni novac pomoću kojeg se obavljaju transakcije. No Bitcoin je cijela zasebna platna mreža u kojoj digitalni token služi kao sredstvo za izvršavanje transakcija. Na toj mreži se zapravo nalazi samo jedan blockchain koji sadrži popis svih transakcija koje su se ikad desile na mreži. U tehničkom smislu ta mreža je zapravo jedna \textit{peer-to-peer} mreža, što znači da nema centralne jedinice koje dijeli blockchain već svaki čvor mreže mora imati svoju kopiju blockchaina. On ju redovito održava i osvježuje u komunikaciji sa susjednim čvorovima. Pojedini čvor ne zna tko su mu susjedi i svaku informaciju koju dobije kompletno provjerava za sebe. U slučaju da od susjeda dobije lance različitog sadržaja, protokol pretpostavlja da je lanac najveće duljine točan. Ključna stvar koja se postiže ovakvom definicijom je decentralizacija. Na mreži žive korisnici koji komuniciraju između sebe jedino pomoću transakcija (dakle jedino što mogu jest izmjenjivati tokene) koje se konstantno zapisiju na blockchain. 
 
 \begin{napomena}
-Uočimo bitnu razliku između korisnika i čvorova. Čvor je fizičko računalo koje održava Bitcoin mrežu aktivnom, dok je korisnik zapravo korisnik te mreže koji obavlja transakcije. Ako imamo skup čvorova $ČVOR$ i skup korisnika $KORISNIK$ tada vrijedi $ČVOR \subsetneqq KORISNIK$
+Uočimo bitnu razliku između korisnika i čvorova. Čvor je fizičko računalo koje održava Bitcoin mrežu aktivnom, dok je korisnik zapravo korisnik te mreže koji obavlja transakcije. Ako imamo skup čvorova $ČVOR$ i skup korisnika $KORISNIK$ tada vrijedi relacija $ČVOR \subsetneqq KORISNIK$.
 \end{napomena}
 
 Recimo da korisnik Alice napravi transakciju s kojom želi poslati 3 tokena (tj. Bitcoina) korisniku Bob. Ta transakcija koju Alice zatraži prvo ide u skup svih neobrađenih transakcija. Taj skup sadrži sve transakcije koje čekaju da ih čvorovi izvrše i zapišu na blockchain. Čvor prvo uzme $n \in \mathbb{N}$ transakcija i provjerava svaku od njih. Pod pojmom provjerava mislimo prolazak kroz sve prethodne transakcije uključenih korisnika i odlučivanje da li je tražena transakcija valjana, tj. da li korisnik koji šalje tokene, zapravo ima broj tokena koji želi poslati. 
@@ -220,11 +223,11 @@ Recimo da korisnik Alice napravi transakciju s kojom želi poslati 3 tokena (tj.
 Primjetimo da je ova provjera svih prethodnih transakcija nužan uvjet jer nigdje na blockchainu ne postoji zapis koliko pojedini korisnik ima tokena, već samo njegove transakcije. Također primjetimo da se nema nikakve provjere primatelja, dakle ako je napisana kriva adresa primatelja poslani tokeni će biti izgubljeni.
 \end{napomena}
 
-Ako su sve transakcije valjane tada se taj blok emitira na mrežu i on će postati idući blok u blockchainu. Da bi postao dio lanca treba nam njegov hash pointer tako da sada svi čvorovi na mreži pokušavaju izračunati hash vrijednost bloka. U račun te hash vrijednosti ne ulazi samo sadržaj bloka već i nonce/salt (ne znam kako prevesti ovo iskreno ako Vi imate neki prijedlog?) jer nam treba vrijednost takva da vrijedi:
+Ako su sve transakcije valjane tada se taj blok emitira na mrežu i on će postati idući blok u blockchainu. Da bi postao dio lanca treba nam njegov hash pointer tako da sada svi čvorovi skupa pokušavaju izračunati hash vrijednost bloka. U račun te hash vrijednosti ne ulazi samo sadržaj bloka već i salt, tj. proizvoljan broj koji ubacujemo jer nam treba hash vrijednost takva da vrijedi:
 
 \begin{equation}
 \label{eq:hash}
-    H(nonce\ |\ kompletan\ sadržaj\ bloka) \leq granica
+    H(salt\ |\ kompletan\ sadržaj\ bloka) \leq granica
 \end{equation}
 
 \begin{definicija}
@@ -232,15 +235,15 @@ Granica je broj jedinstven za cijelu mrežu i kojeg sama mreža računa ispočet
 \end{definicija}
 
 
-Izračunati novu hash vrijednost jedino se može \textit{brute force algoritmom}, dakle nasumičnim pogađanjem raznih vrijednosti nonce-a želi se dobiti hash vrijednost koja je manja od granice. Ta metoda je izrazito procesorski zahtjevna i zbog toga nije  pogodno koristiti kućno računalo kao čvor na Bitcoin mreži. Kao poticaj da ipak ljudi imaju čvorove prvi koji izračuna hash vrijednost za nagradu dobije Bitcoine. Kada se dobije hash vrijednost tada taj blok postaje idući u blockchainu. Taj proces generacije novog bloka i ujedno stvaranje novih Bitcoina se naziva \textbf{rudarenje}.
+Izračunati novu hash vrijednost jedino se može \textit{brute force algoritmom}, dakle nasumičnim pogađanjem raznih vrijednosti salta želi se dobiti hash vrijednost koja je manja od granice. Ta metoda je izrazito procesorski zahtjevna i zbog toga nije  pogodno koristiti kućno računalo kao čvor na Bitcoin mreži. Kao poticaj da ipak ljudi imaju čvorove, prvi koji izračuna hash vrijednost za nagradu dobije  tokene (Bitcoine). Kada se dobije hash vrijednost tada taj blok postaje idući u blockchainu. Proces generacije novog bloka i ujedno stvaranja novih Bitcoina se naziva \textbf{rudarenje}.
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.5]{genisis_block}
-\caption{Izgled jednog bloka u Bitcoin blockchainu. Blok na slici se naziva \textit{genesis block} i to je prvi blok nastao na Bitcoin mreži.}
+\caption{ \textit{genesis blok} - prvi blok u Bitcoin blockchainu.}
 \end{figure}
 
-Ovo je sve što ću općenito reći o Bitcoinu i jedino ću detaljnije predstaviti 3 stvari koje će mi kasnije koristiti u ovom radu: identifikacija korisnika na mreži, transakcije i transakcijske skripte. Prvo ću dati rješenje \textbf{decentraliziranog sustava identifikacije} korisnika na mreži. U prethodnom dijelu smo dali definiciju digitalnog potpisa koji služi za autorizaciju u digitalnom svijetu, no on sam od sebe nije dovoljan za idenitifikaciju jer bi u tom slučaju također trebali imati centralnu jedinicu koja će upravljati ključevima. Bitcoin problem identifikacije rješava zanimljivim trikom da se uzima javni ključ iz sheme digitalnog potpisa kao identitet korisnika, točnije za to koristi već spomenuti digitalni potpis ECDSA. Posljedica uzimanja javnog ključa kao digitalnog identiteta jest da fizička osoba koja kontrolira korisnika mreže (dakle posjeduje privatni ključ) nije nikako vezana za njega, već si može generirati novi par ključeva i stvoriti si novoga korisnika kada god poželi. Također već smo rekli da u ECDSA ključevi su proizvoljni 256-bitni niz nula i jedinica, dakle imamo i nema gotovo nikakve sanše da se korisnika mreže poveže sa fizičko osobom tako da imamo i prilično veliku razinu anonimnosti na mreži.
+Ovo je sve što ćemo općenito reći o Bitcoinu i jedino ćemo detaljnije predstaviti 3 stvari koje će mi kasnije koristiti u ovom radu: identifikacija korisnika na mreži, transakcije i transakcijske skripte. Prvo ćemo dati rješenje \textbf{decentraliziranog sustava identifikacije} korisnika na mreži. U prethodnom dijelu smo dali definiciju digitalnog potpisa koji služi za autorizaciju u digitalnom svijetu, no on sam od sebe nije dovoljan za idenitifikaciju jer bi u tom slučaju također trebali imati centralnu jedinicu koja će upravljati ključevima. Bitcoin problem identifikacije rješava zanimljivim trikom da se uzima javni ključ iz sheme digitalnog potpisa kao identitet korisnika, točnije za to koristi već spomenuti digitalni potpis ECDSA. Posljedica uzimanja javnog ključa kao digitalnog identiteta jest da fizička osoba koja kontrolira korisnika mreže (dakle posjeduje privatni ključ) nije nikako vezana za njega, već si može generirati novi par ključeva i stvoriti novoga korisnika kada god poželi. Također već smo rekli da u ECDSA ključevi su proizvoljni 256-bitni niz nula i jedinica, dakle nema gotovo nikakve sanše da se korisnika mreže poveže sa fizičkom osobom tako da imamo i prilično veliku razinu anonimnosti na mreži.
 
 Sada kada imamo sustav identifikacije možemo opisati kako izgleda transakcija između korisnika na Bitcoin mreži. Transakcija je običan JSON objekt koji se vidi na slici \ref{fig:transakcija} koji se sastoji od 3 glavna dijela:
 \begin{enumerate}
@@ -256,30 +259,30 @@ Sada kada imamo sustav identifikacije možemo opisati kako izgleda transakcija i
 \label{fig:transakcija}
 \end{figure}
 
-Nama najzanimljiviji dio transakcije je transakcijska skripta. Pod tim pojmom mislimo na računalni program pisan u jeziku Script. Taj program se izvršava prilikom prvog procesiranja transakcije i zapisivanju na blockchain te na ostalim čvoroima prilikom osvježavanja blockchaina. Kod toga programa se sam generira i nije programibilan. 
+Nama najzanimljiviji dio transakcije je transakcijska skripta. Pod tim pojmom mislimo na kodirani računalni program pisan u jeziku Script. Taj program se izvršava prilikom prvog procesiranja transakcije i zapisivanja na blockchain. Kod toga programa sam se generira i nije programibilan. 
 
 Script\cite{script} je programski jezik napravljen specifično za Bitcoin. Izvršava se na stogu, vrlo je jednostavan (ima mjesta za samo 256 naredbi, tj svaka naredba je kodirana u 2 broja u heksadecimalnom zapisu), nije Turing-kompletan i nema petlji.
 
 \chapter{Ethereum}
 
-Dok je Bitcoin zamišljen za specifičnu svrhu decentraliziranog izvršavanja financijskih transakcija, 2013. godine Vitalik Buterin je u svoj radu\cite{eth_paper} predstavio svoju ideju za novu generaciju blockchaina nazvanu Ethereum čiji je cilj izvršavanje proizvoljnih programa, tj. pametnih ugovora. U ovom poglavlju ću predstaviti Ethereum i pokušati objasniti napredak u odnosu na svoje prethodnike.
+Dok je Bitcoin zamišljen za specifičnu svrhu decentraliziranog izvršavanja financijskih transakcija, 2013. godine Vitalik Buterin je u svoj radu\cite{eth_paper} predstavio svoju ideju za novu generaciju blockchaina nazvanu Ethereum, čiji je cilj izvršavanje proizvoljnih programa, tj. pametnih ugovora. U ovom poglavlju ćemo predstaviti Ethereum i pokušati objasniti napredak u odnosu na svoje prethodnike.
 
 \section{Općenito}
 
-S obzirom da mnogo ljudi dolazi do Ethereuma sa nekim prijašnjim iskustvima i znanjem o Bitcoinu, želim odmah na početku naglasiti razlike s obzirom da svoje prethodnike, pa po \cite{ethbook}:
+S obzirom da mnogo ljudi dolazi do Ethereuma sa nekim prijašnjim iskustvima i znanjem o Bitcoinu, odmah na početku ćemo naglasiti razlike s obzirom da svoje prethodnike, pa po \cite{ethbook}:
 
 \begin{definicija}
-Ethereum je open source, \textbf{globalno distribuirana računalna mreža} koja izvršava programe zvane smart contracti. Mreža koristi blockchain za sinkronizaciju i spremanje promjena stanja mreže, a valutu zvanu \textbf{ether} za mjerenje i ograničavanje resursa mreže.
+Ethereum je \textbf{globalno distribuirana računalna mreža} koja izvršava programe zvane pametni ugovori. Mreža koristi blockchain za sinkronizaciju i spremanje promjena stanja mreže, a valutu zvanu \textbf{ether} za mjerenje i ograničavanje resursa mreže.
 \end{definicija}
 
-Vidimo odmah da je namjera ove definicije predstaljanje Ethereum kao mreže koja će biti poslužitelj pametnim ugovorima, tj. decentralizirana platforma za aplikacije, a digitalna valuta je samo sredstvo koje se koristi da bi mreža ispravno funkcionirala. Zbog toga bi se moglo zaključiti da građa Ethereuma potpuno drukčije građena od ostalih kriptovaluta no iznenađujuće, to uopće nije slučaj.
+Vidimo odmah da je namjera ove definicije predstaljanje Ethereum kao mreže koja će biti poslužitelj pametnim ugovorima, tj. decentralizirana platforma za aplikacije, a digitalna valuta je samo sredstvo koje se koristi da bi mreža ispravno funkcionirala. Zbog toga bi se moglo zaključiti da građa Ethereuma potpuno drukčija od ostalih kriptovaluta no iznenađujuće, to uopće nije slučaj.
 
-I dalje je to u srcu blockchain koji kao i prije sadrži popis svih transakcije koje su se ikada desile, no stvar zbog koje je Ethereum bitno napredniji od svih svojih prethodnika jest izgled tih samih transakcija. Bitcoinove transakcije su prilično jednosmjerne, jedino mogu izmjenjivati tokene između korisnika. U Ethereumove transakcije moguće je poslati proizvoljan program sa prilagođenom logikom koji se onda izvršava na mreži. Dakle ako zamislimo da je Bitcoin blockchain koji prati stanje koliko koji korisnik ima tokena tada Ethereum možemo zamisliti kao blockchain koji prati proizvoljno stanje.
+I dalje je to u srcu blockchain koji kao i prije sadrži popis svih transakcije koje su se ikada desile, no stvar zbog koje je Ethereum bitno napredniji od svih svojih prethodnika jest funkcionalnost tih samih transakcija. Bitcoinove transakcije su prilično jednosmjerne, jedino mogu izmjenjivati tokene između korisnika (uz male varijacije). U Ethereumove transakcije moguće je poslati proizvoljan program sa prilagođenom logikom koji se nakon toga izvršava na mreži. Dakle ako zamislimo da je Bitcoin blockchain koji prati stanje koliko koji korisnik ima tokena, tada Ethereum možemo zamisliti kao blockchain koji prati stanje podataka proizvoljnog oblika.
 
-Program koji se može poslati transakcijom se naziva \textbf{pametni ugovor}, a cijeli proces nam omogućuje \textbf{Ethereum Virutal Machine} u kojem se izvršava kod programa. Ethereum Virtual Machine (kao i svaki Virtual machine) je sloj apstrakcije između koda koji se izvršava i fizičkog računala koje izvšava kod, tj. sloj koji programski kod pisan u high-level jezicima preslikava u low-level \textbf{bytecode} (primjer bytecoda \ref{eq:bytecode}).
+Taj računalni program koji šaljemo transakcijom se naziva \textbf{pametni ugovor}, a cijeli proces nam omogućuje \textbf{Ethereum Virutal Machine} u kojem se izvršava kod programa. Ethereum Virtual Machine (kao i svaki virtual machine) je sloj apstrakcije između koda koji se izvršava i fizičkog računala koje izvšava kod, tj. sloj koji programski kod pisan u high level jezicima preslikava u low level\textbf{bytecode} (primjer bytecoda \ref{eq:bytecode}).
 
 \begin{napomena}
-Low-level jezik je zapravo niz nul i jedinica razumljivih računalu koje ih izvodi, ali nama ljudima ne znači previše. Suprotno od toga postoje high-level jezici koji imaju snažnu ogradu od apstrakcije računala koje izvodi program. Dakle svi programski jezici koje mi ljudi pišemo su primjeri high level jezika.
+low leveljezik je zapravo niz nula i jedinica razumljivih računalu koje ih izvodi, ali nama ljudima ne znači previše. Suprotno od toga postoje high level jezici koji imaju snažnu ogradu od apstrakcije računala koje izvodi program. Dakle svi programski jezici koje mi ljudi pišemo su primjeri high level jezika.
 \end{napomena}
 
 \begin{dmath}
@@ -303,13 +306,13 @@ Princip identifikacije korisnika na mreži je također potpuno isti kao i prije,
 \label{fig:ethaccounts}
 \end{figure}
 
-Kod Bitcoina je ponašanje svakog korisnika je bilo kontrolirano od strane neke fizičke osobe koja posjeduje privatni ključ od tog korisnika, tj. postojali su samo user korisnici. Ovdje postoji i drugi tip korisnika, a to su adrese na kojima se nalaze pametni ugovori. Kao što se vidi sa slike \ref{fig:ethaccounts} izvana su ti korisnici jednaki (oba sadrže ether, oba mogu slati i primati transakcije), jedina razlika jest što ponašanje korisnika na čijoj je adresi pametni ugovor, definirano pomoću koda koji se nalazi u njemu.
+Kod Bitcoina je ponašanje svakog korisnika je bilo kontrolirano od strane neke fizičke osobe koja posjeduje privatni ključ tog korisnika, tj. postojali su samo user korisnici. Ovdje postoji i drugi tip korisnika, a to su adrese na kojima se nalaze pametni ugovori. Kao što se vidi sa slike \ref{fig:ethaccounts} izvana su ti korisnici jednaki (oba sadrže ether, oba mogu slati i primati transakcije), jedina razlika jest što ponašanje korisnika na čijoj je adresi pametni ugovor, definirano pomoću koda koji se nalazi u njemu.
 
-Kao i kod Bitcoina svaki čvor na mreži izvršava sve poslane transakcije i zapisuje stanje cijele mreže. S obzirom da bilo koji user korisnik može napisati pametni ugovor i poslati ga na mrežu, a nisu svi user korisnici pouzdani, može doći do pretjeranog iskorištavanja resursa čvorova na mreži, npr. u slučaju da pametni ugovor u sebi ima kod \textbf{halting problem} i taj ugovor bude poslan na mrežu, cijela mreža nebi nikad procesirala nijednu drugu transakciju. Zbog toga je uveden sustav naplate feeja za izvršvanje svakog koraka u kodu transakcije i taj sustav ćemo promotriti u idućem odjeljku.
+Kao i kod Bitcoina svaki čvor na mreži izvršava sve poslane transakcije i zapisuje stanje cijele mreže. S obzirom da bilo koji user korisnik može napisati pametni ugovor i poslati ga na mrežu, a nisu svi user korisnici pouzdani, može doći do pretjeranog iskorištavanja resursa čvorova na mreži, npr. u slučaju da pametni ugovor u sebi ima zapisan \textbf{halting problem} i taj ugovor bude poslan na mrežu, cijela mreža nebi nikad procesirala nijednu drugu transakciju. Zbog toga je uveden sustav naplate naknade za izvršvanje svakog koraka u kodu transakcije i taj sustav ćemo promotriti u idućem odjeljku.
 
 \section{Gas}
 
-Na mreži Ethereum postoje dva tokena: \textbf{ether} i \textbf{gas}. Ether ne trebamo pretjerano objašnjavati jer je to digitalna valuta koja se nalazi na Ethereumu i ima fizičku protuvrijednost (na ether zapravo većina ljudi misli kada se kada spomene Ethereum), dok je gas cijena izvršavanja transakcija i rada mreže. Vrijednost gasa se postavlja od strane korisnika u etheru te taj broj nije fiksan.
+Na mreži Ethereum postoje dva tokena: \textbf{ether} i \textbf{gas}. Ether ne trebamo pretjerano objašnjavati jer je to digitalna valuta koja se nalazi na Ethereumu i ima fizičku protuvrijednost (na ether zapravo većina ljudi misli kada se kada spomene Ethereum), dok je gas cijena izvršavanja transakcija i rada mreže. Vrijednost gasa se postavlja od strane korisnika u etheru pri slanju transakcije te taj broj nije fiksan.
 
 \begin{tcolorbox}
 Već u samom imenu gas vidimo analogiju sa stvarnim svijetom. Možemo zamisliti gas kao benzin, novac kao ether, a auto kao cijelu Ethereum mrežu. Novcem kupujemo benzin koji je neophodan da bi auto radio. Isto tako ovdje etherom kupujemo gas koji je neophodan da bi Ethereum mreža radila, tj. procesirala transakcije i zapisivala ih na blockchain.
@@ -319,21 +322,21 @@ Uz svaku transakciju koja se šalje na mrežu, korisnik koji ju šalje treba pos
 
 \begin{itemize}
     \item \textbf{gas limit} - maksimalna količina gas-a koju transakcija smije potrošiti na svoje izvršavanje
-    \item \textbf{gas price} - vrijednost 1 gasa u etheru
+    \item \textbf{cijena gasa} - vrijednost 1 gasa u etheru
 \end{itemize}
 
 Dakle dobivamo da je ukupna maksimalna vrijednost transakcije:
-\begin{equation}
-    maksimalna\ vrijednost\ transakcije = gas\ limit \times gas\ price
-\end{equation}
+\begin{equation*}
+    maksimalna\ vrijednost\ transakcije = gas\ limit \times cijena\ gasa
+\end{equation*}
 
-Kažemo maksimalna vrijednost transakcije jer ne znamo za sve transakcije točan iznos s obzirom da možemo slati proizvoljan kod koji može ovisiti o argumentima koje pošaljemo. U slučaju da nije potrošen puni iznos koji smo naveli tada se ostatak vraća pošiljatelju, ali u slučaju da transakcija nije prošla (npr. nedovoljan iznos na računu) potrošeni gas pošiljatelj neće dobiti natrag. Potrošeni iznos gasa (dakle ethera) će dobiti čvor koji prvi procesira transakciju i zapiše ju na blockchain. Primjetimo da mi sami određujemo koliko ćemo platiti jedinicu gasa, tj. ukupnu vrijednost koliko smo spremni platiti transakciju. S obzirom da čvorovi koji procesiraju transakcije sami odbiru koje će transakcije procesirati, vrlo je vjerojatno što veći iznos stavimo za cijenu gasa i samim time povećamo joj vrijednost, da će nam transakcija brže biti izvršena.
+Kažemo maksimalna vrijednost transakcije jer ne znamo za sve transakcije točan iznos koji ćemo potrošiti s obzirom da možemo slati proizvoljan kod koji može ovisiti o argumentima koje pošaljemo. U slučaju da nije potrošen puni iznos koji smo naveli tada se ostatak vraća pošiljatelju, ali u slučaju da transakcija nije prošla, iz bilo kojeg razloga, potrošeni gas (tj. ether) se gubi zauvijek. Iznos ethera za koji je potrošeno gasa u transakciji će dobiti čvor koji prvi procesira transakciju i zapiše ju na blockchain. Primjetimo da mi sami određujemo koliko ćemo platiti jedinicu gasa, tj. maksimalnu ukupnu vrijednost koliko smo spremni platiti transakciju. S obzirom da čvorovi koji procesiraju transakcije sami odbiru koje će transakcije procesirati, vrlo je vjerojatno što veći iznos stavimo za cijenu gasa i samim time povećamo joj vrijednost, da će nam transakcija brže biti izvršena.
 
-Također primjetimo da cijelo vrijeme govorimo transakcije i iako pod tim mislimo zapravo kod koji se izvršava, iako je izraz transakcija ispravan jer se kao i kod Bitcoina jedino pomoću njih mjenja stanje mreže i pokreću programi.
+Također primjetimo da cijelo vrijeme govorimo transakcije i iako pod tim mislimo zapravo kod koji se izvršava, iako je izraz transakcija ispravan jer kao i kod Bitcoina jedino pomoću njih se mjenja stanje mreže i pokreću programi.
 
 Sada kada imamo objašnjenu naplatu izvršavanja transakcija, promotrit ćemo primjere iz stvarnog svijeta koliko je skupo održavati aplikaciju na Ethereumu. Na slici \ref{fig:ethunits} se nalazi tablica pretvaranja jedinica ethera.
 
-Primjeri za gas price u "standardnim" uvjetima: 
+Primjeri cijene gasa u "standardnim" uvjetima (nemoguće je točno definirati standardne uvjete jer se broj čvorova konstantno mjenja, a s time i procesorska moć mreže): 
 \begin{itemize}
     \item 40 GWEI - gotovo je sigurno da će transakcija biti zapisana u idući blok (vrijeme potrebno za 1 blok je u prosjeku 13 sekundi)
     \item 20 GWEI - prosjek, gotovo sigurno će transakcija biti zapisana u idućih par blokova
@@ -347,9 +350,50 @@ Primjeri za gas price u "standardnim" uvjetima:
 \label{fig:ethunits}
 \end{figure}
 
-Kao što smo prije napomenuli, svaki program se pomoću EMV-u kompajlira u bytecode. Bytecode sadrži samo jednostavne operacije koje imaju različitu cijenu izvođenja (izraženu u gas-u) ovisno o tome koliko je pojedina operacija kompleksna. Tako na primjer postoje ADD što je najobičnije zbrajanje 2 broja koje košta 3 gasa, MUL je množenje i košta 5 gasa. Također postoje i malo kompleksnije operacije tipa BALANCE koje dohvaća iznos ethera koji pojedina adresa sadrži košta 700 gasa.
+\newpage
 
-iiii jos neki primjeri jednostavnih programa koje cu tu navesti za dalje, sad sam samo ovaj dio   jer mi je trebao za kasnije
+Kao što smo prije napomenuli, svaki program se pomoću Ethereum Virtual Machina kompajlira u bytecode. Bytecode je zapravo kodiran jedan \textbf{assembly} program. Assembly program je niz jednostavnih opracija zvanih \textbf{optkodovi}. Optkodovi se izvršavaju na stogu i ovisno o kompleksnosti pojedinih operacija imaju različitu cijenu izvođenja izraženu u gasu. 
+
+\begin{napomena}
+Naziv assembly nema veze sa istoimenim programskim jezikom, iako vidimo sličnost zbog jednostavnosti kao i jednakosti nekih operacija.
+\end{napomena}
+
+\begin{center}
+\begin{tabular}{c|c|c}
+     Optkod & Cijena (gas) & Opis optkoda \\
+     \hline
+     ADD & 3 & zbroj 2 broja \\ \hline
+     MUL & 5 & množenje 2 broja \\ \hline
+     SHA256 & 60 & računanje SHA-256 hash funkcije \\ \hline
+     BALANCE & 700 & dohvaćanje količine ethera koju korisnik ima na računu \\ \hline
+     SSTORE & 20000 & spremanje riječi u memoriju ugovora \\ \hline
+     CREATE & 32000 & kreiranje novog korisnika sa zadanom adresom (najskuplji optkod)
+    
+\end{tabular}
+\end{center}
+
+Na prethodnoj tablici vidimo cijene izvršavanja pojedinih optkodova. Kao što vidimo nema jedinstvene operacije za prijenos ethera sa adrese jednog korisnika na drugi, već je to skup kodova. Ovdje nećemo ulaziti u detalje koji su to kodovi, ali prema \cite{wood2014ethereum} ukupna vrijednost tih kodova je 21000 gasa. Računom dobijemo:
+
+\begin{itemize}
+    \item 30 GWEI - cijena gasa tako da transakcija bude izvršena unutar 1 minute (u prosjeku)
+    \item 171,56 USD - trenutna cijena 1 ethera
+    \item 21000 gasa - prijenos ethera s jedne adrese na drugu
+\end{itemize}
+
+\begin{minipage}{\linewidth}
+\begin{equation*}
+    30\ GWEI = 0.00000003\ ETH
+\end{equation*}
+\begin{equation*}
+    21 000\ gas \times 0.00000003\ ETH = 0.00063\ ETH
+\end{equation*}
+\begin{equation*}
+    0.00063\ ETH \times 171.56\ USD = 0.11\ USD = 0.72\ HRK 
+\end{equation*}
+\hspace{0.5cm}
+\end{minipage}
+
+Dakle uz naknadu od 0.72 kn se može prenijeti proizvoljna količina ethera u roku jedne minute na adresu na koju se može pristupiti bilo gdje u svijetu što je veliki napredak u usporedbi korištenja banaka. No s obzirom da su tema ovoga rada pametni ugovori promotrimo sada primjer ove jednostavne funkcije ugovora.  
 
 \begin{minipage}{\linewidth}
 \begin{lstlisting}[caption = Primjer 1, language=solidity, label={lst:suma}]
@@ -362,15 +406,28 @@ function sumArray(uint[] memory arrayToSum) pure returns (uint _sum) {
 \end{lstlisting}
 \end{minipage}
 
-U primjeru \ref{lst:suma} vidimo jednostavnu funkciju koji prolazi poljem brojeva i zbraja njegove članove. Cijena izvršavanja te funkcije ovisi o duljini polja.
+U primjeru \ref{lst:suma} vidimo funkciju koja sadrži deklaraciju varijable te for petlju koja prolazi poljem brojeva i zbraja njegove članove. Cijena izvršavanja te funkcije očito ovisi o duljini toga polja.
+
+\begin{lstlisting}[language={[x86masm]Assembler}, caption=Assembly program od funkcije iz primjera \ref{lst:suma}]
+tag 52 JUMPDEST, PUSH 0, DUP1, SWAP1, POP, PUSH 0, DUP1, SWAP1, POP, tag 53 JUMPDEST, DUP3, MLOAD, DUP2, LT, ISZERO, PUSH [tag] 54, JUMPI, DUP3, DUP2, DUP2, MLOAD, DUP2, LT, PUSH [tag] 56, JUMPI, INVALID, tag 56 JUMPDEST, PUSH 20, MUL, PUSH 20, ADD, PUSH 20, ADD, ADD, MLOAD, DUP3, ADD, SWAP2, POP, DUP1, DUP1, PUSH 1, ADD, SWAP2, POP, POP, PUSH [tag] 53, JUMP, tag 54 JUMPDEST, POP, SWAP2, SWAP1, POP, JUMP [out]   
+\end{lstlisting}
+
+Dakle ako imamo polja duljine: 
+
+\begin{itemize}
+    \item 1 - cijena je samo 170 gasa sto je zanemariva stvarna protuvrijednost
+    \item 100 - cijena je $\approx$ 17000 gasa, a ako postavimo cijenu gasa na 30 GWEI (potvrda transakcije unutar 1 minute), dolazimo do cijene od 17000 gas $\times$ 30 GWEI = 510000 GWEI = 0.00051 ETH = 0.08 USD = 0.58 HRK što je zapravo prilično velika cijena za dobiti sumu polja sa 100 brojeva
+\end{itemize}
+
+Vidimo da iako imamo prilično jednostavnu operaciju iznos može vrlo brzo narasti do granice isplativosti izvođenja, zato pri programiranju pametnih ugovora treba biti posebno oprezan što ćemo i vidjeti u idućem poglavlju.
 
 \chapter{Pametni ugovori}
 
-U prvom poglavlju smo krenuli od najosnovnije kriptografije i blockchaina, kasnije ukratko predstavili Bitcoin te na kraju elemente Ethereuma. U ovom poglavlju ću napokon objasniti kako funkcionira sam smart contract, njegove mogućnosti i na kraju pogledati sigurnost.
+U prvom poglavlju smo krenuli od najosnovnije kriptografije i blockchaina, kasnije ukratko predstavili Bitcoin te na kraju elemente Ethereuma. U ovom poglavlju ćemo napokon objasniti kako funkcionira sam pametni ugovor, njegove mogućnosti i na kraju pogledati sigurnost.
 
-\section{EMV \& Solidity}
+\section{EVM \& Solidity}
 
-Kao što smo rekli smart contract se izvodi u Ethereum Virtual Machinu (skraćeno EVM). EVM je stack-based virtual machine (izvršava sve operacije na stogu). Kompletno je izoliran od računala na kojem se nalazi (što znači da nema pristup filesystemu, mreži i sl.), ima neograničenu memoriju, ali što se više memorije koristi to više košta gasa, dakle granice u EVMa nisu statične već ekonomske. Da bi dobili bytecode koji EVM zna čitati, trebamo imati neki high level jezik koji je čitljiv nama ljudima, a može se prevesti u njega. Primjera takvih jezika je mnogo: Vyper, Bamboo, LLL, ali najpopularniji među njima je \textbf{Solidity}. Dizjniran je upravo od tima programera koji su implementirali Ethereum mrežu i pravljen specifično za pisanje smart contracta, Solidity je objektno orjentirani \textbf{Turing potpun} jezik vrlo sličan Javascriptu.
+Kao što smo rekli pametni ugovor se izvodi u Ethereum Virtual Machinu (skraćeno EVM). EVM je "stack-based" virtual machine, tj. sve operacije se izvršavaju na stogu. Kompletno je izoliran od računala na kojem se nalazi (što znači da nema pristup filesystemu, mreži i sl.), ima neograničenu memoriju, ali što se više memorije koristi to više košta gasa, dakle granice u EVMa nisu statične već ekonomske. Da bi dobili bytecode koji EVM zna čitati, trebamo imati neki high level jezik koji je čitljiv nama ljudima, a da može se prevesti u njega. Primjera takvih jezika je mnogo: Vyper, Bamboo, LLL, ali najpopularniji među njima je \textbf{Solidity}. Dizjniran je upravo od tima programera koji su implementirali Ethereum mrežu i pravljen specifično za pisanje pametnih ugovora, Solidity je objektno orijentirani \textbf{Turing potpun} jezik vrlo sličan Javascriptu.
 
 \begin{napomena}
 Turing potpunost znači da se može izvršiti program proizvoljne kompleksnosti uz neograničenu memoriju.
@@ -380,7 +437,7 @@ Upravo u toj Turing potpunosti se vidi velik napredak u odnosu na Bitcoin, jer a
 
 \section{Izvršavanje koda}
 
-Kao na Bitcoinu, svaka promjena stanja na Ethereumu zahtjeva slanje neke transakcije. Pri svakom slanju moramo specificirati adresu primatelja i sadržaj transakcije, što je prilično očekivano. Rekli smo da na Ethereumu postoje dvije vrste korisnika: user i contract korisnici. Ako smo specificirali da poruku prima user korisnik tada sve što ta transakcija radi je prebacuje ether, no ako smo specificirali contract korisnik tada aktiviramo pametni ugovor i počinje se izvršavati kod. Pametni ugovor \textbf{nema stanje} i slanjem transakcija jedino ga je moguće aktivirati (ovaj dio je naglašen to znači da je nemoguće imati funkcije koje se same pokreću, npr. periodičke funkcije ili jobovi). Kod pametnih ugovora može:
+Kao na Bitcoinu, svaka promjena stanja na Ethereumu zahtjeva slanje neke transakcije. Pri svakom slanju moramo specificirati adresu primatelja i sadržaj transakcije, što je prilično očekivano. Rekli smo da na Ethereumu postoje dvije vrste korisnika: user i contract korisnici. Ako smo specificirali da poruku prima user korisnik tada sve što ta transakcija radi je prebacuje ether, no ako smo specificirali contract korisnika tada aktiviramo pametni ugovor i počinje se izvršavati kod. Pametni ugovor \textbf{nema stanje} i slanjem transakcija jedino ga je moguće aktivirati (ovaj dio je naglašen jer to znači da je nemoguće imati funkcije koje se same pokreću, npr. periodičke funkcije ili jobovi). Kod pametnih ugovora može:
 
 \begin{itemize}
     \item Slati ether na željene adrese
@@ -388,22 +445,21 @@ Kao na Bitcoinu, svaka promjena stanja na Ethereumu zahtjeva slanje neke transak
     \item Pozivati izvršavanja drugih pametnih ugovora
 \end{itemize}
 
-Znamo da se ugovor piše u nekom high-level jeziku koji se onda kompajlira u bytecode. Taj bytecode se zatim objavljuje na Ethereum mrežu tako da se pošalje transakcijom (kao transakcijska skripta) na adresu koja još nije iskorištena i kada je na mreži se pokreće ponovnim slanjem nove transakcije na tu adresu. No kako pozvati točno određenu funkciju na ugovoru? Pri kompajliranju pametnih ugovora dobijemo mnogo informacija: bytecode,  \textbf{Application Binary Interface} (skraćeno ABI), popits i ostale ovdje nebitne informacije.
+Znamo da se ugovor piše u nekom high level jeziku koji se onda kompajlira u bytecode. Taj bytecode se zatim objavljuje na Ethereum mrežu tako da se pošalje transakcijom (kao transakcijska skripta) na adresu koja još nije iskorištena i na mreži se pokreće ponovnim slanjem nove transakcije na tu adresu. No kako pozvati točno određenu funkciju na ugovoru? Pri kompajliranju pametnih ugovora dobijemo mnogo informacija: bytecode,  \textbf{Application Binary Interface} (skraćeno ABI), assembly, procjene gasa, potpis i još dosta ovdje nebitnih informacija.
 
 \begin{definicija}
 ABI je interface između dva programska modula, od kojih jedan je često na nivou strojnog koda (niz nula i jedinica), a drugi program kojeg pokreće čovjek. 
 \end{definicija}
 
-U kontekstu Ethereuma, ABI je popis svih funkcija koje se koriste u ugovoru (a mogu biti pozvane izvan njega) zajedno sa argumentima i povratnim tipovima. Pozivanje funkcije se odvija tako da se djelovi ABIja zajedno sa argumentima funkcije kodiraju u bytecode koji se kasnije ubaci u transakciju za slanje.
+U kontekstu Ethereuma, ABI je lista svih \textbf{potpisa funkcija} koje se nalaze u pametnom ugovoru, a mogu piti pozvane izvana (primjetimo da privatne funkcije se ne nalaze na ABI-ju). Na primjeru \ref{fig:abi} vidimo potpis funkcije iz primjera \ref{lst:suma}. Odmah primjećujemo da je to zapravo jedan običan JSON objekt (kao i sve u Ethereumu). Kodiranjem nekih vrijednosti tog JSON objekta, zajedno sa našim argumentima i slanjem dobivenog koda transakcijom pozivamo funkcije pametnog ugovora, a za detalje kodiranja promotrimo sljedeći primjer:
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.8]{abi}
-\caption{Primjer ABI-ja}
 \label{fig:abi}
 \end{figure}
 
-Na slici \ref{fig:abi} se nalazi ABI funckije iz primjera \ref{lst:suma} koja računa zbroj svih elemenata polja. Ako želimo pozvati tu funkciju $sumArray([164, 46])$ tada bi poslali ukupno 36 bytova koji izgledaju: 
+Kao što smo rekli na prethodnoj slici je potpis funkcije $sumArray$ iz primjera \ref{lst:suma} i ako želimo pozvati tu funkciju $sumArray([164, 46])$ tada bi poslali ukupno 36 bytova koji izgledaju: 
 
 
 \begin{dmath}
@@ -429,19 +485,19 @@ Taj kod nam ne znači previše, ali ako razdvojimo na svoje djelove dobijemo:
 
 Algoritam takvog kodiranja se zove \textbf{Recursive Length Prefix} i kompleksniji primjeri se nalaze na \cite{rlp}.
 
-Još samo za kraj ću napraviti provjeru da nisam pogriješio u algoritmu. Naime pametni ugovor koji se nalazi u primjeru \ref{eq:bytecode} sadrži upravo funkciju $sumArray$ i što znači da taj bytecode mora imati potpis te funkcije ($1e2aea06$), a to je istina.
+Još samo za kraj ćemo napraviti provjeru da nismo pogriješili u algoritmu. Naime pametni ugovor čiji se bytecode nalazi u primjeru \ref{eq:bytecode} sadrži funkciju $sumArray$ i što znači da taj bytecode mora imati ID te funkcije $1e2aea06$, a to je istina jer:
 
 \begin{dmath}
 0x608060405234801561001057600080fd5b5061018e806100206000396000f3\\fe608060405260043610610041576000357c0100000000000000000000000000\\000000000000000000000000000000900463ffffffff168063\textcolor[rgb]{1,0,0}{1e2aea06}14610\\046575b600080fd5b34801561005257600080fd5b50610109600480360360208\\1101561006957600080fd5b8101908080359060200190640100...
-\label{eq:bytecode}
+\label{eq:bytecode_red}
 \end{dmath}
 
 \section{Sigurnost}
 
-U ovom trenutku postoji više od 1 000 000 pametnih ugovora na Ethereumu koji skupa posjeduju preko 100 000 000 Ethera (trenutna cijena jednog Ethera je 349\$) u sebi. Zbog takovg kapitala koji trenutno posjeduju posebno su zanimljivi hakerima. Pametni ugovori su nova tehnologija i već kao takva daju izazove jer nema standardiziranog principa razvoja. Također, objavljeni su na blockachainu i jednom kada se pošalju na mrežu ne mogu se mjenjati i nadograđivati tako da svaka greška ostavlja trajne posljedice. Primjer jedne takve greške je \textbf{DAO hack} (dio koda koji je hakiran je na primjeru \ref{lst:hack}) koji se dogodio 2016. godine u kojem je ukradeno 50 000 000\$ i zbog kojega se Ethereum blockchain morao razdvojiti na dva lanca. Napravljen je novi lanac čije je stanje jednako onome prije hacka (dakle vraćene su sve transakcije) i danas je to Ethereum, dok je lanac na kojem se dogodio hack nastavio živjeti i danas se on zove Ethereum Classic.
+U ovom trenutku postoji više od 1 000 000 pametnih ugovora na Ethereumu koji skupa posjeduju preko 100 000 000 ethera u sebi. Zbog takovg kapitala posebno su zanimljivi hakerima. Pametni ugovori su nova tehnologija i već kao takva daju izazove jer nema standardiziranog principa razvoja. Također, objavljeni su na blockachainu i jednom kada se pošalju na mrežu ne mogu se mjenjati i nadograđivati tako da svaka greška ostavlja trajne posljedice. Primjer jedne takve greške je \textbf{DAO hack} (dio koda koji je hakiran je na primjeru \ref{lst:hack}) koji se dogodio 2016. godine u kojem je ukradeno 50 000 000\$ i zbog kojega se Ethereum blockchain morao razdvojiti na dva lanca. Napravljen je novi lanac čije je stanje jednako onome prije hacka (dakle vraćene su sve transakcije) i danas je to Ethereum, dok je lanac na kojem se dogodio hack nastavio živjeti i danas se on zove Ethereum Classic.
 
 \begin{minipage}{\linewidth}
-\begin{lstlisting}[caption = Ukratko: DAO je jedna od drugih valuta na Ethereumu koja je imala svoju protuvrijednost u Etheru. Funkcija witdraw jednostavno povlači sredstva koje korisnik ima na pametnom ugovoru. No što ako damo hrpu zahtjeva odjednom? Tada se sredstva konstantno prebacuju na račun korisnika no na pametnom ugovoru se nije uspio smanjiti broj jer nije postojao nikakav mehanizam zaštite., language=solidity, label={lst:hack}]
+\begin{lstlisting}[caption = Ukratko: DAO je jedna od drugih valuta na Ethereumu nastala slanjem pametnog ugovora i njena protuvrijednost je u etheru. Funkcija \lstinline{withdraw} jednostavno povlači sredstva koje korisnik ima na DAO pametnom ugovoru. No što ako damo hrpu zahtjeva odjednom? Tada se sredstva konstantno prebacuju na račun korisnika no na pametnom ugovoru se nije uspio smanjiti broj jer nije postojao nikakav mehanizam zaštite., language=solidity, label={lst:hack}]
 function withdraw(uint _amount) public {
   if(balances[msg.sender] >= _amount) {
     if(!msg.sender.call.value(_amount)()) { 
@@ -453,22 +509,24 @@ function withdraw(uint _amount) public {
 \end{lstlisting}
 \end{minipage}
 
-Još jedno ograničenje koje je bitno jest naplata izvođenja koda, dakle funkcionalnost je "bitnija" od sigurnosti. To izvođenje znamo da se vrši iz bytecoda na koji mi imamo jedini utjecaj preko high-level jezika u kojima pišemo. Dakle sigurnost pametnih ugovora zapravo proizlazi iz sigurnosti samog high level jezika u kojem su napisani.
+\newpage
 
-Solidity je Turing potpun jezik rađen po uzoru na Javascript, a Javascript nije poznat kao siguran jezik. Dakle i Solidity ima standardne probleme kao što su overflow i underflow. No Solidity strašno brzo napreduje i (službeno po Githubu 315 ljudi ga razvija i od prosinca 2015. je doživio 59 izdanja) popravlja probleme svakim novim izdanjem no i dalje postoje sumnje u Solidity kao pravi jezik za smart contracte. Upravo se mnogo ljudi zalažu za neke Turing nepotpune jezike poput Vypera koji mogu većinu operacija izvesti kao i Solidity no mnogo su sigurniji. Vyper je također objektno orjentirani jezik sličan Pythonu. Njegove ključne karakteristike zbog čega je postao popularan u jako kratkom roku (prvo izdanje Vyper je doživio u ožujku 2018. godine) su: sigurnost, jednostavnost jezika i čitljivost. 
+Još jedno ograničenje koje je bitno jest naplata izvođenja koda, dakle funkcionalnost je "bitnija" od sigurnosti. To izvođenje znamo da se vrši iz bytecoda na koji mi imamo jedini utjecaj preko high level jezika u kojima pišemo. Dakle sigurnost pametnih ugovora zapravo proizlazi iz sigurnosti samog high level jezika u kojem su napisani.
+
+Solidity je Turing potpun jezik rađen po uzoru na Javascript, a Javascript nije poznat kao siguran jezik. Dakle i Solidity ima standardne probleme kao što su overflow i underflow. No Solidity strašno brzo napreduje (službeno po Githubu 315 ljudi ga razvija i od prosinca 2015. je doživio čak 59 izdanja), popravlja probleme svakim novim izdanjem, ali i dalje postoje sumnje u Solidity kao pravi jezik za pametne ugovore. Upravo se mnogo ljudi zalažu za neke Turing nepotpune jezike poput Vypera koji mogu većinu operacija izvesti kao i Solidity no mnogo su sigurniji. Vyper je također objektno orijentirani jezik vrlo sličan Pythonu. Njegove ključne karakteristike zbog čega je postao popularan u jako kratkom roku (prvo izdanje Vyper je doživio u ožujku 2018. godine) su: sigurnost, jednostavnost jezika i čitljivost. 
 
 Još bi samo htio na kraju reći malo o sigurnosti s legalne strane. Naime trenutno nigdje ne postoji niti jedan članak zakona kojim bi se pametni ugovori predstavljali kao zakonski ugovor (ili barem nešto slično tome) što je prilično interesantna činjenica s obzirom da ima toliki ogroman kapital pohranjen u sebi.
     
-\chapter{Primjer: Crypto Roullete}
+\chapter{Primjer: Crypto Roulette}
 
-Sa prethodnim poglavljem samo zaključili svu potrebnu teoriju za razumjevanje funkcionalnosti pametnih ugovora. No trenutno sva ta teorija je nekako u svom "ekosustavu" i nije potpuno jasno kako ju uklopiti u današnji svakodnevni život, s time dolazimo do svijeta \textbf{decentraliziranih aplikacija} koji se popularno naziva \textbf{Web3}.
+Sa prethodnim poglavljem samo zaključili svu potrebnu teoriju za razumjevanje funkcionalnosti pametnih ugovora. No trenutno sva ta teorija je nekako u svom "ekosustavu" i nije potpuno jasno kako ju uklopiti u današnji svakodnevni život, s time dolazimo do svijeta \textbf{decentraliziranih aplikacija} koji se popularno naziva \textbf{Web 3.0}.
 
 \section{Decentralizirane aplikacije}
 
-Kao što smo rekli u definiciji \ref{def:dapp}, decentralizirana aplikacija je open-source aplikacija koja se izvršava na nekoj blockchain mreži. Svaka aplikacija se sastoji od front-end, ono što vidimo, te back-end dijela, sama logika aplikacije (naravno takva podjela je jako pojednostavljeno stanje). Decentralizirane aplikacije su posebne zato što se njihov back-end dio nalazi i izvršava na nekoj blockchain mreži. S obzirom da su tema ovoga rada pametni ugovori, u našem slučaju back-end dio naše decentralizirane aplikacije je jedan sustav pametnih ugovora, koji se izvršavaju na Ethereumu. 
+Kao što smo rekli u definiciji \ref{def:dapp}, decentralizirana aplikacija je open source aplikacija koja se izvršava na nekoj blockchain mreži. Svaka aplikacija se sastoji od frontend, ono što vidimo, te backend dijela, sama logika aplikacije (naravno takva podjela je jako pojednostavljeno stanje). backend dio uobičajenih aplikacija se izvršava na nekom centralnom serveru, dok kod decentraliziranih aplikacija na nekoj blockchain mreži. S obzirom da su tema ovoga rada pametni ugovori, u našem slučaju backend dio naše decentralizirane aplikacije jedan je sustav pametnih ugovora, koji se izvršavaju na Ethereumu. 
 
 \begin{napomena}
-U prethodnoj definiciji sam naveo "sustav pametnih ugovora", naime aplikacija može sastojati od skupa ugovora koji komuniciraju međusobno pomoću transakcija.
+U prethodnoj definiciji smo naveli "sustav pametnih ugovora", naime aplikacija može sastojati od skupa ugovora koji komuniciraju međusobno pomoću transakcija.
 \end{napomena}
 
 \begin{figure}[h]
@@ -478,21 +536,25 @@ U prethodnoj definiciji sam naveo "sustav pametnih ugovora", naime aplikacija mo
 \label{fig:appvsdapp}
 \end{figure}
 
-Također na slici \ref{fig:appvsdapp} vidimo da uobičajena aplikacija ima centralnu bazu podataka koja pruža samo nužne podatke korisniku, za razliku od decentralizirane aplikacije gdje se svi podaci nalaze u Ethereumu (točnije pametnom ugovoru), dakle svaki korisnik u bilo kojem trenutku ima dostupnu kompletnu bazu podataka aplikacije. Iz prethodnih poglavlja znamo da pojedini korisnik ne može sam mjenjati zapise na blockchainu ta baza je ujedno i decentralizirana. Transparentnost i decentraliziranost su zasigurno pozitivna promjena od tradicionalnih aplikacija, no te promjene dolaze sa cijenom. Svako izvršavanje koda i spremanje podataka na Ethereumu košta neki iznos Ethera koji se s količinom spremljenih podataka povećava. Dakle pri izradi decentralizirane aplikacije treba biti vrlo oprezan sa arhitekturom logike aplikacije i spremanja podataka. Neke aplikacije čak koriste tzv. "off-chain izvore" (izvore koji se ne nalaze na blockchainu i ne koriste njegove resurse) za kompleksno računanje zbog ušteda sredstava.
+Na slici \ref{fig:appvsdapp} vidimo glavnu razliku između decentraliziranih i uobičajenih aplikacija, one imaju centralnu bazu podataka koja pruža samo nužne podatke korisniku, za razliku od decentralizirane aplikacije gdje se svi podaci nalaze na Ethereumu (točnije pametnom ugovoru), dakle svaki korisnik u bilo kojem trenutku ima dostupnu kompletnu bazu podataka aplikacije. Ta razlika je posljedica upravo činjenice da se decentralizirana aplikacija nalazi na blockchain mreži koja je u potpunosti transparentna. Iz prethodnih poglavlja znamo da svaki korisnik može sam mjenjati zapise na blockchainu ta baza je ujedno i decentralizirana (ako nije u pametnom ugovoru zadano suprotno). Transparentnost i decentraliziranost su zasigurno pozitivna promjena od uobičajenih aplikacija, no te promjene dolaze sa cijenom. Svako izvršavanje koda i spremanje podataka na Ethereumu košta neki iznos ethera koji se s količinom spremljenih podataka povećava. Dakle pri izradi decentralizirane aplikacije treba biti vrlo oprezan sa arhitekturom logike aplikacije. Neke aplikacije čak koriste tzv. "off-chain izvore" (izvore koji se ne nalaze na blockchainu i ne koriste njegove resurse) za kompleksno računanje zbog uštede sredstava.
 
-Još jedna bitna činjenica koju ću ponoviti jest da nema mjenjanja koda aplikacije. Jedino što je moguće kompletno ju izbrisati ako imamo dostupnu operaciju \emph{SELFDESTRUCT} za samouništenje ugovora.
+Još jedna bitna činjenica koju ćemo ponoviti jest da nema mjenjanja koda aplikacije. Jedino što je moguće kompletno ju izbrisati ako imamo dostupnu operaciju \emph{SELFDESTRUCT} za samouništenje ugovora.
 
-Do sada smo objanili back-end dio aplikacije i gdje se nalazi, ali još uvijek nije jasno što je front-end i kako se odvija komunikacija između ta dva dijela. U uvodu smo rekli da se svijet decentraliziranih aplikacija naziva Web3 pa vratimo se malo na to. Trenutne web aplikacije se nalaze na serveru koji u sebi ima cijelu aplikaciju i na zahtjev šalje "user-generated" podatke koji nemoraju biti jednaki za svakog korisnika. Takva arhitektura se naziva Web 2.0 i s njome je građen današnji web, tj. dio interneta koji se sastoji od web stranica (aplikacija). Iz toga se može pretpostaviti da su decentralizirane aplikacije veoma slične web aplikacijama što je i istina. Naime njihov cijeli front-end dio grade aktualne web tehologije.
+Do sada smo objanili backend dio aplikacije i gdje se nalazi, ali još uvijek nije jasno što je frontend i kako se odvija komunikacija između ta dva dijela. U uvodu smo rekli da se svijet decentraliziranih aplikacija naziva Web 3.0 pa vratimo se malo na to. Rekli smo da se trenutne web aplikacije nalaze na serveru koji u sebi ima cijelu aplikaciju i na zahtjev šalje "user-generated" podatke koji nemoraju biti jednaki za svakog korisnika. Takva arhitektura se naziva Web 2.0 i s njome je građen današnji web, tj. dio interneta koji se sastoji od web stranica (aplikacija). Iz toga se može pretpostaviti da su decentralizirane aplikacije veoma slične web aplikacijama, što je i istina. Naime njihov cijeli frontend dio grade aktualne web tehologije.
 
 \begin{tcolorbox}
-Ime Web3 ima i simbolično značenje. Od pojave World Wide Weba 1991. godine do ranih 2000-tih web stranice su bile statični prikazi povezani linkovima. Ta era se naziva Web 1.0. Nakon statičnih stranica su došle dinamične, "user-generated" web stranice koje su, kao što sam već rekao, i danas aktivne i nazivaju se Web 2.0. Dakle Web 3.0 predstavlja što mnogi vjeruju iduću generaciju weba, tj. decentraliziranog weba bez servera.
+Ime Web 3.0 ima i simbolično značenje. Od pojave World Wide Weba 1991. godine do ranih 2000-tih web stranice su bile statični prikazi povezani linkovima. Ta era se naziva Web 1.0. Nakon statičnih stranica su došle dinamične, "user-generated" web stranice koje su, kao što smo već rekli, i danas aktivne i nazivaju se Web 2.0. Dakle Web 3.0 predstavlja što mnogi vjeruju iduću generaciju weba, decentraliziranog bez servera.
 \end{tcolorbox}
 
-Trenutno najpopularnije okruženje za izradu web stranica je \textbf{Node js}. Node je runtime enviroment za izvšavanje Javascripta koji je izrađen za izradu skalabilnih web aplikacija. Skalabilnost proizlazi iz činjenice da se u Node okruženju nalazi mnogo modula (prethodno napisanih djelova koda) koji se vrlo jednostavno mogu ubaciti u bilo koji projekt (isti princip kao i Python ekosustav). Javascript je programski jezik koji se izvršava u samom web pregledniku kod klijenta, a web preglednici komuniciraju sa ostatkom weba preko http protokola. Za decentralizirane aplikacije pojam "ostatak weba" je zapravo Ethereum mreža gdje se sva komunikacija odvija preko JSON-RPC prokotola (vidjeli smo u svim prijašnjim primjerima da su se svugdje nalaze JSON objekti) pa web browseri ne znaju kako komunicirati sa Ethereumom. Rekao sam da se Node okruženje sastoji od modula, pa tako postoji modul \emph{Web3.js} što je gotova implementacija JSON-RPC protokola za slanje transakcija i pozivanje koda na Ethereumu. Upravo to služi za povezivanje korisničkog sučelja sa nekom instancom Ethereum mreže. Na kraju zadnji problem u arhitekturi decentraliziranih aplikacija jest: "Na koji način povezati Ethereum i svoj web preglednik?"
+Trenutno najpopularnije okruženje za izradu web stranica je \textbf{Node js}. Node je runtime enviroment za izvšavanje Javascripta koji je izrađen za izradu skalabilnih web aplikacija. Skalabilnost proizlazi iz činjenice da se u Node okruženju nalazi mnogo modula (prethodno napisanih djelova koda) koji se vrlo jednostavno mogu ubaciti u bilo koji projekt (isti princip kao i Python ekosustav). Javascript je programski jezik koji se izvršava u samom web pregledniku kod klijenta, a web preglednici komuniciraju sa ostatkom weba preko HTTP protokola. Za decentralizirane aplikacije pojam "ostatak weba" je zapravo Ethereum mreža gdje se sva komunikacija odvija preko JSON-RPC prokotola (vidjeli smo u svim prijašnjim primjerima da su se svugdje nalaze JSON objekti) tako da web preglednici sami po sebi ne znaju kako komunicirati sa Ethereum mrežom. Rekli smo da se Node okruženje sastoji od modula, pa tako postoji modul \emph{Web3.js} što je gotova implementacija JSON-RPC protokola za slanje transakcija i pozivanje koda na Ethereumu. Upravo to služi za povezivanje korisničkog sučelja sa nekom instancom Ethereum mreže. Na kraju zadnje pitanje u arhitekturi decentraliziranih aplikacija jest: "Na koji način povezati Ethereum i svoj web preglednik?"
 
-Metamask je browser add-on koji pretvara web preglednik u Ethereum račun (wallet - ne znam kako bi drukčije preveo). Pomoću Metamaska je moguće spremati, slati i primati ether u bilo kojem pregledniku, ali najbitnija stvar, pomoću njega preglednik može pristupati decentraliziranim aplikacijama. Metamask je jako pogodan za svakodnevnog korisnika jer je vrlo malen i brz (veličina je 9.78 MB) te se prilično dobro uklapa u svakodnevni rad, a to je iznenađujuća činjenica jer smo rekli da pri pristupanju decentralizirane aplikacije imamo pristup cijeloj Ethereum mreži, razlog tome je što Metamask drži cijeli Ethereum blockchain na svojim serverima preko kojih se zapravo spajamo (postoji opcija za vođenje svog Ethereum čvora, no Ethereum chain u trenutku pisanja rada Ethereum chain je imao 2.3 TB tako da ni zbog toga nije pogodan za upotrebu na kućnim računalima), a podaci o ga rada korisniku se čuvaju u pregledniku tako da su relativno sigurni.
+Metamask je "add-on" u web pregledniku koji je ujedno Ethereum novčanik. Pomoću Metamaska je moguće na jednostavan način slati i primati ether, ali najbitnija stvar, on ima pristup cijeloj Ethereum mreži pa je pomoću njega moguće pristupiti decentraliziranim aplikacijama. Metamask je jako pogodan za svakodnevnog korisnika jer je vrlo malen i brz (veličina je 9.78 MB) te se prilično lako uklapa u svakodnevni rad, a to je iznenađujuća činjenica jer smo rekli da imamo pristup cijeloj Ethereum mreži, koja je velika, razlog tome je što Metamask drži cijeli Ethereum blockchain na svojim serverima (dakle njihovi serveri su Ethereum čvor) preko kojih se zapravo spajamo na mrežu, a podaci o korisniku se čuvaju u pregledniku tako da su sigurni koliko je i naše računalo.
 
-S time je gotov prikaz kompletne arhitekture jedne decentralizirane aplikacije čiji se grafički prikaz nalazi na slici \ref{fig:dapp}. Također ovo je zadnji teorijski dio i dalje ću pisati samo o aplikaciji.
+\begin{napomena}
+U Metamasku postoji opcija za vođenje svog Ethereum čvora, no Ethereum blockchain u trenutku pisanja rada je imao veličinu od 2.3 TB (što je 2300 GB ili 2300000 MB) tako da ni zbog toga, kućna računala više nisu pogodna za voditi Ethereum čvor.
+\end{napomena}
+
+S time je gotov prikaz kompletne arhitekture jedne decentralizirane aplikacije čiji se grafički prikaz nalazi na slici \ref{fig:dapp}. Također, ovo je zadnji teorijski dio u radu i dalje ćemo govoriti o našoj decentraliziranoj aplikaciji.
 
 \begin{figure}[H]
 \centering
@@ -501,26 +563,26 @@ S time je gotov prikaz kompletne arhitekture jedne decentralizirane aplikacije �
 \label{fig:dapp}
 \end{figure}
 
-\section{Crypto Roullete}
+\section{Crypto Roulette}
 
-Crypto Roulette je decentralizirana aplikacija koja implementira kockarsku igru ruleta. Pametni ugovor se nalazi na testentu Ropsten tako da ne trebaju stvari novci za pristup i korištenje aplikacije. Front-end dio aplikacije je izgrađen u frameworku zvanom React. U nastavku slijedi par podataka o aplikaciji, a kasnije i na slici \ref{fig:crypto} je sama aplikacija. 
+Crypto Roulette je decentralizirana aplikacija koja implementira kockarsku igru ruleta. Pametni ugovor se nalazi na testentu Ropsten (Ethereum testna mreža, tako da ne trebaju stvari novci za pristup i korištenje aplikacije). frontend dio aplikacije je izgrađen u frameworku zvanom React js. U nastavku slijedi par podataka o aplikaciji, a kasnije na slici \ref{fig:crypto} je korisničko sučelje same aplikacije. 
 
 \begin{itemize}
     \item aplikacija: \url{https://masterthesisv2.firebaseapp.com/}
-    \item pametni ugovor: TODO:\url{}
+    \item pametni ugovor: \url{https://bit.ly/2m6bZko}
     \item kod cijele aplikacije: \url{https://github.com/senaa12/PmfSmartContracts/tree/master/app}
 \end{itemize}
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.44]{screenshot}
-\caption{Crypto roullete interface}
+\includegraphics[scale=0.3]{screenshot}
+\caption{Crypto Roulette interface}
 \label{fig:crypto}
 \end{figure}
 
-Decentralizirane aplikacije igara na sreću iako jako popularne trenutno (prema stranici \href{https://www.stateofthedapps.com/}{State Of The Dapps} one čine ukupno 18\% svih aplikacija) vrlo su neprirodne u Ethereum okruženju upravo zbog toga što uključuju faktor sreće. U prethodnim poglavljima smo rekli da svaki čvor na mreži za sebe treba potvrditi svaki blok u blockchainu, dakle sve mora biti determinističko. Generacija slučajnih brojeva je u Ethereumu zapravo nemoguća. Prave aplikacije koriste vanjske izvore za generaciju brojeva, s obzirom da Crypto Roullete demonstrativna aplikacija i jedino je na testnetu dovoljna je i pseudo random generacija kosištenjem hash funkcije sa kombinacijom ovih vrijednosti: vrijeme u kojem je trenutni blok potvrđen, hash-vrijednost prethodnog bloka i prethodno izabrani broj. Hash vrijednost prethodnog bloka i prethodno izabrani broj svi znaju u trenutku klađenja, ali prvu se čini da vrijeme potvrđivanja bloka nije unaprijed poznato i to je istina, ali čvor koji računa hash vrijednost trenutnog bloka može pogoditi vrijeme kada će blok biti potvrđen i samim time on može kontrolirati ishod oklade.
+Decentralizirane aplikacije igara na sreću iako jako popularne trenutno (prema stranici \href{https://www.stateofthedapps.com/}{State Of The DApps} one čine ukupno 18\% svih aplikacija) vrlo su neprirodne u Ethereum okruženju upravo zbog toga što uključuju faktor sreće. U prethodnim poglavljima smo rekli da svaki čvor na mreži za sebe treba potvrditi svaki blok u blockchainu, dakle sve je determinističko. Generacija slučajnih brojeva je u Ethereumu zapravo nemoguća. Prave decentralizirane aplikacije koriste vanjske izvore za generaciju brojeva, s obzirom da Crypto Roulette demonstrativna aplikacija koja služi porebama ovoga rada i jedino je na testnoj mreži, dovoljna je i pseudo random generacija korištenjem hash funkcije sa kombinacijom ovih vrijednosti: vrijeme u kojem je trenutni blok potvrđen, hash-vrijednost prethodnog bloka i prethodno izabrani broj. Hash vrijednost prethodnog bloka i prethodno izabrani broj svi znaju u trenutku klađenja, ali na prvu se čini da je vrijeme potvrđivanja bloka nasumično i to je istina, no čvor koji stvara trenutni blok može kontrolirati vrijeme kada će blok biti potvrđen i samim time on može kontrolirati ishod oklade.
 
-\begin{lstlisting}[caption=CryptoRoulette funkcija koja imitira generaciju brojeva pomoću hash funkcije keccak256 (SHA256) i nije sigurna za stvarnu upotrebu.]
+\begin{lstlisting}[caption=Crypto Roulette funkcija koja imitira generaciju brojeva pomoću hash funkcije keccak256 (SHA256) i nije sigurna za stvarnu upotrebu.]
 function wheelSpin() public returns (uint) {
         uint _randomNumber = (uint(keccak256(abi.encodePacked(blockhash(block.number - 1), block.timestamp, _lastSpinResults.length)))) % 36;
         _lastSpinResults.push(_randomNumber);
@@ -528,9 +590,9 @@ function wheelSpin() public returns (uint) {
     }
 \end{lstlisting}
 
-Iduća posebnost programiranja pametnih ugovora su \textbf{eventi}. Funkcije koje mjenjaju stanje blockchaina pozivaju se transakcijama, za njih ne znamo unaprijed kada će biti procesirane (naravno možemo otprilike kontrolirati vrijeme podešavanjem cijene gasa, ali ne možemo odabrati točan trenutak). Dakle takve funkcije se ne izvršavaju odmah nego u trenutku kada je blok sa transakcijom koja poziva takvu funkciju potvrđen, zbog toga takve funkcije ne mogu imati nikakvu povratnu vrijednost. Umjesto toga pametni ugovori su uveli evente. Eventi zapravo spremaju argumente s kojima su pozvani u log transakcija. Event u slučaju Crypto roullet aplikacije je rezultat jedne oklade, u isječku koda \ref{code:bet} se prikazuje prvo računanje ishoda jedne oklade i na kraju odašiljanje eventa sa rezultatom.
+Iduća posebnost programiranja pametnih ugovora su \textbf{eventi}. Funkcije koje mjenjaju stanje blockchaina pozivaju se transakcijama, za njih ne znamo unaprijed kada će biti procesirane (naravno možemo otprilike kontrolirati vrijeme podešavanjem cijene gasa, ali ne možemo odabrati točan trenutak). Dakle takve funkcije se ne izvršavaju odmah nego u trenutku kada je blok sa transakcijom koja poziva takvu funkciju potvrđen, zbog toga takve funkcije ne mogu imati nikakvu povratnu vrijednost. Umjesto toga pametni ugovori su uveli evente. Eventi su zapravo spremanje unaprijed definiranih objekata u log transakcija. Event u slučaju Crypto Roullete aplikacije je rezultat jedne oklade, u isječku koda \ref{code:bet} se prikazuje prvo računanje ishoda jedne oklade i na kraju odašiljanje eventa sa rezultatom.
 
-\begin{lstlisting}[caption=Funkcija koja se pokreće prilikom slanja transakcije koja sadrži podatke za igru jedne runde ruleta. Argumenti funkcije su polje \lstinline{betIDs} sa okladama i polje \lstinline{bets} sa iznosima za okladu. Na početku vidimo generaciju broja i računanje dobitka. Tada pametni ugovor ako ima dobitka u liniji \lstinline{msg.sender.transfer(payoutAmount)} se šalje dobitak osobi koja je poslala transakciju. Sve prethodne oklade se čuvaju u polju (primjetimo da je to lošiji način zapravo\, jer nakon nekog vremena polje će zauzimati mnogo memorije\, pa će i cijena oklade biti skuplja.) U zadnjoj liniji se odašilje event koji se prikazuje na ekranu kao na slici \ref{fig:result}, label={code:bet}]
+\begin{lstlisting}[caption=Funkcija koja se pokreće prilikom slanja transakcije koja sadrži podatke za igru jedne runde ruleta. Argumenti funkcije su polje \lstinline{betIDs} sa okladama i polje \lstinline{bets} sa iznosima za okladu. Na početku vidimo generaciju broja i računanje dobitka. Tada pametni ugovor\, ako ima dobitka\, u liniji \lstinline{msg.sender.transfer(payoutAmount)} prebacuje dobitnu količinu ethera na adresu igrača. Sve prethodne oklade se čuvaju u polju (primjetimo da je to loš način zapravo\, jer nakon nekog vremena polje će zauzimati mnogo memorije\, pa će i cijena oklade biti skuplja.) U zadnjoj liniji se odašilje event koji se prikazuje na ekranu kao na slici \ref{fig:result}, label={code:bet}]
     function placeBet(uint[] memory betIDs, uint[] memory bets) public payable {
         uint selectedNumber = wheelSpin();
         uint payoutAmount = calculatePayout(selectedNumber, betIDs, bets);
@@ -552,14 +614,15 @@ Iduća posebnost programiranja pametnih ugovora su \textbf{eventi}. Funkcije koj
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.44]{result}
-\caption{Crypto roullete prikaz eventa}
+\includegraphics[scale=0.3]{result}
+\caption{Crypto Roulette prikaz eventa}
 \label{fig:result}
 \end{figure}
 
-U prethodnom isječku koda vidimo da pametni ugovor šalje ether jedino u dobitnoj okladi, što je potpuno očekivano. Ether koji je uložen u okladu koja nije dobitna ostaje u pametnom ugovoru i valjalo bi ugraditi mehanizam da se sredstva koja se nalaze u ugovoru podignu. No logično je ograničiti podizanje sredstava samo na vlasnika pametnog ugovora. Upravo u takvom slučaju nam vrlo korisni dolaze \textbf{modifikatori funkcija}. Modifikatori su djelovi koda koji se izvršavaju prije same funkcije i idealni su za provjeravanje raznih uvjeta nad pozvanom funkcijom. U našem slučaju želimo provjeriti da li je poziv funkcije za isplatu sredstava došao od vlasnika pametnog ugovora. Upravo takav modifikator sa funkcijom koja služi za isplatu sredstava vidimo na djelu koda \ref{code:modif}
+U prethodnom isječku koda vidimo da pametni ugovor šalje ether jedino u dobitnoj okladi, što je potpuno očekivano. Ether koji je uložen u okladu koja nije dobitna ostaje u pametnom ugovoru i valjalo bi ugraditi mehanizam da se sredstva u ugovoru podignu. No logično je ograničiti podizanje sredstava samo na vlasnika pametnog ugovora ili neku manju skupinu korisnika jer u protivnom igra nema smisla. Upravo u takvom slučaju nam vrlo korisni dolaze \textbf{modifikatori funkcija}. Modifikatori su djelovi koda koji se izvršavaju prije same funkcije i idealni su za provjeravanje raznih uvjeta nad pozvanom funkcijom. Dakle mi želimo provjeriti da li je poziv funkcije za isplatu sredstava došao od vlasnika pametnog ugovora i za to ćemo iskoristiti modifikator funkcije koji se nalazi na idućem isječku koda.
 
-\begin{lstlisting}[caption=Ključna riječ \lstinline{modifier} označuje da slijedi kod modifikatora funkcije. U require naredbu možemo ubaciti sve uvjete koji želimo da budu zadovoljeni\, no tu samo zahtjevamo da je pozivatelj funkcije \lstinline{msg.sender} ujedno i vlasnik pametnog ugovora \lstinline{_contractOwner} (ovo je lokalna varijabla koja se postavlja u kontruktoru\, jer nema jednostavnog načina za naći vlasnika pametnog ugovora osim ići kroz prošlost transakcija koje uključuju ugovor.) Funkcija payout uplaćuje ether sa ugovora \lstinline{address(this).balance} pozivatelja funkcije (tj. vlasnika ugovora), label={code:modif}]
+%\begin{minipage}{\linewidth}
+\begin{lstlisting}[caption=Ključna riječ \lstinline{modifier} označuje da slijedi modifikator funkcije. U \lstinline{require} naredbu možemo ubaciti sve uvjete koji želimo da budu zadovoljeni\, no tu samo zahtjevamo da je pozivatelj funkcije \lstinline{msg.sender} ujedno i vlasnik pametnog \lstinline{_contractOwner} (lokalna varijabla koja se postavlja u kontruktoru; nema jednostavnog načina za naći vlasnika pametnog ugovora osim ići kroz prošlost transakcija koje uključuju ugovor\, tako da je ovo mnogo jednostavnije i brže.) \\Funkcija payout uplaćuje ether sa ugovora \lstinline{address(this).balance} pozivatelja funkcije (tj. vlasnika ugovora), label={code:modif}, hspace={0.5cm}]
 modifier onlyOwner() {
     require(
         msg.sender == _contractOwner,
@@ -572,10 +635,13 @@ function payout() public onlyOwner payable {
     return msg.sender.transfer(address(this).balance);
 }
 \end{lstlisting}
+%\end{minipage}
+
+Za kraj još samo napomenimo ovo: Svi isječci kodova, primjeri bytecodova i sl. koji se nalaze u ovome radu su djelovi našeg Crypto Roulette pametnog ugovora.
 
 \chapter{Zaključak}
 
-Prema stranici \href{https://www.stateofthedapps.com/}{StateOfDapps.com} koja prati stanje decentraliziranih aplikacija ne samo na Ethereumu već i na ostalim blockchainima dnevno se napravi 1,7 milijun transakcija na decentraliziranim aplikacijama sa prometom od 15 milijuna dolara. Te su brojke pokazatelji da blockchain i decentralizirane aplikacije u konstantnom porastu i razvoju što vidimo i na slici \ref{fig:stats} (valja napomenuti da je to statistika samo aplikacija koje se nalaze na stranici StateOfDapps, dakle aplikacija mora biti registrirana tamo, tako da je stvarni broj vjerojatno i veći). Čak za vrijeme pisanja ovoga rada Metamask je izdao alpha verziju mobilnog ethereum preglednika (koji je ujedno i wallet s kojim se direktno mogu slati transakcije) i time postao prvi mobilni preglednik s kojim se može pristupiti decentraliziranim aplikacijama.
+Prema stranici State Of The DApps koja prati stanje decentraliziranih aplikacija ne samo na Ethereumu već i na ostalim blockchainima dnevno se napravi 1,7 milijun transakcija na decentraliziranim aplikacijama sa prometom od 15 milijuna dolara. Te brojke pokazuju da blockchain i decentralizirane aplikacije su u konstantnom porastu i razvoju što vidimo i na slici \ref{fig:stats} (valja napomenuti da je to statistika samo aplikacija koje se nalaze na stranici StateOfDapps, dakle aplikacija mora biti registrirana tamo, tako da je stvarni broj vjerojatno i veći). Čak za vrijeme pisanja ovoga rada Metamask je izdao alpha verziju mobilnog ethereum preglednika (koji je ujedno i wallet s kojim se direktno mogu slati transakcije) i time postao prvi mobilni preglednik s kojim se može pristupiti decentraliziranim aplikacijama što je veliki korak s obzirom na činjenicu da u današnje vrijeme sve se nalazi na mobitelu.
 
 \begin{figure}[H]
 \centering
@@ -584,10 +650,13 @@ Prema stranici \href{https://www.stateofthedapps.com/}{StateOfDapps.com} koja pr
 \label{fig:stats}
 \end{figure}
 
-No sve ove brojke i statistike govore o samoj Ethereum zajednici koja obuhvaća određen dio ljudi koji imaju potrebna znanja i ne utječu previše na "prosječnog građanina". No cilj ovoga rada je pokazati da blockchain i decentralizirane aplikacije mogu postati dio svakodnevnog života, ali i tu ima velik broj primjera koji tu pokazuju napredak. Sve više lokalnih dućana koji prihvaćaju bitcoin kao stvarnu valutu plaćanja, također francuska osiguravajuća kuća AXA svoj program osiguranja letova drži na Ethereum mreži\cite{axa}, Venezuela je u ožujku 2018. izdala službenu državnu kriptovalutu Petro s kojom je dopušteno plaćanje u cijeloj državi. Primjera ima jako puno, ali svi vode do istog zaključka 
+\newpage
 
-% U datoteku diplomski.bib se stavljaju bibliografske reference
-% Bibliografske reference u bib formatu se mogu dobiti iz MathSciNet baze, Google Scholara, ArXiva, ...
+Čak i u fizičkom svijetu oko nas vidimo sve više primjera lokalnih dućana koji prihvaćaju Bitcoin kao način plaćanja. Naime trenutno nema nikakve regulative oporezivanja kriptovaluta i s obzirom na naučeno kroz ovaj rad možemo zaključiti da će to biti jako teško ostvarivo. Iako je Venezuela u ožujku 2018. izdala službenu državnu kriptovalutu Petro s kojom je dopušteno plaćanje u cijeloj državi. Kao primjer korištenja pametnih ugovora imamo Francusku osiguravajuću kuću AXA, koja svoj program osiguranja od kašnjenja letova ima na Ethereumu \cite{axa}.
+
+Primjera postoji sve više iz dana u dan i sve prethodno navedene činjenice nas dovode do istih zaključaka. To jest da i u fizičkom svijetu, kao način plaćanja, ali i u digitalnom svijetu, kao decentralizirane aplikacije, kriptovalute i pametni ugovori imaju svjetlu budućnost.
+
+
 \bibliography{bibliografija}
 
 \pagestyle{empty} % ne zelimo brojanje sljedecih stranica
@@ -595,17 +664,39 @@ No sve ove brojke i statistike govore o samoj Ethereum zajednici koja obuhvaća 
 % I na koncu idu sazeci na hrvatskom i engleskom
 
 \begin{sazetak}
-Ukratko ...
+Kriptovalute zbog svoje vrijednosti trenutno su jedna od popularnijih tema u informatičkom društvu. Većina ljudi ih zamišlja samo kao način plaćanja, no one mogu biti mnogo više od toga i ovaj rad se fokusira na istraživanje kriptovaluta upravo u takvom širem kontekstu. Predstavlja ih kao decentraliziranu mrežu i daje primjere na koji način mogu utjecati na svakodnevni život. Takvu mogućnost nam pružaju pametni ugovori s kojima je moguće napisati proizvoljni računalni program i poslati ga da se izvršava na toj mreži.
+
+Decentralizirana aplikacija je naziv za moderne aplikacije građene pomoću pametnih ugovora. Cilj ovoga rada je potpuna implementacija jedne takve aplikacije i istraživanje teorijske pozadine potrebne za shvaćanje rada iste. Naša decentralizirana aplikacija zove se Crypto Roulette i nalazi se na: \url{https://masterthesisv2.firebaseapp.com/}.
+
+U prvom dijelu rada prvo se iskazuju sva teorijska znanja potreba za shvaćanje decentraliziranih aplikacija. Na početku predstavljamo kriptografske tehnike koje čine bazu svih kriptovaluta da bi nakon toga mogli objasniti Bitcoin, a nakon toga i Ethreum što je mreža na kojoj se izvršavaju pametni ugovori koje ćemo mi proučavati. Nadalje ćemo promotriti same ugovore, njihove mogućnosti, cijene izvršavanja, sigurnost i načine pozivanja koda.
+
+Drugi dio se fokusira na praktičnu primjenu teorije iz prvog dijela pri gradnji decentralizirane aplikacije. Dakle predstavljamo cijelu arhitekturu same aplikacije te navodimo alate koji se koriste pri izgradnji. 
+
+Konačno predstavljamo ukratko samu aplikaciju, analiziramo djelove koda pametnog ugovora Crypto Roulette aplikacije i ističemo razlike od "klasičnog" programiranja aplikacije. U zaključku dajemo primjere iz svakodnevnice gdje se koriste pametni ugovori i naša predviđanja za budućnost.
 \end{sazetak}
 
 \begin{summary}
-In this ...
+Because of their current value, cryptocurrencies are one of the more popular topics in computer society. To most of the people, they are just the way of paying, but can be so much more and this master thesis focuses on researching cryptocurrencies in that wider context. It presents them as a decentralized network and gives examples in which way they affect everyday life. Smart contracts give us a possibility to write an arbitrary computer program, send it in a transaction and then run it on the network.
+
+A decentralized application is a name for modern application build from smart contracts. A purpose of this thesis is full implementation of one application of that kind and researching theoretic background to understand its working. Our decentralized application is called Crypto Roulette and hosts on: \url{https://masterthesisv2.firebaseapp.com/}.
+
+In the first part of theses initially, we state all theoretical knowledge required to understand the decentralized application. In the beginning, we present cryptography that makes a base for all cryptocurrencies so later we can introduce Bitcoin, and after that Ethereum - which is a network where our smart contracts runs. After that we will observe contracts itself, their possibilities, running prices, security and ways to call code.
+
+The second part focuses on the practical use of theory from the first part when building a decentralized application. Therefore we present the architecture of the entire application while listing tools used in the development process.
+
+Finally, we present an application itself, analyze code of the Crypto Roulette smart contract and emphasize differences between "classical" application development and decentralized one. In the conclusion part, we list examples from every day where smart contracts are used and our predictions for the future.
 \end{summary}
 
 % te zivotopis
 
 \begin{cv}
-Dana ...
+Rođen sam 9. prosinca 1994. godine u Zagrebu. Završio sam Osnovnu školu "Ante Kovačića" i Prirodoslovno-matematičku gimnaziju Lucijana Vranjanina također u Zagrebu. U osnovnoj školi sam sudjelovao na natjecanjima iz matematike i informatike. Bavim se košarkom dugi niz godina i predstavljam fakultet na sveučilišnom prvenstvu. Kao predstavnik Zagrebačkog sveučilišta 2017. sam bio državni prvak u 3x3 košarci.
+
+Nakon završetka srednjoškolskog obrazovanja upisujem preddiplomski sveučilišni studij Matematika na Prirodoslovno-matematičkom fakultetu. Isti završavam 2016. godine postavši tako prvostupnik matematike. U rujnu iste godine upisujem sveučilišni diplomski studij Računarstvo i matematika na istom fakultetu.
+
+U zimskom semestru akademske godine 2017./2018. bio sam na Erasmusu+ programu na Sveučilištu u Ljubljani gdje sam stekao dosta praktičnoga znanja koje mi i danas koristi.
+
+Od srpnja 2018. godine zaposlen sam na poziciji softverskog inženjera u tvrtci Syskit, gdje trenutno radim na razvoju proizvoda Syskit Security Manager koji se koristi za lakšu administraciju Microsoftovog Office365 okruženja.
 \end{cv}
 
 \end{document}

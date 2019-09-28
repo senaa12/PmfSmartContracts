@@ -65,7 +65,7 @@ export default function App() {
     const onSelection = useCallback((newID) => {
         if(!appData.currentSelectedIDs.includes(newID) && appData.currentSelectedIDs.length < 4){
             setSelectedIDs([...appData.currentSelectedIDs, newID]);
-            setAmounts([...appData.currentSelectedAmounts, 1]);          
+            setAmounts([...appData.currentSelectedAmounts, "1"]);          
         }
         if(appData.currentSelectedIDs.length == 4){
             toggleWarningAnimation(true);

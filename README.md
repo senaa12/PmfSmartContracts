@@ -6,6 +6,8 @@ App link: https://masterthesisv2.firebaseapp.com/.
 
 ![Crypto roulette](./images/app-screen.PNG)
 
+![Crypto roulette result](./images/result.PNG)
+
 Key dependencies:
 
 * React
@@ -17,6 +19,3 @@ Key dependencies:
 
 * **Luka Seničić** 
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
