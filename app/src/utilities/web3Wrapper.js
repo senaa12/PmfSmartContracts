@@ -59,7 +59,7 @@ class Web3Wrapper {
         if(appSettings._contractAddress === null) {
             return { success: false, errorMessage: "No Address for smart contract provided" };
         }
-        this._contract = this._web3.eth.Contract(this._testContractAbi.abi, 
+        this._contract = new this._web3.eth.Contract(this._testContractAbi.abi, 
             !appSettings._isDevelopment ? "0x305f369c5dcad17d23da504ef8c562beefd925fe" : appSettings._contractAddress);
         
         this._contract.events.SpinResultEvent(

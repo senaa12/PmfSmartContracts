@@ -10,7 +10,7 @@ const definePlugin = new webpack.DefinePlugin({
 
 
 module.exports = {
-  entry: "./src/index.js",
+  entry: [ "babel-polyfill", "./src/index.js"],
   output: {
     path: path.join(__dirname, "/dist"),
     filename: "index_bundle.js"
