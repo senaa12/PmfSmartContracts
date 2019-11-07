@@ -4,9 +4,9 @@ export const initialState = {
 };
 
 export const toggleWarningAnimation = animations => (shouldShow) => {
-    animations.setState({ ...animations, warningAnimation: shouldShow });
+    animations.state.setState({ ...animations.state, warningAnimation: shouldShow });
 } 
 
 export const toggleSpinResultAnimation = animations => (shouldShow) => {
-    animations.setState({ ...animations, spinResultAnimation: shouldShow });
+    animations.state.setState({ ...animations.state, spinResultAnimation: shouldShow });
 }

@@ -11,7 +11,7 @@ export const initialState = {
 
 export const refreshAllData = appData => async (setAppState) => {
     appData.setState({ 
-        ...appData, 
+        ...appData.state, 
         refreshInProgress: true, 
         lastSpins: [] 
     });
@@ -20,7 +20,7 @@ export const refreshAllData = appData => async (setAppState) => {
     const lastSpins = await web3Wrapper._getLastSpins();
 
     await appData.setState({ 
-        ...appData, 
+        ...appData.state, 
         refreshInProgress: false, 
         lastSpins: lastSpins, 
         userBalance: balance 
@@ -30,24 +30,24 @@ export const refreshAllData = appData => async (setAppState) => {
 }
 
 export const removeCurrentSelection = appData => index => {
-    appData.state.state.currentSelectedAmounts.splice(index, 1);
-    appData.state.state.currentSelectedIDs.splice(index, 1);
+    appData.state.currentSelectedAmounts.splice(index, 1);
+    appData.state.currentSelectedIDs.splice(index, 1);
     appData.setState({ 
-        ...appData, 
-        currentSelectedAmounts: appData.state.state.currentSelectedAmounts,
-        currentSelectedIDs: appData.state.state.currentSelectedIDs
+        ...appData.state, 
+        currentSelectedAmounts: [...appData.state.currentSelectedAmounts],
+        currentSelectedIDs: [...appData.state.currentSelectedIDs]
     });
 }
 
 export const updateCurrentSelectionSpinAmounts = appData => (newAmount, index) => {
-    appData.state.state.currentSelectedAmounts[index] = newAmount;
-    appData.setState({ ...appData, currentSelectedAmounts: [...appData.state.state.currentSelectedAmounts] });
+    appData.state.currentSelectedAmounts[index] = newAmount;
+    appData.setState({ ...appData.state, currentSelectedAmounts: [...appData.state.currentSelectedAmounts] });
 }
 
 export const setAmounts = appData => newAmounts => {
-    appData.setState({ ...appData, currentSelectedAmounts: newAmounts });
+    appData.setState({ ...appData.state, currentSelectedAmounts: newAmounts });
 }
 
 export const setSelectedIDs = appData => newSelections => {
-    appData.setState({ ...appData, currentSelectedIDs: newSelections });
+    appData.setState({ ...appData.state, currentSelectedIDs: newSelections });
 }
