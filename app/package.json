@@ -32,6 +32,7 @@
   "homepage": "https://github.com/senaa12/PmfSmartContracts#readme",
   "dependencies": {
     "bootstrap": "^4.3.1",
+    "babel-polyfill": "^6.26.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-entities": "^0.5.1",
@@ -46,7 +47,6 @@
     "@babel/preset-react": "^7.0.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^8.0.5",
-    "babel-polyfill": "^6.26.0",
     "classnames": "^2.2.6",
     "cross-env": "^5.2.0",
     "css-loader": "^2.1.1",

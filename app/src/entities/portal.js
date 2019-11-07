@@ -5,9 +5,9 @@ export const initialState = {
 };
 
 export const openPortal = portal => portalData => {
-    portal.state.setState({...portalData});
+    portal.setState({...portalData});
 }
 
 export const closePortal = portal => () => {
-    portal.state.setState({ ...initialState, showPortal: false });
+    portal.setState({ ...initialState, showPortal: false });
 }

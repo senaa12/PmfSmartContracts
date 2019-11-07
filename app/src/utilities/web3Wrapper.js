@@ -28,8 +28,8 @@ class Web3Wrapper {
                     return { success: false, errorMessage: JSON.stringify(e) }; 
                 }
             } finally {
-                if(window.ethereum.networkVersion != "3" && !appSettings._isDevelopment) {
-                    errorMessage = "Select Ropsten testnet in Metamask menu or application wont work.";
+                if(window.ethereum.networkVersion != 3 && !appSettings._isDevelopment) {
+                    return { success: true, errorMessage: "Select Ropsten testnet in Metamask menu or application wont work."};
                 }
             }
             

@@ -30,13 +30,16 @@ export default function App() {
                 if(!res.success) {
                     setAppState(AppState.ErrorWhenInitializing);
                     setErrorMessage(res.errorMessage);
-                    return;
-                } else if(res.errorMessage){
+                    return 
+                } 
+                else if (res.errorMessage){
+                    setAppState(AppState.SuccessfulInitialization);
                     openPortal({
                         showPortal: true,
                         portalContent: res.errorMessage,
                         portalTitle: "Wrong network!"
-                    })
+                    });
+                    return    
                 }
                 refreshAllData(setAppState);
             }).catch(err => {
