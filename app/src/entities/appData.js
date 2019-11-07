@@ -41,7 +41,7 @@ export const removeCurrentSelection = appData => index => {
 
 export const updateCurrentSelectionSpinAmounts = appData => (newAmount, index) => {
     appData.state.state.currentSelectedAmounts[index] = newAmount;
-    appData.setState({ ...appData, currentSelectedAmounts: appData.state.state.currentSelectedAmounts });
+    appData.setState({ ...appData, currentSelectedAmounts: [...appData.state.state.currentSelectedAmounts] });
 }
 
 export const setAmounts = appData => newAmounts => {

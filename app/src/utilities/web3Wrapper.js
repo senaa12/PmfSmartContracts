@@ -20,8 +20,13 @@ class Web3Wrapper {
             try {
                 await window.ethereum.enable();
             } catch (e) {
-                // user denied premissions
-                return { success: false, errorMessage: JSON.stringify(e) };
+                console.error(e);
+                if(e.code == 4001) {
+                    return { success: false, errorMessage: "You need to approve connection between application and your account. Please refresh page and connect." };
+                }
+                else {
+                    return { success: false, errorMessage: JSON.stringify(e) }; 
+                }
             } finally {
                 if(window.ethereum.networkVersion != "3" && !appSettings._isDevelopment) {
                     errorMessage = "Select Ropsten testnet in Metamask menu or application wont work.";
@@ -36,9 +41,8 @@ class Web3Wrapper {
         }
         // Non-dapp browsers (they do not have any wallet injected in them)...
         else {
-            const provider = new Web3.providers.HttpProvider("http://localhost:8545");
-            this._web3 = new Web3(provider);
-            //TODO: MUST THROW ERROR IN PRODUCTION;
+            // const provider = new Web3.providers.HttpProvider("http://localhost:8545");
+            // this._web3 = new Web3(provider);
             return { success: false, errorMessage: "You must have Metamask in your browser to access Ethereum blockchain"}
         }
         //#endregion
@@ -87,22 +91,22 @@ class Web3Wrapper {
     }
 
     async _getLastSpinResults() {
-        const res = await this._contract.methods.getSpinResults().call();
+        const res = await this._contract.methods.getSpinResults().call({ from: this._userAddress });
         return this._convertHexToDecimal(res.map(r => r._hex));
     }
 
     async _getLastSpins() {
-        const res = await this._contract.methods.getLastSpins().call();
+        const res = await this._contract.methods.getLastSpins().call({ from: this._userAddress });
         return this._spinMapper(res);
     }
 
     async _getBalance() {
-        const res = await this._contract.methods.getBalance().call();
+        const res = await this._contract.methods.getBalance().call({ from: this._userAddress });
         return this._customFromWei(res);
     }
 
     async _getContractOwner() {
-        const res = await this._contract.methods.getContractOwner().call();
+        const res = await this._contract.methods.getContractOwner().call({ from: this._userAddress });
         return res;
     }
 
