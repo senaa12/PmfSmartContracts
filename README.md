@@ -17,15 +17,15 @@ Key dependencies:
 
 ## Installation
 
-Other than dependencies in `package.json` file, you also need to install (Ganache-cli)[https://github.com/trufflesuite/ganache-cli].
+Other than dependencies in `package.json` file, you also need to install [Ganache-cli](https://github.com/trufflesuite/ganache-cli).
 
 ## FAQ
 
 * Web3 has problems when installing on Windows 10. You need to have installed Python 2.7 as key dependency and also you need to run `npm install --global windows-build-tools` from Administrator PowerShell.
 
-* If after running truffle commands you get error: **The file is not digitaly signed.**, you need to set execution policy like (here)[https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.security/set-executionpolicy?view=powershell-6].
+* If after running truffle commands you get error: **The file is not digitaly signed.**, you need to set execution policy like [here](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.security/set-executionpolicy?view=powershell-6).
 
-* If you receive message error message like "Returned values aren't valid, did it run Out of Gas?" when starting a project, that means that you did not establish connection with smart contract. Check official (web3js docs)[https://web3js.readthedocs.io/] and your smart contract address.
+* If you receive message error message like "Returned values aren't valid, did it run Out of Gas?" when starting a project, that means that you did not establish connection with smart contract. Check official [web3js docs](https://web3js.readthedocs.io/) and your smart contract address.
 
 ## Starting project
 
