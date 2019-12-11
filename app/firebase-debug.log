@@ -1,0 +1,37 @@
+[debug] [2019-12-11T19:30:25.464Z] ----------------------------------------------------------------------
+[debug] [2019-12-11T19:30:25.467Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\SENA\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2019-12-11T19:30:25.467Z] CLI Version:   7.9.0
+[debug] [2019-12-11T19:30:25.467Z] Platform:      win32
+[debug] [2019-12-11T19:30:25.467Z] Node Version:  v12.13.1
+[debug] [2019-12-11T19:30:25.468Z] Time:          Wed Dec 11 2019 20:30:25 GMT+0100 (Central European Standard Time)
+[debug] [2019-12-11T19:30:25.468Z] ----------------------------------------------------------------------
+[debug] [2019-12-11T19:30:25.468Z] 
+[debug] [2019-12-11T19:30:25.478Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-12-11T19:30:25.479Z] > authorizing via signed-in user
+[debug] [2019-12-11T19:30:25.479Z] [iam] checking project masterthesisv2 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2019-12-11T19:30:25.481Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2019-12-11T19:30:25.481Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2019-12-11T19:30:25.752Z] <<< HTTP RESPONSE 200
+[debug] [2019-12-11T19:30:25.767Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/masterthesisv2:testIamPermissions  
+
+[debug] [2019-12-11T19:30:26.791Z] <<< HTTP RESPONSE 200
+[debug] [2019-12-11T19:30:26.795Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/masterthesisv2  
+ 
+[debug] [2019-12-11T19:30:27.160Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'masterthesisv2'...
+[info] 
+[info] i  deploying hosting
+[debug] [2019-12-11T19:30:27.180Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/masterthesisv2/versions  
+
+[debug] [2019-12-11T19:30:28.990Z] <<< HTTP RESPONSE 200
+[info] i  hosting[masterthesisv2]: beginning deploy...
+[info] i  hosting[masterthesisv2]: found 3 files in dist
+[debug] [2019-12-11T19:30:29.150Z] [hosting] hash cache [ZGlzdA] stored for 3 files
+[debug] [2019-12-11T19:30:29.150Z] [hosting][hash queue][FINAL]
+[debug] [2019-12-11T19:30:29.150Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/masterthesisv2/versions/63a0c0682d7b8253:populateFiles  
+ <request body omitted>
+[debug] [2019-12-11T19:30:30.483Z] <<< HTTP RESPONSE 200
+[debug] [2019-12-11T19:30:30.485Z] [hosting][populate queue][FINAL]
+[debug] [2019-12-11T19:30:30.485Z] [hosting] uploads queued: 1

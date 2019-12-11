@@ -1,8 +1,16 @@
 const path = require("path");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
+const CopyWebPackPlugin = require("copy-webpack-plugin");
 
-const htmlWebpackPlugin = new HtmlWebPackPlugin({ template: "./src/index.html" });
 
+const htmlWebpackPlugin = new HtmlWebPackPlugin({ 
+  template: "./src/index.html"
+});
+
+const copyWebpackPlugin = new CopyWebPackPlugin([
+  './src/common/favicon.ico',
+  { from: './dist'}
+])
 
 module.exports = {
   entry: [ "babel-polyfill", "./src/index.js"],
@@ -40,5 +48,5 @@ module.exports = {
       }
     ]
   },
-  plugins: [ htmlWebpackPlugin ]
+  plugins: [ htmlWebpackPlugin, copyWebpackPlugin ]
 };

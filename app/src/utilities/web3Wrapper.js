@@ -31,6 +31,9 @@ class Web3Wrapper {
                 if(window.ethereum.networkVersion != 3 && !appSettings._isDevelopment) {
                     return { success: true, errorMessage: "Select Ropsten testnet in Metamask menu or application wont work."};
                 }
+                else if(appSettings._isDevelopment && window.ethereum.networkVersion < 10){
+                    return { success: true, errorMessage: "You probbably want to select localhost testnet"};
+                }
             }
             
             this._web3 = new Web3(window.ethereum);
@@ -170,8 +173,8 @@ class Web3Wrapper {
                     time: new Date(s.time*1000),
                     address: s.better,
                     isWinningSpin: s.isWinningSpin,
-                    selectedNumber: this._convertHexToDecimal(s.selectedNumber),
-                    placedBetsID: this._convertHexToDecimal(s.selectedItemID),
+                    selectedNumber: s.selectedNumber,//this._convertHexToDecimal(s.selectedNumber),
+                    placedBetsID: s.selectedItemID,//this._convertHexToDecimal(s.selectedItemID),
                     totalFundsPlaced: this._customFromWei(s.totalFundsPlaced)
                 };
                 jsSpins.push(spin);
@@ -187,11 +190,11 @@ class Web3Wrapper {
 
     _resultEventMapper(returnValues) {
         return {
-            placedBetsID: this._convertHexToDecimal(returnValues.selectedItemID),
+            placedBetsID: returnValues.selectedItemID,//this._convertHexToDecimal(returnValues.selectedItemID),
             amountWon: this._customFromWei(returnValues.amountWon),
             address: returnValues.sender,
             isWinningSpin: returnValues.won,
-            selectedNumber: this._convertHexToDecimal(returnValues.selectedNumber),
+            selectedNumber: returnValues.selectedNumber//this._convertHexToDecimal(returnValues.selectedNumber),
 
         }
     }

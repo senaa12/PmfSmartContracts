@@ -10,6 +10,7 @@ import Result from './portal/result/result';
 import CurrentBetDashboard from "./currentBetDashboard/currentBetDashboard";
 import PreviousBetDashboard from "./previosBetDashboard/previousBetDashboard";
 import Portal from "./portal/portal";
+import Snowfall from "./snowfall/snowfall";
 
 import "./app.scss";
 
@@ -86,6 +87,7 @@ export default function App() {
 
     return(
         <div className="app">
+            <Snowfall />
             <Portal />             
                 {!(appState.intializationState == AppState.IsNotInitialized) && <>
                     <Header />

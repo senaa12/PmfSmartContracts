@@ -13,11 +13,13 @@ $white: #fff;
 /* board colors */
 $brown: #3c1912;
 $yellow: #f3c620;
-$dark-green: #01431e;
+$dark-green-base: #01431e;
 $light-green: #02632c;
 $red: #e0080b;
 $black: #000;
 $white: #fff;
+
+$dark-green: rgba($dark-green-base, 0.9);
 
 @function px-to-rem($value, $root-value: 14px) {
     @return 1rem * ($value / $root-value);
